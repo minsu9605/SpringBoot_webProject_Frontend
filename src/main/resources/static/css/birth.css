@@ -1,0 +1,8 @@
+.birth {
+    float: left;
+    width: 32%;
+}
+
+.nickname_already, .nickname_ok, .username_already, .username_ok {
+    display: none;
+}

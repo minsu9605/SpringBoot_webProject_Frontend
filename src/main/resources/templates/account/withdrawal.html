@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>회원 탈퇴</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link th:href="@{/css/signin.css}" rel="stylesheet">
+    <link th:href="@{/css/birth.css}" rel="stylesheet">
+</head>
+
+<script>
+    function withdrawal() {
+        if (!confirm("정말로 탈퇴 하시겠습니까?")) {
+            return false
+        } else if (!confirm("이후 취소 처리가 불가 합니다. 탈퇴 하시겠습니까?")) {
+            return false
+        }
+        alert("회원탈퇴가 완료되었습니다.")
+    }
+</script>
+
+<body class="text-center">
+<form class="form-signin" th:action="@{/account/withdrawal}" method="post" th:object="${member}">
+
+    <h1 class="h3 mb-3 fw-normal">회원 탈퇴</h1>
+    <hr>
+    <input type="hidden" class="form-control" th:field="*{id}" th:readonly="readonly" >
+    <div class="form-floating mb-3">
+        <label th:for="username">이메일</label>
+        <input type="email" class="form-control" th:field="*{username}" th:readonly="readonly" >
+    </div>
+
+    <div class="form-floating mb-3">
+        <label th:for="nickname">닉네임</label>
+        <input type="text" class="form-control" th:field="*{nickname}" th:readonly="readonly">
+    </div>
+
+    <label class="mb-3 form-label" for="birth">생년월일</label>
+    <div class="mb-3" id="birth" th:readonly="readonly">
+        <div class="birth">
+            <input type="text" class="form-control" th:field="*{year}" th:readonly="readonly">
+        </div>
+        <div class="birth mx-1">
+            <input type="text" class="form-control" th:field="*{month}" th:readonly="readonly">
+        </div>
+        <div class="birth">
+            <input type="text" class="form-control" th:field="*{day}" th:readonly="readonly">
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="age_input">나이</label>
+        <input type="text" class="form-control" id="age_input" th:readonly="readonly" >
+    </div>
+
+    <div class="form-floating mb-3">
+        <label th:for="gender">성별</label>
+        <input type="text" class="form-control" th:field="*{gender}" th:readonly="readonly" >
+    </div>
+
+
+    <div class="form-floating mb-3">
+        <button class="w-100 btn btn-lg btn-danger" type="submit" onclick="return withdrawal()">탈퇴</button>
+    </div>
+
+    <div class="form-floating mb-3">
+        <a type="button" style="color:white" class="w-100 btn btn-lg btn-primary" th:href="@{/}">홈으로</a>
+    </div>
+
+</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{/js/calAge.js}"></script>
+</body>
+</html>

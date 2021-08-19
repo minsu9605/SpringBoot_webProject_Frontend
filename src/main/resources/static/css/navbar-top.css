@@ -1,0 +1,22 @@
+/* Show it's not fixed to the top */
+body {
+    min-height: 75rem;
+}
+
+.mb-4, .my-4{
+    margin-bottom: 3.0rem!important;
+}
+.bg-dark{
+    height : 60px;
+}
+.navbar-brand{
+    font-size : 2rem;
+    margin-right: 3rem;
+}
+/*.btn-secondary{
+    font-size: 1.4rem;
+}*/
+
+.navbar-expand-md .navbar-nav{
+    font-size: 1.5rem;
+}

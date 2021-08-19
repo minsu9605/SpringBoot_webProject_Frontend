@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>로그인</title>
+    <link th:href="@{/css/signin.css}" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body class="text-center">
+<main class="form-signin">
+    <a th:href="@{/}"><img class="mb-4" th:src="@{/image/log_icon.png}" alt="로고" width="72" height="57"></a>
+    <h1 class="h3 mb-3 fw-normal">My Page</h1>
+    <hr>
+
+    <div class="form-floating mb-3">
+        <a type="button" class="w-100 btn btn-lg btn-success" th:href="@{/account/myinfo}">회원정보 변경</a>
+    </div>
+
+    <div class="form-floating mb-3">
+        <a type="button" class="w-100 btn btn-lg btn-success" th:href="@{/account/password}">패스워드 변경</a>
+    </div>
+
+    <div class="form-floating mb-3">
+        <a type="button" class="w-100 btn btn-lg btn-primary" th:href="@{/}">홈으로</a>
+    </div>
+
+    <div class="form-floating mb-3">
+        <a type="button" class="w-100 btn btn-lg btn-danger" th:href="@{/account/withdrawal}">회원탈퇴</a>
+    </div>
+
+</main>
+</body>
+</html>

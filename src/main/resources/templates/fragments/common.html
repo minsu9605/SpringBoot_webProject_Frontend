@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:fragment="head(title)">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link th:href="@{/css/navbar-top.css}" rel="stylesheet">
+    <title th:text="${title}">게시판</title>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4" th:fragment="menu(menu)">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">CUSH</a>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li class="nav-item" th:classappend="${menu} == 'home'">
+                    <a class="nav-link " th:href="@{/}">홈 </a>
+                </li>
+                <li class="nav-item" th:classappend="${menu} == 'board'">
+                    <a class="nav-link " th:href="@{/board/list}">리뷰게시판</a>
+                </li>
+                <li class="nav-item" th:classappend="${menu} == 'map'">
+                    <a class="nav-link " th:href="@{/map}">지도 </a>
+                </li>
+            </ul>
+        </div>
+
+            <a class="btn btn-secondary mx-2" th:href="@{/account/login}" sec:authorize="!isAuthenticated()">로그인</a>
+
+            <a class="btn btn-secondary mx-1" th:href="@{/account/register}" sec:authorize="!isAuthenticated()">회원가입</a>
+
+            <form class="form-inline my-2 my-lg-0" th:action="@{/account/logout}" method="get" sec:authorize="isAuthenticated()">
+                <span class="text-white mx-2" sec:authentication="name">사용자</span>
+                <span class="text-white mx-2" sec:authentication="principal.authorities">권한</span>
+
+                <a class="btn btn-secondary mx-2" th:href="@{/account/mypage}" sec:authorize="hasRole('ROLE_MEMBER')">내 정보</a>
+
+                <a class="btn btn-secondary mx-2" th:href="@{/admin}" sec:authorize="hasRole('ROLE_ADMIN')">관리</a>
+
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">로그아웃</button>
+            </form>
+
+
+    </div>
+</nav>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
