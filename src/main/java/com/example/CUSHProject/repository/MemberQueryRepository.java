@@ -4,7 +4,6 @@ import com.example.CUSHProject.dto.MemberDto;
 import com.example.CUSHProject.entity.MemberEntity;
 import com.example.CUSHProject.entity.QMemberEntity;
 import com.querydsl.core.QueryResults;
-import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -36,6 +35,13 @@ public class MemberQueryRepository {
                 .from(QMemberEntity.memberEntity)
                 .where(QMemberEntity.memberEntity.id.ne(id))
                 .fetchResults();
+    }
+
+    //검색어를 통해 아이디찾기
+    public double findByKeyword(String keyword) {
+        return queryFactory.selectFrom(QMemberEntity.memberEntity)
+                .where(QMemberEntity.memberEntity.username.contains(keyword))
+                .fetchCount();
     }
 
     @Transactional

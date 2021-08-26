@@ -10,7 +10,6 @@ import javax.persistence.Enumerated;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-
 @Getter
 @Setter
 @NoArgsConstructor

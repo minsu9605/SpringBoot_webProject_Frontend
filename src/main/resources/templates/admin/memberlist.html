@@ -16,6 +16,8 @@
                 <button type="submit" class="mx-2 btn btn-secondary">검색</button>
             </div>
         </form>
+
+        <input name="memberList" id="memberList" th:vlaue="${memberList}" type="hidden">
         <table class="table table-striped table-hover">
             <thead>
             <tr>
@@ -44,7 +46,24 @@
         </table>
     </div>
 </div>
+
+
 <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <li class="page-item" th:classappend="${1 == memberList.pageable.pageNumber +1} ? 'disabled'">
+            <a class="page-link" th:href="@{/admin(page=${memberList.pageable.pageNumber},keyword=${param.keyword})}" tabindex="-1" aria-disabled="true">이전</a>
+        </li>
+        <li class="page-item" th:each="pageNum : ${#numbers.sequence(paging.startPage, paging.endPage)}" th:classappend="${pageNum == memberList.pageable.pageNumber +1} ? 'active'" >
+            <a class="page-link" th:href="@{/admin(page=${pageNum},keyword=${param.keyword})}" th:text="${pageNum}"></a>
+        </li>
+        <li class="page-item" th:classappend="${memberList.totalPages == memberList.pageable.pageNumber +1} ? 'disabled'">
+            <a class="page-link" th:href="@{/admin(page=${memberList.pageable.pageNumber + 2},keyword=${param.keyword})}">다음</a>
+        </li>
+    </ul>
+</nav>
+
+
+<!--<nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
         <li class="page-item" th:classappend="${1 == memberList.pageable.pageNumber +1} ? 'disabled'">
             <a class="page-link" th:href="@{/admin(page=${memberList.pageable.pageNumber},keyword=${param.keyword})}" tabindex="-1" aria-disabled="true">이전</a>
@@ -56,6 +75,7 @@
             <a class="page-link" th:href="@{/admin(page=${memberList.pageable.pageNumber + 2},keyword=${param.keyword})}">다음</a>
         </li>
     </ul>
-</nav>
+</nav>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </body>
 </html>
