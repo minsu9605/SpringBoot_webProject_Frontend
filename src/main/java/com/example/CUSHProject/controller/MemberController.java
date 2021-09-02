@@ -24,9 +24,9 @@ import java.util.HashMap;
 @AllArgsConstructor
 public class MemberController {
 
-    private final Logger logger = LoggerFactory.getLogger(MemberController.class);
     private final MemberService memberService;
 
+    //로그아웃
     @GetMapping("/account/logout")
     public String logout(HttpSession session) {
         session.invalidate();
@@ -35,14 +35,19 @@ public class MemberController {
 
     //로그인 페이지
     @GetMapping("/account/login")
-    public String loginPage() {
+    public String loginPage(HttpServletRequest request) {
+        //이전 페이지의 정보를 담음
+        String url = request.getHeader("Referer");
+        if(!url.contains("/account/login")) {
+            request.getSession().setAttribute("prevPage",request.getHeader("Referer"));
+        }
+
         return "account/login";
     }
 
-    //로그인 에러 처리
+    //로그인 처리
     @PostMapping("/account/login")
     public String loginError(HttpServletRequest request, Model model) {
-
         String loginFailMsg = (String) request.getAttribute("loginFailMsg");
         model.addAttribute("loginFailMsg",loginFailMsg);
         return "account/login";
@@ -103,7 +108,6 @@ public class MemberController {
         memberService.passwordUpdate(memberDto);
         return "redirect:/account/logout";
     }
-
 
     //회원탈퇴
     @GetMapping("/account/withdrawal")
