@@ -1,0 +1,10 @@
+#dropDown{
+    display: flex;
+}
+
+#divHairType{
+    margin-right: 3%;
+}
+.ck-content {
+    height: 300px;
+}

@@ -3,15 +3,24 @@ package com.example.CUSHProject.service;
 import com.example.CUSHProject.Pagination.Paging;
 import com.example.CUSHProject.dto.BoardDto;
 import com.example.CUSHProject.entity.BoardEntity;
-import com.example.CUSHProject.entity.MemberEntity;
 import com.example.CUSHProject.repository.BoardQueryRepository;
 import com.example.CUSHProject.repository.BoardRepository;
+import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
+import org.apache.commons.io.FileUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -25,11 +34,11 @@ public class BoardService {
     public Page<BoardEntity> boardList(String searchType, String keyword, int curPageNum) {
         Page<BoardEntity> boardEntityPage = null;
         if(searchType.equals("title")) {
-            boardEntityPage = boardRepository.findByTitleContaining(keyword, PageRequest.of(curPageNum - 1, paging.getRecordPerPage(), Sort.by(Sort.Direction.ASC, "id")));
+            boardEntityPage = boardRepository.findByTitleContaining(keyword, PageRequest.of(curPageNum - 1, paging.getRecordPerPage(), Sort.by(Sort.Direction.DESC, "id")));
         }else if (searchType.equals("content")){
-            boardEntityPage = boardRepository.findByContentContaining(keyword, PageRequest.of(curPageNum - 1, paging.getRecordPerPage(), Sort.by(Sort.Direction.ASC, "id")));
-        }else if(searchType.equals("username")){
-            boardEntityPage = boardRepository.findByUsernameContaining(keyword, PageRequest.of(curPageNum - 1, paging.getRecordPerPage(), Sort.by(Sort.Direction.ASC, "id")));
+            boardEntityPage = boardRepository.findByContentContaining(keyword, PageRequest.of(curPageNum - 1, paging.getRecordPerPage(), Sort.by(Sort.Direction.DESC, "id")));
+        }else if(searchType.equals("writer")){
+            boardEntityPage = boardRepository.findByWriterContaining(keyword, PageRequest.of(curPageNum - 1, paging.getRecordPerPage(), Sort.by(Sort.Direction.DESC, "id")));
         }
         return boardEntityPage;
     }
@@ -38,8 +47,8 @@ public class BoardService {
         return boardQueryRepository.findByKeyword(keyword);
     }
 
-    //보드 글 작성 & 상세보기
-    public BoardDto boardForm(Long id){
+    //보드 글 상세보기
+    public BoardDto boardContent(Long id){
         BoardEntity boardEntity;
         if(id==null){
             boardEntity = new BoardEntity();
@@ -48,16 +57,71 @@ public class BoardService {
         }
         BoardDto boardDto = BoardDto.builder()
                 .id(boardEntity.getId())
-                .username(boardEntity.getUsername())
+                .writer(boardEntity.getWriter())
                 .title(boardEntity.getTitle())
                 .content(boardEntity.getContent())
-                .date(boardEntity.getDate())
+                .createdDate(boardEntity.getCreatedDate())
+                .updatedDate(boardEntity.getUpdatedDate())
                 .hit(boardEntity.getHit())
                 .rating(boardEntity.getRating())
+                .hairType(boardEntity.getHairType())
                 .build();
         return boardDto;
     }
 
+    /*보드 글 작성 준비*/
+    public BoardDto boardFormWrite(){
+        BoardEntity boardEntity = new BoardEntity();
+        BoardDto boardDto = BoardDto.builder()
+                .id(boardEntity.getId())
+                .writer(boardEntity.getWriter())
+                .title(boardEntity.getTitle())
+                .content(boardEntity.getContent())
+                .createdDate(boardEntity.getCreatedDate())
+                .updatedDate(boardEntity.getUpdatedDate())
+                .hit(boardEntity.getHit())
+                .rating(boardEntity.getRating())
+                .hairType(boardEntity.getHairType())
+                .build();
+        return boardDto;
+    }
 
+    /*게시글 등록 후 전송*/
+    @Transactional
+    public BoardEntity boardWrite(BoardDto boardDto) {
+        boardDto.setCreatedDate(LocalDateTime.now());
+        boardDto.setUpdatedDate(LocalDateTime.now());
+        return boardRepository.save(boardDto.toEntity());
+    }
+
+    /*보드 수정 후 전송*/
+    @Transactional
+    public BoardEntity boardModifySave(BoardDto boardDto) {
+        boardDto.setUpdatedDate(LocalDateTime.now());
+        return boardRepository.save(boardDto.toEntity());
+    }
+
+    public JsonObject boardImageUpload(MultipartFile multipartFile){
+        JsonObject jsonObject = new JsonObject();
+
+        String fileRoot = "D:\\summernote_image\\";
+
+        String originalFileName = multipartFile.getOriginalFilename(); // 오리지널 파일명
+        String extension = originalFileName.substring(originalFileName.lastIndexOf(".")); //파일확장자
+        String savedFileName = UUID.randomUUID() + extension; //저장될 파일 명
+
+        File targetFile = new File(fileRoot + savedFileName);
+        try {
+            InputStream fileStream = multipartFile.getInputStream();
+            FileUtils.copyInputStreamToFile(fileStream, targetFile);
+            jsonObject.addProperty("url", "/summernoteImage/"+savedFileName);
+            jsonObject.addProperty("responseCode", "success");
+        } catch (IOException e) {
+            FileUtils.deleteQuietly(targetFile); //저장된 파일 삭제
+            jsonObject.addProperty("responseCode", "error");
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
 }
 

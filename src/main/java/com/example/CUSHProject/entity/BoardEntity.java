@@ -1,10 +1,13 @@
 package com.example.CUSHProject.entity;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
+import com.example.CUSHProject.enums.HairType;
+import com.example.CUSHProject.enums.Rating;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter
@@ -17,14 +20,14 @@ import lombok.NoArgsConstructor;
         allocationSize = 1
 )
 
-public class BoardEntity {
+public class BoardEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BOARD_SEQ_GEN")
     @Column(name = "BOARD_ID")
     private Long id;
 
-    @Column(name = "USERNAME")
-    private String username;
+    @Column(name = "WRITER")
+    private String writer;
 
     @Column(name = "TITLE")
     private String title;
@@ -32,23 +35,35 @@ public class BoardEntity {
     @Column(name = "CONTENT")
     private String content;
 
-    @Column(name = "BOARD_DATE")
-    private Timestamp date;
+    //@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @Column(name = "CREATEDDATE")
+    private LocalDateTime createdDate;
+
+    //@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @Column(name = "UPDATEDDATE")
+    private LocalDateTime updatedDate;
 
     @Column(name = "HIT")
     private int hit;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "RATING")
-    private int rating;
+    private Rating rating;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "HAIRTYPE")
+    private HairType hairType;
 
     @Builder
-    public BoardEntity(Long id, String username, String title, String content, Timestamp date, int hit, int rating) {
+    public BoardEntity(Long id, String writer, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate,int hit, Rating rating, HairType hairType) {
         this.id = id;
-        this.username = username;
+        this.writer = writer;
         this.title = title;
         this.content = content;
-        this.date = date;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
         this.hit = hit;
         this.rating = rating;
+        this.hairType= hairType;
     }
 }
