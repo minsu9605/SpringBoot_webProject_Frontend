@@ -13,9 +13,8 @@
 </style>
 
 <body class="text-center">
-<!--        th:action="@{/admin/memberform}"-->
-<form class="form-signin" method="post" th:object="${member}" th:action="@{/admin/memberform}">
 
+<form class="form-signin" method="post" th:object="${member}" th:action="@{/admin/memberform}">
     <a th:href="@{/}"><img class="mb-4" th:src="@{/image/log_icon.png}" alt="로고" width="72" height="57"></a>
     <h1 class="h3 mb-3 fw-normal">Member Page for Admin</h1>
     <hr>
@@ -104,16 +103,11 @@
     </div>
 
     <div class="form-floating mb-3">
-<!--        <button class="w-100 btn btn-lg btn-primary" type="submit" formaction="/admin/memberform">수정</button>-->
         <button class="w-100 btn btn-lg btn-primary" type="submit" onclick="return modifyCheckAll()">수정</button>
-<!--        <button class="w-100 btn btn-lg btn-primary" type="submit">수정</button>-->
     </div>
 
     <div class="form-floating mb-3">
-
-<!--        <button class="w-100 btn btn-lg btn-primary" type="submit" onclick="return modifyCheckAll()">수정</button>-->
-<!--        <button class="w-100 btn btn-lg btn-primary" type="submit" formaction="/admin/withdrawal">탈퇴</button>-->
-        <a type="button" class="w-100 btn btn-lg btn-danger" th:href="@{/admin/withdrawal}">회원탈퇴</a>
+        <button class="w-100 btn btn-lg btn-danger" onclick="withdrawalSubmit()">탈퇴</button>
     </div>
 
     <div class="form-floating mb-3">

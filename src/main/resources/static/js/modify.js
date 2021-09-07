@@ -4,6 +4,22 @@ const nickname = $("#nickname");
 let nicknameCheck = 1;
 let usernameCheck = 1;
 
+function withdrawalSubmit() {
+    $.ajax({
+        type :"post",
+        url :"/admin/withdrawal",
+        data : {"id" : id.val()},
+        dataType : "JSON",
+        success : function(){
+            alert("회원 탈퇴가 완료되었습니다.")
+        },
+        error : function(){
+            alert("ajax 실행 실패");
+        }
+    });
+
+}
+
 function modifyCheckAll(){
     if(username.val()==""){
         alert("아이디를 입력해주세요!. 필수항목입니다.");

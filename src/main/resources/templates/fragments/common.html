@@ -33,8 +33,10 @@
             <a class="btn btn-secondary mx-1" th:href="@{/account/register}" sec:authorize="!isAuthenticated()">회원가입</a>
 
             <form class="form-inline my-2 my-lg-0" th:action="@{/account/logout}" method="get" sec:authorize="isAuthenticated()">
-                <span class="text-white mx-2" sec:authentication="name">사용자</span>
-                <span class="text-white mx-2" sec:authentication="principal.authorities">권한</span>
+<!--                <span class="text-white mx-2" sec:authentication="name">사용자</span>-->
+                <span class="text-white mx-2" th:text="${session.memberNickname} + '님 환영합니다'">사용자</span>
+<!--                <span class="text-white mx-2" sec:authentication="principal.authorities">권한</span>-->
+                <span class="text-white mx-2" th:text="${session.memberRole.title}">권한</span>
 
                 <a class="btn btn-secondary mx-2" th:href="@{/account/mypage}" sec:authorize="hasRole('ROLE_MEMBER')">내 정보</a>
 

@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 @Configuration
 @EnableWebSecurity
@@ -63,6 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .ignoringAntMatchers("/usernameModify")
                     .ignoringAntMatchers("/pwCheck")
                     .ignoringAntMatchers("/admin/withdrawal")
+                    .ignoringAntMatchers("/uploadSummernoteImageFile")
                     .and()
                 .formLogin()
                     .loginPage("/account/login")

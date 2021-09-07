@@ -34,7 +34,7 @@ public class MemberEntity {
     @Column(name="PASSWORD")
     private String password;
 
-    @Column(name="USERNAME")
+    @Column(name="NICKNAME")
     private String nickname;
 
     @Enumerated(EnumType.STRING)

@@ -79,7 +79,6 @@ public class MemberService implements UserDetailsService {
                 .day(str[2])
                 .gender(memberEntity.getGender())
                 .role(memberEntity.getRole())
-                //.role(memberEntity.getRole().getValue())
                 .build();
         return memberDto;
     }

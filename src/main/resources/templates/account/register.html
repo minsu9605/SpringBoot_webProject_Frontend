@@ -48,13 +48,13 @@
             <select class="form-control" id="year" name="year">
                 <option value="">년(YY)</option>
                 <th:block th:each="a: ${#numbers.sequence(2001,1900)}">
-                    <option th:value="${a}" th:text="${a}" ></option>
+                    <option th:value="${a}" th:text="${a}"></option>
                 </th:block>
             </select>
         </div>
 
         <div class="birth mx-1 dropdown">
-            <select  class="form-control" id="month" name="month">
+            <select class="form-control" id="month" name="month">
                 <option value="">월(mm)</option>
                 <th:block th:each="month: ${#numbers.listFormatInteger(#numbers.sequence(1,12),2)}">
                     <option class="dropdown-item" th:value="${month}" th:text="${month}"></option>
@@ -63,7 +63,7 @@
         </div>
 
         <div class="birth dropdown">
-            <select  class="form-control" id="day" name="day">
+            <select class="form-control" id="day" name="day">
                 <option value="">일(dd)</option>
                 <th:block th:each="day: ${#numbers.listFormatInteger(#numbers.sequence(1,31),2)}">
                     <option class="dropdown-item" th:value="${day}" th:text="${day}"></option>

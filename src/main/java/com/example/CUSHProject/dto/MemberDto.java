@@ -7,13 +7,14 @@ import lombok.*;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class MemberDto {
+public class MemberDto implements Serializable {
 
     private Long id;
     private String username;

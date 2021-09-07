@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -30,16 +32,10 @@ public class AdminController {
                        @RequestParam(required = false, defaultValue = "") String keyword) {
         Paging paging = new Paging();
         Page<MemberEntity> memberList = memberService.memberList(keyword, curPageNum);
-        double listcnt = memberService.getMemberListCntByKeyword(keyword);
-        paging.pageInfo(curPageNum, listcnt);
-
+        double listCnt = memberService.getMemberListCntByKeyword(keyword);
+        paging.pageInfo(curPageNum, listCnt);
         model.addAttribute("memberList",memberList);
         model.addAttribute("paging",paging);
-
-        System.out.println("리스트 : " + listcnt);
-        System.out.println("total : " + paging.getTotalPageSize());
-        System.out.println("시작 : " + paging.getStartPage());
-        System.out.println("끝 : " + paging.getEndPage());
         return "admin/memberlist";
     }
 
@@ -50,6 +46,7 @@ public class AdminController {
         model.addAttribute("member", memberDto);
         return "admin/memberform";
     }
+
     //회원 정보 수정
     @PostMapping("/admin/memberform")
     public String updateform(MemberDto memberDto){
@@ -57,10 +54,11 @@ public class AdminController {
         return "redirect:/";
     }
 
-    /*//회원탈퇴
+    //회원탈퇴
+    @ResponseBody
     @PostMapping("/admin/withdrawal")
     public String withdrawalMember(@RequestParam(required = false) Long id) {
         memberService.deleteUser(id);
         return "admin/memberlist";
-    }*/
+    }
 }

@@ -1,0 +1,17 @@
+.inline-container{
+    display: inline;
+}
+#dropDown{
+    display: flex;
+}
+
+#divHairType{
+    margin-right: 3%;
+}
+.ck-content {
+    height: 300px;
+}
+#createdDate, #updatedDate{
+    background-color: transparent;
+    border: 0px;
+}
