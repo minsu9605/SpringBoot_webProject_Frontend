@@ -48,12 +48,14 @@ public class BoardService {
     }
 
     //보드 글 상세보기
-    public BoardDto boardContent(Long id){
+    public BoardDto boardContent(Long id) {
         BoardEntity boardEntity;
-        if(id==null){
+
+        if (id == null) {
             boardEntity = new BoardEntity();
-        } else{
+        } else {
             boardEntity = boardRepository.findById(id).orElse(null);
+           // boardHitUpdate(id);
         }
         BoardDto boardDto = BoardDto.builder()
                 .id(boardEntity.getId())
@@ -66,6 +68,9 @@ public class BoardService {
                 .rating(boardEntity.getRating())
                 .hairType(boardEntity.getHairType())
                 .build();
+        System.out.println("-------------------");
+        System.out.println("조회수" + boardEntity.getHit());
+        System.out.println("-------------------");
         return boardDto;
     }
 
@@ -86,6 +91,11 @@ public class BoardService {
         return boardDto;
     }
 
+    /*조회수 증가*/
+    public void boardHitUpdate(Long id){
+        boardQueryRepository.boardHitUpdate(id);
+    }
+
     /*게시글 등록 후 전송*/
     @Transactional
     public BoardEntity boardWrite(BoardDto boardDto) {
@@ -101,6 +111,7 @@ public class BoardService {
         return boardRepository.save(boardDto.toEntity());
     }
 
+    /*이미지 첨부*/
     public JsonObject boardImageUpload(MultipartFile multipartFile){
         JsonObject jsonObject = new JsonObject();
 
@@ -123,5 +134,6 @@ public class BoardService {
         }
         return jsonObject;
     }
+
 }
 

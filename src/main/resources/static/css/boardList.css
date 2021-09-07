@@ -14,7 +14,15 @@
 #listHit{
     margin-left:auto;
 }
-
+#th-title{
+    width: 40%;
+}
+#td-title{
+    text-align: left;
+}
 #list{
     cursor: pointer;
+}
+.container{
+    max-width: 66%;
 }

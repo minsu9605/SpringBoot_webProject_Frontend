@@ -56,11 +56,9 @@ public class BoardController {
 
     @GetMapping("/board/content")
     public String boardContent(Model model, @RequestParam(required = false) Long id){
+        boardService.boardHitUpdate(id);
         BoardDto boardForm = boardService.boardContent(id);
         model.addAttribute("boardForm",boardForm);
-        System.out.println("-------------------------");
-        System.out.println("수정날짜"+boardForm.getUpdatedDate());
-        System.out.println("-------------------------");
         return "board/boardcontent";
     }
 
