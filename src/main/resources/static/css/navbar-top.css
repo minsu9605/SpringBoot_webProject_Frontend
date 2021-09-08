@@ -9,6 +9,9 @@ body {
 .bg-dark{
     height : 60px;
 }
+.navbar{
+    position: sticky;
+}
 .navbar-brand{
     font-size : 2rem;
     margin-right: 3rem;
@@ -19,4 +22,5 @@ body {
 
 .navbar-expand-md .navbar-nav{
     font-size: 1.5rem;
+    position: sticky;
 }

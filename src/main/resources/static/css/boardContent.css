@@ -1,3 +1,8 @@
 .contentTop{
+    display: inline;
     background-color: whitesmoke;
+}
+
+.main-wrapper{
+    margin-top: 5%;
 }

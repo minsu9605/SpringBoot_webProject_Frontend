@@ -6,19 +6,11 @@ import com.example.CUSHProject.entity.BoardEntity;
 import com.example.CUSHProject.service.BoardService;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
-import org.apache.commons.io.FileUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.UUID;
 
 @Controller
 @AllArgsConstructor

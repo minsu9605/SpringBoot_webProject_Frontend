@@ -24,5 +24,13 @@
     cursor: pointer;
 }
 .container{
-    max-width: 66%;
+    max-width: 85%;
 }
+
+#page-wrapper {
+    padding-left: 233px;
+}
+ .main-wrapper{
+     margin-top: 5%;
+     margin-left: 12%;
+ }
