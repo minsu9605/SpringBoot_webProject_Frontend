@@ -6,6 +6,7 @@ import com.example.CUSHProject.entity.MemberEntity;
 import com.example.CUSHProject.enums.Role;
 import com.example.CUSHProject.repository.MemberQueryRepository;
 import com.example.CUSHProject.repository.MemberRepository;
+import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

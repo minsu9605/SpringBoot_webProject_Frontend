@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta charset="utf-8">
     <title>회원가입</title>
@@ -7,8 +7,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link th:href="@{/css/signin.css}" rel="stylesheet">
     <link th:href="@{/css/birth.css}" rel="stylesheet">
-</head>
 
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
 
 <body class="text-center">
 <form name="registerForm" class="form-signin" th:action="@{/account/register}" method="post" th:object="${register}" onsubmit="return checkAll();">
@@ -94,7 +97,7 @@
     </div>
 
 </form>
-<script type="text/javascript" th:src="@{/js/register.js}"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script type="text/javascript" src="/js/register.js"></script>
 </body>
 </html>

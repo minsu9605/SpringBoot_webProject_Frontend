@@ -41,7 +41,6 @@ public class MemberController {
         if(!url.contains("/account/login")) {
             request.getSession().setAttribute("prevPage",request.getHeader("Referer"));
         }
-
         return "account/login";
     }
 

@@ -33,7 +33,7 @@
         </div>
 
         <label class="mb-3 form-label" for="birth">생년월일</label>
-        <div class="mb-3" id="birth" onchange="checkAge()">
+        <div class="mb-3" id="birth" onchange="checkAgeModify()">
             <div class="birth dropdown">
                 <select  class="form-control" id="year" name="year">
                     <option th:value="*{year}" th:text="*{year}" selected></option>
@@ -88,7 +88,6 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/modify.js}"></script>
-    <script type="text/javascript" th:src="@{/js/register.js}"></script>
     <script type="text/javascript" th:src="@{/js/calAge.js}"></script>
 
 </body>

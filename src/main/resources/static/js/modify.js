@@ -20,6 +20,27 @@ function withdrawalSubmit() {
 
 }
 
+function checkAgeModify() {
+    const birth_check_msg = $("#birth_check_msg");
+    if ($("#year").val() == "") {
+        birth_check_msg.html("태어난 년도를 선택해주세요");
+        birth_check_msg.css("color", "red");
+        return false;
+    } else if ($("#month").val() == "") {
+        birth_check_msg.html("태어난 월을 선택해주세요");
+        birth_check_msg.css("color", "red");
+        return false;
+    } else if ($("#day").val() == "") {
+        birth_check_msg.html("태어난 날짜(일)를 선택해주세요");
+        birth_check_msg.css("color", "red");
+        return false;
+    } else {
+        birth_check_msg.html("");
+    }
+    return true;
+}
+
+
 function modifyCheckAll(){
     if(username.val()==""){
         alert("아이디를 입력해주세요!. 필수항목입니다.");
@@ -51,6 +72,7 @@ function nicknameModify(){
         data : {"id" : id.val(), "nickname" : nickname.val()},
         dataType : "JSON",
         success : function(result){
+            console.log("리턴 결과:" + result.result);
             if(result.result == "0"){
                 $('.nickname_ok').css({"display" : "inline-block","color" : "blue"});
                 $('.nickname_already').css("display", "none");

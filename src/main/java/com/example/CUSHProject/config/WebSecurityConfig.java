@@ -3,6 +3,7 @@ package com.example.CUSHProject.config;
 import com.example.CUSHProject.service.MemberLoginFailService;
 import com.example.CUSHProject.service.MemberLoginSuccessService;
 import com.example.CUSHProject.service.MemberService;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -19,9 +20,10 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 
 @Configuration
 @EnableWebSecurity
+@AllArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private MemberService memberService;
+    private final MemberService memberService;
 
     @Bean
     public AuthenticationFailureHandler failureHandler() {
@@ -31,11 +33,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationSuccessHandler successHandler() {
         return new MemberLoginSuccessService();
     }
-
-    public WebSecurityConfig(MemberService memberService){
-        this.memberService = memberService;
-    }
-
 
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -52,13 +49,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/","/welcome","/account/register","/login","/board/list").permitAll()
+                    .antMatchers("/","/welcome","/account/register","/login","/board/list","/overlap/**").permitAll()
                     .antMatchers("/admin/**").hasRole("ADMIN")
                     //.antMatchers("/hello").hasRole("MEMBER")
                     .anyRequest().authenticated()
                     .and()
                 .csrf()
-                    .ignoringAntMatchers("/usernameOverlap")
                     .ignoringAntMatchers("/nicknameOverlap")
                     .ignoringAntMatchers("/nicknameModify")
                     .ignoringAntMatchers("/usernameModify")
