@@ -1,9 +1,13 @@
 package com.example.CUSHProject.controller;
 
 import com.example.CUSHProject.Pagination.Paging;
+import com.example.CUSHProject.dto.BoardCategoryDto;
 import com.example.CUSHProject.dto.BoardDto;
+import com.example.CUSHProject.entity.BoardCategoryEntity;
 import com.example.CUSHProject.entity.BoardEntity;
+import com.example.CUSHProject.repository.BoardCategoryRepository;
 import com.example.CUSHProject.service.BoardService;
+import com.example.CUSHProject.service.CategoryService;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,11 +16,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Controller
 @AllArgsConstructor
 public class BoardController {
 
     private final BoardService boardService;
+    private final CategoryService categoryService;
+
 
     @GetMapping("/board/list")
     public String boardList(Model model,
@@ -35,8 +43,10 @@ public class BoardController {
     //글쓰기
     @GetMapping("/board/write")
     public String boardWrite(Model model) {
-        BoardDto boardForm = boardService.boardFormWrite();
+        BoardDto boardForm = new BoardDto();
+        List<BoardCategoryDto> categoryList = categoryService.getCategory();
         model.addAttribute("boardForm",boardForm);
+        model.addAttribute("categoryList",categoryList);
         return "board/boardform";
     }
 

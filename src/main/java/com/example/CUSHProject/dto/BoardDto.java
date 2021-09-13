@@ -1,7 +1,6 @@
 package com.example.CUSHProject.dto;
 
 import com.example.CUSHProject.entity.BoardEntity;
-import com.example.CUSHProject.enums.HairType;
 import com.example.CUSHProject.enums.Rating;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +24,7 @@ public class BoardDto {
     private LocalDateTime updatedDate;
     private int hit;
     private Rating rating;
-    private HairType hairType;
+    private Long categoryId;
 
     public BoardEntity toEntity() {
         return BoardEntity.builder()
@@ -37,12 +36,11 @@ public class BoardDto {
                 .updatedDate(updatedDate)
                 .hit(hit)
                 .rating(rating)
-                .hairType(hairType)
                 .build();
     }
 
     @Builder
-    public BoardDto(Long id, String writer, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate,int hit, Rating rating, HairType hairType) {
+    public BoardDto(Long id, String writer, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate,int hit, Rating rating, Long categoryId) {
         this.id=id;
         this.writer=writer;
         this.title=title;
@@ -51,6 +49,6 @@ public class BoardDto {
         this.updatedDate=updatedDate;
         this.hit=hit;
         this.rating=rating;
-        this.hairType=hairType;
+        this.categoryId=categoryId;
     }
 }

@@ -22,12 +22,12 @@
         </div>
         <hr>
         <div class="mb-3" id="dropDown">
-            <div class="dropdown" id="divHairType">
-                <label class="form-label" for="hairType">종류</label>
-                <select class="form-control" id="hairType" name="hairType">
-                    <option th:each="hairTypeValue : ${T(com.example.CUSHProject.enums.HairType).values()}"
-                            th:value="${hairTypeValue.value}"
-                            th:text="${hairTypeValue.title}">
+            <div class="dropdown" id="divCategory">
+                <label class="form-label" for="categoryId">종류</label>
+                <select class="form-control" id="categoryId" name="categoryId">
+                    <option th:each="category : ${categoryList}"
+                            th:value="${category.id}"
+                            th:text="${category.name}">
                     </option>
                 </select>
             </div>

@@ -1,6 +1,5 @@
 package com.example.CUSHProject.entity;
 
-import com.example.CUSHProject.enums.HairType;
 import com.example.CUSHProject.enums.Rating;
 import lombok.Builder;
 import lombok.Getter;
@@ -50,12 +49,16 @@ public class BoardEntity{
     @Column(name = "RATING")
     private Rating rating;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "HAIRTYPE")
-    private HairType hairType;
+    @ManyToOne
+    @JoinColumn(name = "CATEGORY_ID")
+    private BoardCategoryEntity category;
+
+    public void setCategory(BoardCategoryEntity category){
+        this.category=category;
+    }
 
     @Builder
-    public BoardEntity(Long id, String writer, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate,int hit, Rating rating, HairType hairType) {
+    public BoardEntity(Long id, String writer, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate,int hit, Rating rating) {
         this.id = id;
         this.writer = writer;
         this.title = title;
@@ -64,6 +67,5 @@ public class BoardEntity{
         this.updatedDate = updatedDate;
         this.hit = hit;
         this.rating = rating;
-        this.hairType= hairType;
     }
 }
