@@ -67,7 +67,9 @@ public class BoardController {
     @GetMapping("/board/modify")
     public String boardModify(Model model, @RequestParam(required = false) Long id){
         BoardDto boardForm = boardService.boardContent(id);
+        List<BoardCategoryDto> categoryList = categoryService.getCategory();
         model.addAttribute("boardForm",boardForm);
+        model.addAttribute("categoryList",categoryList);
         return "board/boardmodify";
     }
 

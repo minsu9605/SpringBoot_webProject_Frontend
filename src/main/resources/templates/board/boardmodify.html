@@ -21,19 +21,21 @@
             <input id="createdDate" name="createdDate" th:value="${#temporals.format(boardForm.createdDate, 'yyyy-MM-dd HH:mm')}" readonly>
             <b class="form-label" for="updatedDate">마지막 수정 날짜</b>
             <input id="updatedDate" name="updatedDate" th:value="${#temporals.format(boardForm.updatedDate, 'yyyy-MM-dd HH:mm')}" readonly>
+            <b for="hit">조회수</b>
+            <input id="hit" name="hit" th:value="${boardForm.hit}" readonly>
         </div>
         <hr>
         <div class="mb-3" id="dropDown">
-            <!--<div class="dropdown" id="divHairType">
-                <label class="form-label" for="hairType">종류</label>
-                <select class="form-control" id="hairType" name="hairType">
-                    <option th:each="hairTypeValue : ${T(com.example.CUSHProject.enums.HairType).values()}"
-                            th:value="${hairTypeValue.value}"
-                            th:text="${hairTypeValue.title}"
-                            th:selected="${hairTypeValue.title} == ${boardForm.hairType.title}">
+            <div class="dropdown" id="divCategory">
+                <label class="form-label" for="categoryId">종류</label>
+                <select class="form-control" id="categoryId" name="categoryId">
+                    <option th:each="category : ${categoryList}"
+                            th:value="${category.id}"
+                            th:text="${category.name}"
+                            th:selected="${category.name} == ${boardForm.categoryId}">
                     </option>
                 </select>
-            </div>-->
+            </div>
 
             <div class="dropdown" id="divRating">
                 <label class="form-label" for="rating">평점</label>

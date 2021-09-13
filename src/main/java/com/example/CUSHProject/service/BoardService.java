@@ -99,11 +99,17 @@ public class BoardService {
     /*보드 수정 후 전송*/
     @Transactional
     public BoardEntity boardModifySave(BoardDto boardDto) {
+        Optional<BoardCategoryEntity> boardCategoryEntity = boardCategoryRepository.findById(boardDto.getCategoryId());
+
         boardDto.setUpdatedDate(LocalDateTime.now());
-        return boardRepository.save(boardDto.toEntity());
+
+        BoardEntity boardEntity = boardDto.toEntity();
+        boardEntity.setCategory(boardCategoryEntity.get());
+        System.out.println("카테고리 dto :  " + boardDto.getCategoryId());
+        return boardRepository.save(boardEntity);
     }
 
-    /*이미지 첨부*/
+    /*summernote 이미지 첨부*/
     public JsonObject boardImageUpload(MultipartFile multipartFile){
         JsonObject jsonObject = new JsonObject();
 
