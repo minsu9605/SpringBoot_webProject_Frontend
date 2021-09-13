@@ -105,7 +105,7 @@ public class BoardService {
 
         BoardEntity boardEntity = boardDto.toEntity();
         boardEntity.setCategory(boardCategoryEntity.get());
-        System.out.println("카테고리 dto :  " + boardDto.getCategoryId());
+
         return boardRepository.save(boardEntity);
     }
 
