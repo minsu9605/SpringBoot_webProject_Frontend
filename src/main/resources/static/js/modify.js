@@ -5,18 +5,23 @@ let nicknameCheck = 1;
 let usernameCheck = 1;
 
 function withdrawalSubmit() {
-    $.ajax({
-        type :"post",
-        url :"/admin/withdrawal",
-        data : {"id" : id.val()},
-        dataType : "JSON",
-        success : function(){
-            alert("회원 탈퇴가 완료되었습니다.")
-        },
-        error : function(){
-            alert("ajax 실행 실패");
-        }
-    });
+    if(!confirm("탈퇴처리 하시겠습니까?")){
+        return false;
+    }else {
+        $.ajax({
+            type: "delete",
+            url: "/admin/withdrawal",
+            data: {"id": id.val()},
+            success: function () {
+                    alert("회원 탈퇴처리가 완료되었습니다.");
+            },
+            error: function (request, status, error) {
+                alert("ajax 실행 실패");
+                alert("code:" + request.status + "\n" + "error :" + error);
+
+            }
+        });
+    }
 
 }
 

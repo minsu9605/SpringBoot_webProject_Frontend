@@ -85,5 +85,13 @@ public class BoardController {
         return boardService.boardImageUpload(multipartFile);
     }
 
+    @ResponseBody
+    @DeleteMapping("/board/delete")
+    public Long boardDelete(@RequestParam(required = false)Long id) {
+        System.out.println("받아온 id값 : " + id);
+        boardService.boardDelete(id);
+        return id;
+    }
+
 
 }

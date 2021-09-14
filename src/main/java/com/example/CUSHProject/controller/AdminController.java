@@ -11,10 +11,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -56,9 +53,9 @@ public class AdminController {
 
     //회원탈퇴
     @ResponseBody
-    @PostMapping("/admin/withdrawal")
-    public String withdrawalMember(@RequestParam(required = false) Long id) {
+    @DeleteMapping("/admin/withdrawal")
+    public Long withdrawalMember(@RequestParam(required = false) Long id) {
         memberService.deleteUser(id);
-        return "admin/memberlist";
+        return id;
     }
 }

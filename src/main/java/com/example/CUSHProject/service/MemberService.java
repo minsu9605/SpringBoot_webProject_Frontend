@@ -138,7 +138,7 @@ public class MemberService implements UserDetailsService {
 
     //멤버 탈퇴
     public void deleteUser(Long id) {
-        memberQueryRepository.memberDelete(id);
+        memberRepository.deleteById(id);
     }
 
     //email 중복 검사

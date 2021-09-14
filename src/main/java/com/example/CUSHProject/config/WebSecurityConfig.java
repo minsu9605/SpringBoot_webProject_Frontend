@@ -56,6 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                 .csrf()
                     .ignoringAntMatchers("/nicknameOverlap")
+                    .ignoringAntMatchers("/board/delete")
                     .ignoringAntMatchers("/nicknameModify")
                     .ignoringAntMatchers("/usernameModify")
                     .ignoringAntMatchers("/pwCheck")

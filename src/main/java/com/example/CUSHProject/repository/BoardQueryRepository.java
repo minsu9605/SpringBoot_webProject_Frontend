@@ -2,6 +2,7 @@ package com.example.CUSHProject.repository;
 
 import com.example.CUSHProject.entity.BoardEntity;
 import com.example.CUSHProject.entity.QBoardEntity;
+import com.example.CUSHProject.entity.QMemberEntity;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -33,4 +34,13 @@ public class BoardQueryRepository{
                 .where(QBoardEntity.boardEntity.id.eq(id))
                 .execute();
     }
+
+    /*게시물 삭제*/
+    @Transactional
+    public void boardDeleteById(Long id) {
+        queryFactory.delete(QBoardEntity.boardEntity)
+                .where(QBoardEntity.boardEntity.id.eq(id))
+                .execute();
+    }
+
 }

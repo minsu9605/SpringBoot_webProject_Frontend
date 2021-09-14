@@ -109,6 +109,11 @@ public class BoardService {
         return boardRepository.save(boardEntity);
     }
 
+    /*게시판 삭제*/
+    public void boardDelete(Long id) {
+        boardRepository.deleteById(id);
+    }
+
     /*summernote 이미지 첨부*/
     public JsonObject boardImageUpload(MultipartFile multipartFile){
         JsonObject jsonObject = new JsonObject();

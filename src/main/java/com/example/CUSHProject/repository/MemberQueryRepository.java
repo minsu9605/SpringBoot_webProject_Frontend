@@ -45,13 +45,6 @@ public class MemberQueryRepository {
     }
 
     @Transactional
-    public void memberDelete(Long id) {
-        queryFactory.delete(QMemberEntity.memberEntity)
-                .where(QMemberEntity.memberEntity.id.eq(id))
-                .execute();
-    }
-
-    @Transactional
     public void updateMemberInfo(MemberDto memberDto) {
         queryFactory.update(QMemberEntity.memberEntity)
                 .set(QMemberEntity.memberEntity.id, memberDto.getId())

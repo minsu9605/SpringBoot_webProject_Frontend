@@ -11,7 +11,7 @@
 .ck-content {
     height: 300px;
 }
-#createdDate, #updatedDate{
+#createdDate, #updatedDate, #hit{
     background-color: transparent;
     border: 0px;
 }
