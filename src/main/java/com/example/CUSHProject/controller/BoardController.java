@@ -59,14 +59,19 @@ public class BoardController {
     @GetMapping("/board/content")
     public String boardContent(Model model, @RequestParam(required = false) Long id){
         boardService.boardHitUpdate(id);
+
         BoardDto boardForm = boardService.boardContent(id);
+        String categoryName = categoryService.findCategoryById(boardForm.getCategoryId());
+
         model.addAttribute("boardForm",boardForm);
+        model.addAttribute("categoryName",categoryName);
         return "board/boardcontent";
     }
 
     @GetMapping("/board/modify")
     public String boardModify(Model model, @RequestParam(required = false) Long id){
         BoardDto boardForm = boardService.boardContent(id);
+
         List<BoardCategoryDto> categoryList = categoryService.getCategory();
         model.addAttribute("boardForm",boardForm);
         model.addAttribute("categoryList",categoryList);
