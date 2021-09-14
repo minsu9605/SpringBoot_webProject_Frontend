@@ -49,6 +49,7 @@ public class MemberLoginSuccessService implements AuthenticationSuccessHandler {
         MemberDto memberDto = memberService.memberInfo(authentication.getName());
         HttpSession session = request.getSession(false);
         session.setAttribute("memberId",memberDto.getId());
+        session.setAttribute("memberUsername",memberDto.getUsername());
         session.setAttribute("memberNickname",memberDto.getNickname());
         session.setAttribute("memberGender",memberDto.getGender());
         session.setAttribute("memberAge",memberDto.toEntity().getAge());

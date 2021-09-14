@@ -5,9 +5,11 @@ import com.example.CUSHProject.dto.BoardCategoryDto;
 import com.example.CUSHProject.dto.BoardDto;
 import com.example.CUSHProject.entity.BoardCategoryEntity;
 import com.example.CUSHProject.entity.BoardEntity;
+import com.example.CUSHProject.entity.MemberEntity;
 import com.example.CUSHProject.repository.BoardCategoryRepository;
 import com.example.CUSHProject.repository.BoardQueryRepository;
 import com.example.CUSHProject.repository.BoardRepository;
+import com.example.CUSHProject.repository.MemberRepository;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import org.apache.commons.io.FileUtils;
@@ -29,6 +31,7 @@ import java.util.UUID;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final MemberRepository memberRepository;
     private final BoardQueryRepository boardQueryRepository;
     private final BoardCategoryRepository boardCategoryRepository;
     private final Paging paging;
@@ -62,7 +65,7 @@ public class BoardService {
         }
         BoardDto boardDto = BoardDto.builder()
                 .id(boardEntity.getId())
-                .writer(boardEntity.getWriter())
+                .writer(boardEntity.getWriter().getNickname())
                 .title(boardEntity.getTitle())
                 .content(boardEntity.getContent())
                 .createdDate(boardEntity.getCreatedDate())
@@ -84,15 +87,17 @@ public class BoardService {
 
     /*게시글 등록 후 전송*/
     @Transactional
-    public BoardEntity boardWrite(BoardDto boardDto) {
+    public BoardEntity boardWrite(BoardDto boardDto, String username) {
 
         Optional<BoardCategoryEntity> boardCategoryEntity = boardCategoryRepository.findById(boardDto.getCategoryId());
+        Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
 
         boardDto.setCreatedDate(LocalDateTime.now());
         boardDto.setUpdatedDate(LocalDateTime.now());
 
         BoardEntity boardEntity = boardDto.toEntity();
         boardEntity.setCategory(boardCategoryEntity.get());
+        boardEntity.setWriter(memberEntity.get());
         return boardRepository.save(boardEntity);
     }
 

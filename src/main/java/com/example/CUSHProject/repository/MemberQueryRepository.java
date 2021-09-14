@@ -44,6 +44,7 @@ public class MemberQueryRepository {
                 .fetchCount();
     }
 
+    /*회원정보 수정*/
     @Transactional
     public void updateMemberInfo(MemberDto memberDto) {
         queryFactory.update(QMemberEntity.memberEntity)

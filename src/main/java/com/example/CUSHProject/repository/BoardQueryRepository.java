@@ -20,7 +20,7 @@ public class BoardQueryRepository{
         return queryFactory.selectFrom(QBoardEntity.boardEntity)
                 .where(QBoardEntity.boardEntity.title.contains(keyword)
                         .or(QBoardEntity.boardEntity.content.contains(keyword))
-                        .or(QBoardEntity.boardEntity.writer.contains(keyword))
+                        .or(QBoardEntity.boardEntity.writer.nickname.contains(keyword))
                 )
                 .fetchCount();
     }

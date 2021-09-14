@@ -29,7 +29,6 @@ public class BoardDto {
     public BoardEntity toEntity() {
         return BoardEntity.builder()
                 .id(id)
-                .writer(writer)
                 .title(title)
                 .content(content)
                 .createdDate(createdDate)

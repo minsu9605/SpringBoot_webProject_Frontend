@@ -105,6 +105,7 @@ public class MemberService implements UserDetailsService {
     }
 
     public void memberUpdate(MemberDto memberDto) {
+        System.out.println("확인 : " +memberDto.getGender());
         memberQueryRepository.updateMemberInfo(memberDto);
     }
 

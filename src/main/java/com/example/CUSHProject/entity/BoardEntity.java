@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.lang.reflect.Member;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -25,8 +26,9 @@ public class BoardEntity{
     @Column(name = "BOARD_ID")
     private Long id;
 
-    @Column(name = "WRITER")
-    private String writer;
+    @ManyToOne
+    @JoinColumn(name = "Board_WRITER")
+    private MemberEntity writer;
 
     @Column(name = "TITLE")
     private String title;
@@ -56,11 +58,12 @@ public class BoardEntity{
     public void setCategory(BoardCategoryEntity category){
         this.category=category;
     }
-
+    public void setWriter(MemberEntity memberEntity){
+        this.writer=memberEntity;
+    }
     @Builder
-    public BoardEntity(Long id, String writer, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate,int hit, Rating rating) {
+    public BoardEntity(Long id, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate,int hit, Rating rating) {
         this.id = id;
-        this.writer = writer;
         this.title = title;
         this.content = content;
         this.createdDate = createdDate;

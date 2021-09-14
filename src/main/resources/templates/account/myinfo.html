@@ -73,7 +73,8 @@
 
         <div class="mb-3">
             <label th:for="gender">성별</label>
-            <input type="text" class="form-control" th:field="*{gender.title}" th:readonly="readonly" >
+            <input type="text" class="form-control" id="gender" name="gender" th:value="*{gender.value}" hidden >
+            <input type="text" class="form-control"  th:value="*{gender.title}" readonly>
         </div>
 
         <div class="mb-3">

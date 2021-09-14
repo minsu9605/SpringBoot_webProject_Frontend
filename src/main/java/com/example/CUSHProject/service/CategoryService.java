@@ -17,7 +17,6 @@ import java.util.Optional;
 public class CategoryService {
 
     private final BoardCategoryRepository boardCategoryRepository;
-    private final BoardService boardService;
 
     public List<BoardCategoryDto> getCategory() {
         List<BoardCategoryEntity> boardCategoryRepositoryAll = boardCategoryRepository.findAll();

@@ -11,6 +11,7 @@ import com.example.CUSHProject.service.CategoryService;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -51,8 +52,9 @@ public class BoardController {
     }
 
     @PostMapping("/board/write")
-    public String boardWrite(BoardDto boardDto){
-        boardService.boardWrite(boardDto);
+    public String boardWrite(BoardDto boardDto, Authentication authentication){
+        System.out.println("컨 확인: " + authentication.getName());
+        boardService.boardWrite(boardDto, authentication.getName());
         return "redirect:/board/list";
     }
 
