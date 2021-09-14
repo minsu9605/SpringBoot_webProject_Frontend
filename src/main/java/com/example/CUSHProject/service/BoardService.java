@@ -109,7 +109,7 @@ public class BoardService {
         return boardRepository.save(boardEntity);
     }
 
-    /*게시판 삭제*/
+    /*게시글 삭제*/
     public void boardDelete(Long id) {
         boardRepository.deleteById(id);
     }

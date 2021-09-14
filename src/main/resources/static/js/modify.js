@@ -13,7 +13,9 @@ function withdrawalSubmit() {
             url: "/admin/withdrawal",
             data: {"id": id.val()},
             success: function () {
-                    alert("회원 탈퇴처리가 완료되었습니다.");
+                alert("회원 탈퇴처리가 완료되었습니다.");
+                window.location.href='/admin';
+
             },
             error: function (request, status, error) {
                 alert("ajax 실행 실패");
