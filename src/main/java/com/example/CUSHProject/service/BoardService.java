@@ -103,13 +103,15 @@ public class BoardService {
 
     /*보드 수정 후 전송*/
     @Transactional
-    public BoardEntity boardModifySave(BoardDto boardDto) {
+    public BoardEntity boardModifySave(BoardDto boardDto, String username) {
         Optional<BoardCategoryEntity> boardCategoryEntity = boardCategoryRepository.findById(boardDto.getCategoryId());
+        Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
 
         boardDto.setUpdatedDate(LocalDateTime.now());
 
         BoardEntity boardEntity = boardDto.toEntity();
         boardEntity.setCategory(boardCategoryEntity.get());
+        boardEntity.setWriter(memberEntity.get());
 
         return boardRepository.save(boardEntity);
     }

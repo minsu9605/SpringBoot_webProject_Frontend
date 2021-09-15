@@ -53,7 +53,6 @@ public class BoardController {
 
     @PostMapping("/board/write")
     public String boardWrite(BoardDto boardDto, Authentication authentication){
-        System.out.println("컨 확인: " + authentication.getName());
         boardService.boardWrite(boardDto, authentication.getName());
         return "redirect:/board/list";
     }
@@ -81,8 +80,8 @@ public class BoardController {
     }
 
     @PostMapping("/board/modify")
-    public String boardModify(BoardDto boardDto){
-        boardService.boardModifySave(boardDto);
+    public String boardModify(BoardDto boardDto, Authentication authentication){
+        boardService.boardModifySave(boardDto, authentication.getName());
         return "redirect:/board/list";
     }
 
