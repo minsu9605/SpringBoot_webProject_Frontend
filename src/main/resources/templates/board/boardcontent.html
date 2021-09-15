@@ -3,6 +3,7 @@
 
 <head th:replace="fragments/common :: head('게시판')"></head>
 <link th:href="@{/css/boardContent.css}" rel="stylesheet">
+<link th:href="@{/css/comment.css}" rel="stylesheet">
 
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4" th:replace="fragments/common :: menu('board')"></nav>
@@ -30,13 +31,30 @@
 
     <hr>
 
-    <div class="text-end">
-        <a type="button" class="btn btn-secondary" th:href="@{/board/list}">목록</a>
+    <div class="text-end mb-3">
+        <a type="button" class="btn btn-secondary" th:href="@{/board/list}">게시글 목록</a>
         <a class="btn btn-primary" id="modify" th:if="${boardForm.writer.equals(session.memberNickname)}" th:href="@{/board/modify(id=${boardForm.id})}">수정</a>
+    </div>
+
+    <form id="commentForm" name="commentForm" method="post">
+        <input type="hidden" id="bid" name="bid" th:value="${boardForm.id}"/>
+        <div id="comment-count">
+            <span><strong>댓글</strong></span> <span id="count">0</span>
+        </div>
+        <input id="comment-input" name="content" onclick="commentPost()" placeholder="댓글을 입력해 주세요.">
+        <button class="btn btn-primary" id="submit">등록</button>
+    </form>
+
+    <div class="container">
+        <form id="commentListForm" name="commentListForm" method="post">
+            <div id="commentList">
+            </div>
+        </form>
     </div>
 </div>
 <script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" th:src="@{/js/boardcontent.js}"></script>
+<script type="text/javascript" th:src="@{/js/comment.js}"></script>
 </body>
 </html>

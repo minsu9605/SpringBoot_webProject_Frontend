@@ -2,19 +2,15 @@ package com.example.CUSHProject.controller;
 
 import com.example.CUSHProject.Pagination.Paging;
 import com.example.CUSHProject.dto.MemberDto;
+import com.example.CUSHProject.entity.BoardEntity;
 import com.example.CUSHProject.entity.MemberEntity;
+import com.example.CUSHProject.service.BoardService;
 import com.example.CUSHProject.service.MemberService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -58,4 +54,7 @@ public class AdminController {
         memberService.deleteUser(id);
         return id;
     }
+
+
+
 }

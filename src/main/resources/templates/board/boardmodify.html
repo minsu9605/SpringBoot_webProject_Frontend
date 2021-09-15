@@ -1,17 +1,19 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="fragments/common :: head('게시판')"></head>
 
+<link th:href="@{/css/summernote/summernote-lite.css}" rel="stylesheet">
 <link th:href="@{/css/boardModify.css}" rel="stylesheet">
 
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4" th:replace="fragments/common :: menu('board')"></nav>
 
 <div class="container">
-    <h1>리뷰 게시판</h1>
+    <h1>게시글 수정</h1>
     <form th:action="@{/board/modify}" method="post">
         <input type="hidden" th:field="${boardForm.id}"/>
+
         <div class="mb-3 inline-container">
             <b class="form-label" for="writer">작성자</b>
             <input class="form-control-plaintext" id="writer" name="writer" th:value="${boardForm.writer}" readonly>
@@ -25,6 +27,7 @@
             <input id="hit" name="hit" th:value="${boardForm.hit}" readonly>
         </div>
         <hr>
+
         <div class="mb-3" id="dropDown">
             <div class="dropdown" id="divCategory">
                 <label class="form-label" for="categoryId">종류</label>
@@ -38,7 +41,7 @@
             </div>
 
             <div class="dropdown" id="divRating">
-                <label class="form-label" for="rating">평점</label>
+                <label class="form-label" for="rating">상태</label>
                 <select class="form-control" id="rating" name="rating">
                     <option th:each="ratingValue : ${T(com.example.CUSHProject.enums.Rating).values()}"
                             th:value="${ratingValue.value}"
@@ -49,24 +52,31 @@
             </div>
         </div>
 
+        <div class="form-check" id="divNotice" sec:authorize="hasRole('ROLE_ADMIN')">
+            <input class="form-check-input" type="checkbox" value="1" id="notice" name="notice" th:checked="${boardForm.notice == 1}">
+            <label class="form-check-label" for="notice">공지사항</label>
+        </div>
+
+
         <div class="mb-3" id="divTitle">
-            <label class="form-label" for="title">제목</label>
+            <label class="form-label" for="title"></label>
             <input type="text" class="form-control" id="title" name="title" th:value="${boardForm.title}" placeholder="제목을 작성해 주세요.">
         </div>
 
         <div class="mb-3" id="divContent">
-            <label class="form-label" for="content">글내용</label>
+            <label class="form-label" for="content"></label>
             <textarea class="form-control" id="content" name="content" th:text="${boardForm.content}" placeholder="내용을 작성해 주세요."></textarea>
         </div>
 
         <div class="text-end">
             <a type="button" class="btn btn-secondary" th:href="@{/board/list}">목록</a>
-            <button type="button" class="btn btn-danger" id="boardDelete" >삭제</button>
+            <button type="button" class="btn btn-danger" id="boardDelete">삭제</button>
             <button type="submit" class="btn btn-primary">제출</button>
         </div>
     </form>
 </div>
-<script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
+<script type="text/javascript" th:src="@{/js/summernote/summernote-ko-KR.js}"></script>
+<script type="text/javascript" th:src="@{/js/summernote/summernote-lite.js}" defer></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" th:src="@{/js/boardModify.js}"></script>
 </body>

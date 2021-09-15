@@ -11,9 +11,9 @@ import java.util.Optional;
 
 @Repository
 public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
-    Page<BoardEntity> findByContentContaining(String keyword, Pageable pageable);
-    Page<BoardEntity> findByTitleContaining(String keyword, Pageable pageable);
-    Page<BoardEntity> findByWriterContaining(String keyword, Pageable pageable);
+    Page<BoardEntity> findByNoticeAndContentContaining(int notice, String keyword, Pageable pageable);
+    Page<BoardEntity> findByNoticeAndTitleContaining(int notice, String keyword, Pageable pageable);
+    Page<BoardEntity> findByNoticeAndWriterContaining(int notice, String keyword, Pageable pageable);
 
 
 }

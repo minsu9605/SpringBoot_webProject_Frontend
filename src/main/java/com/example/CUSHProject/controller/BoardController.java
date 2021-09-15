@@ -32,9 +32,10 @@ public class BoardController {
                             @RequestParam(value ="page", defaultValue = "1") Integer curPageNum,
                             @RequestParam(defaultValue = "title") String searchType,
                             @RequestParam(required = false, defaultValue = "")String keyword) {
+        int notice =0;
         Paging paging = new Paging();
-        Page<BoardEntity> boardList = boardService.boardList(searchType, keyword, curPageNum);
-        double listCnt = boardService.getBoardListCnt(keyword);
+        Page<BoardEntity> boardList = boardService.boardList(searchType, keyword, curPageNum, notice);
+        double listCnt = boardService.getBoardListCnt(keyword,notice);
         paging.pageInfo(curPageNum, listCnt);
         model.addAttribute("boardList",boardList);
         model.addAttribute("paging",paging);
@@ -76,6 +77,10 @@ public class BoardController {
         List<BoardCategoryDto> categoryList = categoryService.getCategory();
         model.addAttribute("boardForm",boardForm);
         model.addAttribute("categoryList",categoryList);
+
+        System.out.println("______________________________");
+        System.out.println("노티스: "+ boardForm.getNotice());
+        System.out.println("______________________________");
         return "board/boardmodify";
     }
 
@@ -97,6 +102,22 @@ public class BoardController {
         System.out.println("받아온 id값 : " + id);
         boardService.boardDelete(id);
         return id;
+    }
+
+    /*공지사항*/
+    @GetMapping("/board/noticeboard")
+    public String noticeList(Model model,
+                            @RequestParam(value ="page", defaultValue = "1") Integer curPageNum,
+                            @RequestParam(defaultValue = "title") String searchType,
+                            @RequestParam(required = false, defaultValue = "")String keyword) {
+        int notice =1;
+        Paging paging = new Paging();
+        Page<BoardEntity> noticeList = boardService.boardList(searchType, keyword, curPageNum,notice);
+        double listCnt = boardService.getBoardListCnt(keyword,notice);
+        paging.pageInfo(curPageNum, listCnt);
+        model.addAttribute("noticeList",noticeList);
+        model.addAttribute("paging",paging);
+        return "board/noticeboard";
     }
 
 

@@ -25,6 +25,7 @@ public class BoardDto {
     private int hit;
     private Rating rating;
     private Long categoryId;
+    private int notice;
 
     public BoardEntity toEntity() {
         return BoardEntity.builder()
@@ -35,11 +36,12 @@ public class BoardDto {
                 .updatedDate(updatedDate)
                 .hit(hit)
                 .rating(rating)
+                .notice(notice)
                 .build();
     }
 
     @Builder
-    public BoardDto(Long id, String writer, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate,int hit, Rating rating, Long categoryId) {
+    public BoardDto(Long id, String writer, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate,int hit, Rating rating, Long categoryId,int notice) {
         this.id=id;
         this.writer=writer;
         this.title=title;
@@ -49,5 +51,6 @@ public class BoardDto {
         this.hit=hit;
         this.rating=rating;
         this.categoryId=categoryId;
+        this.notice=notice;
     }
 }

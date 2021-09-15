@@ -25,7 +25,7 @@ public class BoardCommentEntity {
     @Column(name = "CID")
     private Long id;
 
-    @Column(name = "COMMENT")
+    @Column(name = "CONTENT")
     private String comment;
 
     @Column(name = "CREATEDATE")

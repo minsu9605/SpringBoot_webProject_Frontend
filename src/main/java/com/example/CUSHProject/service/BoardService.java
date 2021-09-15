@@ -1,20 +1,17 @@
 package com.example.CUSHProject.service;
 
 import com.example.CUSHProject.Pagination.Paging;
-import com.example.CUSHProject.dto.BoardCategoryDto;
 import com.example.CUSHProject.dto.BoardDto;
 import com.example.CUSHProject.entity.BoardCategoryEntity;
 import com.example.CUSHProject.entity.BoardEntity;
 import com.example.CUSHProject.entity.MemberEntity;
-import com.example.CUSHProject.repository.BoardCategoryRepository;
-import com.example.CUSHProject.repository.BoardQueryRepository;
-import com.example.CUSHProject.repository.BoardRepository;
-import com.example.CUSHProject.repository.MemberRepository;
+import com.example.CUSHProject.repository.*;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import org.apache.commons.io.FileUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,21 +33,33 @@ public class BoardService {
     private final BoardCategoryRepository boardCategoryRepository;
     private final Paging paging;
 
-    //리스트 페이지
-    public Page<BoardEntity> boardList(String searchType, String keyword, int curPageNum) {
+    /*게시판 리스트 페이지*/
+    public Page<BoardEntity> boardList(String searchType, String keyword, int curPageNum, int notice) {
         Page<BoardEntity> boardEntityPage = null;
-        if(searchType.equals("title")) {
-            boardEntityPage = boardRepository.findByTitleContaining(keyword, PageRequest.of(curPageNum - 1, paging.getRecordPerPage(), Sort.by(Sort.Direction.DESC, "id")));
-        }else if (searchType.equals("content")){
-            boardEntityPage = boardRepository.findByContentContaining(keyword, PageRequest.of(curPageNum - 1, paging.getRecordPerPage(), Sort.by(Sort.Direction.DESC, "id")));
-        }else if(searchType.equals("writer")){
-            boardEntityPage = boardRepository.findByWriterContaining(keyword, PageRequest.of(curPageNum - 1, paging.getRecordPerPage(), Sort.by(Sort.Direction.DESC, "id")));
+        Pageable pageable = PageRequest.of(curPageNum - 1, paging.getRecordPerPage(), Sort.by(Sort.Direction.DESC, "id"));
+        if(notice==0){
+            if(searchType.equals("title")) {
+                boardEntityPage = boardRepository.findByNoticeAndTitleContaining(notice,keyword, pageable);
+            }else if (searchType.equals("content")){
+                boardEntityPage = boardRepository.findByNoticeAndContentContaining(notice,keyword, pageable);
+            }else if(searchType.equals("writer")){
+                boardEntityPage = boardRepository.findByNoticeAndWriterContaining(notice,keyword, pageable);
+            }
+        }else if(notice == 1){
+            if(searchType.equals("title")) {
+                boardEntityPage = boardRepository.findByNoticeAndTitleContaining(notice,keyword, pageable);
+            }else if (searchType.equals("content")){
+                boardEntityPage = boardRepository.findByNoticeAndContentContaining(notice,keyword, pageable);
+            }
         }
+
         return boardEntityPage;
     }
-    //검색된 리스트 갯수
-    public double getBoardListCnt(String keyword) {
-        return boardQueryRepository.findByKeyword(keyword);
+
+
+    /*게시판 리스트 수 */
+    public double getBoardListCnt(String keyword, int notice) {
+        return boardQueryRepository.findByKeyword(keyword, notice);
     }
 
     //보드 글 상세보기
@@ -73,10 +82,8 @@ public class BoardService {
                 .hit(boardEntity.getHit())
                 .rating(boardEntity.getRating())
                 .categoryId(boardEntity.getCategory().getId())
+                .notice(boardEntity.getNotice())
                 .build();
-        System.out.println("-------------------");
-        System.out.println("조회수" + boardEntity.getHit());
-        System.out.println("-------------------");
         return boardDto;
     }
 

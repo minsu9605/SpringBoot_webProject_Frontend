@@ -5,11 +5,8 @@
     display: flex;
 }
 
-#divHairType{
+#divCategory{
     margin-right: 3%;
-}
-.ck-content {
-    height: 300px;
 }
 #createdDate, #updatedDate, #hit{
     background-color: transparent;

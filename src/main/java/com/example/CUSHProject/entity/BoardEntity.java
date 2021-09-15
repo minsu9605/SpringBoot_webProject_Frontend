@@ -47,6 +47,9 @@ public class BoardEntity{
     @Column(name = "HIT")
     private int hit;
 
+    @Column(name = "NOTICE")
+    private int notice;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "RATING")
     private Rating rating;
@@ -62,7 +65,7 @@ public class BoardEntity{
         this.writer=memberEntity;
     }
     @Builder
-    public BoardEntity(Long id, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate,int hit, Rating rating) {
+    public BoardEntity(Long id, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate,int hit, Rating rating, int notice) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -70,5 +73,6 @@ public class BoardEntity{
         this.updatedDate = updatedDate;
         this.hit = hit;
         this.rating = rating;
+        this.notice = notice;
     }
 }

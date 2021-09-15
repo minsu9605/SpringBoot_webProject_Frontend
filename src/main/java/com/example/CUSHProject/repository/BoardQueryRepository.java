@@ -16,12 +16,13 @@ public class BoardQueryRepository{
     private final JPAQueryFactory queryFactory;
 
     //키워드 통해 갯수 찾기
-    public double findByKeyword(String keyword) {
+    public double findByKeyword(String keyword, int notice) {
         return queryFactory.selectFrom(QBoardEntity.boardEntity)
-                .where(QBoardEntity.boardEntity.title.contains(keyword)
+                .where(QBoardEntity.boardEntity.notice.eq(notice)
+                    .and((QBoardEntity.boardEntity.title.contains(keyword))
                         .or(QBoardEntity.boardEntity.content.contains(keyword))
                         .or(QBoardEntity.boardEntity.writer.nickname.contains(keyword))
-                )
+                ))
                 .fetchCount();
     }
 
@@ -43,4 +44,9 @@ public class BoardQueryRepository{
                 .execute();
     }
 
+    public BoardEntity noticeList(){
+        return queryFactory.selectFrom(QBoardEntity.boardEntity)
+                .where(QBoardEntity.boardEntity.notice.eq(1))
+                .fetchOne();
+    }
 }
