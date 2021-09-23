@@ -78,9 +78,6 @@ public class BoardController {
         model.addAttribute("boardForm",boardForm);
         model.addAttribute("categoryList",categoryList);
 
-        System.out.println("______________________________");
-        System.out.println("노티스: "+ boardForm.getNotice());
-        System.out.println("______________________________");
         return "board/boardmodify";
     }
 

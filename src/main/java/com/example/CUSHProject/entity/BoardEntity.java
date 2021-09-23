@@ -1,5 +1,6 @@
 package com.example.CUSHProject.entity;
 
+import com.example.CUSHProject.dto.BoardDto;
 import com.example.CUSHProject.enums.Rating;
 import lombok.Builder;
 import lombok.Getter;
@@ -63,6 +64,21 @@ public class BoardEntity{
     }
     public void setWriter(MemberEntity memberEntity){
         this.writer=memberEntity;
+    }
+
+    public BoardDto toDto() {
+        return BoardDto.builder()
+                .id(id)
+                .title(title)
+                .writer(writer.getNickname())
+                .content(content)
+                .createdDate(createdDate)
+                .updatedDate(updatedDate)
+                .hit(hit)
+                .rating(rating)
+                .categoryId(category.getId())
+                .notice(notice)
+                .build();
     }
     @Builder
     public BoardEntity(Long id, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate,int hit, Rating rating, int notice) {

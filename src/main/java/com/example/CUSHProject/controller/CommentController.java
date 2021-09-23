@@ -1,17 +1,41 @@
 package com.example.CUSHProject.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.CUSHProject.dto.BoardCommentDto;
+import com.example.CUSHProject.entity.BoardCommentEntity;
+import com.example.CUSHProject.service.BoardService;
+import com.example.CUSHProject.service.CommentService;
+import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
-/*@RestController
+import java.util.HashMap;
+import java.util.List;
+
+@RestController
+@AllArgsConstructor
 public class CommentController {
+
+    private final CommentService commentService;
 
     @ResponseBody
     @PostMapping("/comment/post")
-    public int commentPost(@RequestParam int bid, @RequestParam String content)throws Exception{
+    public String commentPost(@RequestParam Long bid, @RequestParam String comment, Authentication authentication)throws Exception {
 
+        BoardCommentDto boardCommentDto = new BoardCommentDto();
+
+        boardCommentDto.setComment(comment);
+        boardCommentDto.setBoardId(bid);
+        commentService.commentPost(boardCommentDto, authentication.getName());
+        return "success";
+    }
+
+    @ResponseBody
+    @GetMapping("/comment/list")
+    public HashMap<String, Object> getCommentList(@RequestParam Long bid)throws Exception{
+        HashMap<String, Object> map = new HashMap<>();
+
+        map.put("list",commentService.getCommentList(bid));
+        return map;
 
     }
-}*/
+}

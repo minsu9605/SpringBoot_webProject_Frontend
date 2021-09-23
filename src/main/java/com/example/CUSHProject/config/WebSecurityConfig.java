@@ -55,6 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .anyRequest().authenticated()
                     .and()
                 .csrf()
+                    .ignoringAntMatchers("/comment/**")
                     .ignoringAntMatchers("/nicknameOverlap")
                     .ignoringAntMatchers("/board/delete")
                     .ignoringAntMatchers("/nicknameModify")

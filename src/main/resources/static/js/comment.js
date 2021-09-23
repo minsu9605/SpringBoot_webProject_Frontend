@@ -1,13 +1,15 @@
+$(function (){
+    getCommentList();
+});
 
 function commentPost() {
     $.ajax({
         type: "post",
         url: "/comment/post",
-        data: {"content":$("#content").val(), "bid" : $("#bid").val()},
+        data: {"comment":$("#comment").val(), "bid" : $("#bid").val()},
         success : function (data) {
-            if(data=="success"){
-                getCommentList();
-                $("#comment-input").val("");
+            if(data == "success"){
+                location.reload();
             }
         },
         error: function (request, status, error) {
@@ -21,16 +23,18 @@ function getCommentList(){
     $.ajax({
         type: "get",
         url: "/comment/list",
-        data: $("#commentForm").serialize(),
+        data: {"bid" : $("#bid").val()},
         success : function (data) {
+            console.log(data.list);
             let html="";
-            const count = data.length;
-            if(data.length>0){
+            const count = data.list.length;
+            if(data.list.length>0){
 
-                for(i=0; i<data.length; i++){
+                for(let i=0; i<data.list.length; i++){
                     html += "<div>";
-                    html += "<div><table class='table'><h6><strong>"+data[i].writer+"</strong></h6>";
-                    html += data[i].comment + "<tr><td></td></tr>";
+                    html += "<div><table class='table'><h6><strong>"+data.list[i].writer+"</strong></h6>";
+                    html += "<h6 class=''>"+data.list[i].createDate+"</h6>";
+                    html += data.list[i].comment + "<tr><td></td></tr>";
                     html += "</table></div>";
                     html += "</div>";
                 }
@@ -45,7 +49,7 @@ function getCommentList(){
             $("#commentList").html(html);
         },
         error: function (request, status, error) {
-            alert("code: " + request.status + "\n" + "error: " + error);
+            alert("code: " + request.status + "\n" + "message" + request.responseText + "\n" + "error: " + error);
         }
 
     });

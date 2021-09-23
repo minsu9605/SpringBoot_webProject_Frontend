@@ -1,5 +1,6 @@
 package com.example.CUSHProject.entity;
 
+import com.example.CUSHProject.dto.BoardCommentDto;
 import com.example.CUSHProject.enums.Rating;
 import lombok.Builder;
 import lombok.Getter;
@@ -46,6 +47,17 @@ public class BoardCommentEntity {
     public void setCommentBoardId(BoardEntity boardEntity){
         this.boardId=boardEntity;
     }
+
+    public BoardCommentDto toDto() {
+        return BoardCommentDto.builder()
+                .id(id)
+                .comment(comment)
+                .createDate(createDate)
+                .writer(writer.getNickname())
+                .boardId(boardId.getId())
+                .build();
+    }
+
 
     @Builder
     public BoardCommentEntity(Long id, String comment, LocalDateTime createDate) {

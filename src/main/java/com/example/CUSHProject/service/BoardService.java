@@ -1,8 +1,10 @@
 package com.example.CUSHProject.service;
 
 import com.example.CUSHProject.Pagination.Paging;
+import com.example.CUSHProject.dto.BoardCommentDto;
 import com.example.CUSHProject.dto.BoardDto;
 import com.example.CUSHProject.entity.BoardCategoryEntity;
+import com.example.CUSHProject.entity.BoardCommentEntity;
 import com.example.CUSHProject.entity.BoardEntity;
 import com.example.CUSHProject.entity.MemberEntity;
 import com.example.CUSHProject.repository.*;
@@ -16,10 +18,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -31,6 +37,7 @@ public class BoardService {
     private final MemberRepository memberRepository;
     private final BoardQueryRepository boardQueryRepository;
     private final BoardCategoryRepository boardCategoryRepository;
+    private final BoardCommentRepository boardCommentRepository;
     private final Paging paging;
 
     /*게시판 리스트 페이지*/
@@ -72,19 +79,8 @@ public class BoardService {
             boardEntity = boardRepository.findById(id).orElse(null);
            // boardHitUpdate(id);
         }
-        BoardDto boardDto = BoardDto.builder()
-                .id(boardEntity.getId())
-                .writer(boardEntity.getWriter().getNickname())
-                .title(boardEntity.getTitle())
-                .content(boardEntity.getContent())
-                .createdDate(boardEntity.getCreatedDate())
-                .updatedDate(boardEntity.getUpdatedDate())
-                .hit(boardEntity.getHit())
-                .rating(boardEntity.getRating())
-                .categoryId(boardEntity.getCategory().getId())
-                .notice(boardEntity.getNotice())
-                .build();
-        return boardDto;
+
+        return boardEntity.toDto();
     }
 
     /*조회수 증가*/
@@ -151,6 +147,8 @@ public class BoardService {
         }
         return jsonObject;
     }
+
+
 
 }
 

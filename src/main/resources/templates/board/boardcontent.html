@@ -25,7 +25,7 @@
     <hr class="mb-2">
     <b>종류</b>
     <span class="mx-2" th:text="${categoryName}"></span>
-    <b>평점</b>
+    <b>상태</b>
     <span th:text="${boardForm.rating.title}"></span>
     <div class="mx-10" id="contentMain" th:utext="${boardForm.content}"></div>
 
@@ -36,19 +36,18 @@
         <a class="btn btn-primary" id="modify" th:if="${boardForm.writer.equals(session.memberNickname)}" th:href="@{/board/modify(id=${boardForm.id})}">수정</a>
     </div>
 
-    <form id="commentForm" name="commentForm" method="post">
+    <form class="mb-3" id="commentForm" name="commentForm" method="post">
         <input type="hidden" id="bid" name="bid" th:value="${boardForm.id}"/>
         <div id="comment-count">
             <span><strong>댓글</strong></span> <span id="count">0</span>
         </div>
-        <input id="comment-input" name="content" onclick="commentPost()" placeholder="댓글을 입력해 주세요.">
-        <button class="btn btn-primary" id="submit">등록</button>
+        <input id="comment" name="comment" placeholder="댓글을 입력해 주세요.">
+        <button class="btn btn-primary" id="submit" onclick="commentPost()">등록</button>
     </form>
 
     <div class="container">
         <form id="commentListForm" name="commentListForm" method="post">
-            <div id="commentList">
-            </div>
+            <div id="commentList"></div>
         </form>
     </div>
 </div>

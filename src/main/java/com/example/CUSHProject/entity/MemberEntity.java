@@ -1,5 +1,6 @@
 package com.example.CUSHProject.entity;
 
+import com.example.CUSHProject.dto.MemberDto;
 import com.example.CUSHProject.enums.Gender;
 import com.example.CUSHProject.enums.Role;
 import lombok.AccessLevel;
@@ -50,6 +51,7 @@ public class MemberEntity {
     @Enumerated(EnumType.STRING)
     @Column
     private Role role;
+
 
     @Builder
     public MemberEntity(Long id, String username, String password, String nickname, Gender gender, String birth, int age, Role role){
