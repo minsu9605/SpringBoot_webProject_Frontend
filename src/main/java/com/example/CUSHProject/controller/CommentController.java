@@ -36,6 +36,20 @@ public class CommentController {
 
         map.put("list",commentService.getCommentList(bid));
         return map;
-
     }
+
+    @ResponseBody
+    @DeleteMapping("/comment/delete")
+    public void deleteComment(@RequestParam Long cid){
+        commentService.deleteComment(cid);
+    }
+
+    @ResponseBody
+    @PutMapping("/comment/modify")
+    public String modifyComment(@RequestParam Long cid, @RequestParam String comment){
+        commentService.modifyComment(cid, comment);
+        return "success";
+    }
+
+
 }

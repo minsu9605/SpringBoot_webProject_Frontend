@@ -4,9 +4,7 @@ import com.example.CUSHProject.dto.BoardCommentDto;
 import com.example.CUSHProject.entity.BoardCommentEntity;
 import com.example.CUSHProject.entity.BoardEntity;
 import com.example.CUSHProject.entity.MemberEntity;
-import com.example.CUSHProject.repository.BoardCommentRepository;
-import com.example.CUSHProject.repository.BoardRepository;
-import com.example.CUSHProject.repository.MemberRepository;
+import com.example.CUSHProject.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +20,7 @@ public class CommentService {
     private final MemberRepository memberRepository;
     private final BoardRepository boardRepository;
     private final BoardCommentRepository boardCommentRepository;
+    private final BoardCommentQueryRepository boardCommentQueryRepository;
 
 
     /*댓글 등록*/
@@ -30,6 +29,7 @@ public class CommentService {
         Optional<BoardEntity> boardEntity = boardRepository.findById(boardCommentDto.getBoardId());
 
         boardCommentDto.setCreateDate(LocalDateTime.now());
+        boardCommentDto.setUpdateDate(LocalDateTime.now());
 
         BoardCommentEntity boardCommentEntity = boardCommentDto.toEntity();
 
@@ -45,9 +45,18 @@ public class CommentService {
         List<BoardCommentEntity> boardCommentEntityList = boardCommentRepository.findByBoardId(boardEntity.get());
         List<BoardCommentDto> boardCommentDtoList = new ArrayList<>();
 
-        for (int i = 0; i < boardCommentEntityList.size(); i++) {
+        for(int i = 0; i < boardCommentEntityList.size(); i++) {
             boardCommentDtoList.add(boardCommentEntityList.get(i).toDto());
         }
         return boardCommentDtoList;
+    }
+
+    /*댓글 삭제*/
+    public void deleteComment(Long cid){
+        boardCommentRepository.deleteById(cid);
+    }
+
+    public void modifyComment(Long cid, String comment){
+        boardCommentQueryRepository.updateComment(cid,comment);
     }
 }

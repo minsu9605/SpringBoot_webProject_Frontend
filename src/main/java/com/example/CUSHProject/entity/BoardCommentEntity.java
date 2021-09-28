@@ -1,7 +1,6 @@
 package com.example.CUSHProject.entity;
 
 import com.example.CUSHProject.dto.BoardCommentDto;
-import com.example.CUSHProject.enums.Rating;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +31,9 @@ public class BoardCommentEntity {
     @Column(name = "CREATEDATE")
     private LocalDateTime createDate;
 
+    @Column(name = "UPDATEDATE")
+    private LocalDateTime updateDate;
+
     @ManyToOne
     @JoinColumn(name = "COMMENT_WRITER")
     private MemberEntity writer;
@@ -53,6 +55,7 @@ public class BoardCommentEntity {
                 .id(id)
                 .comment(comment)
                 .createDate(createDate)
+                .updateDate(updateDate)
                 .writer(writer.getNickname())
                 .boardId(boardId.getId())
                 .build();
@@ -60,9 +63,10 @@ public class BoardCommentEntity {
 
 
     @Builder
-    public BoardCommentEntity(Long id, String comment, LocalDateTime createDate) {
+    public BoardCommentEntity(Long id, String comment, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.comment = comment;
         this.createDate = createDate;
+        this.updateDate = updateDate;
     }
 }

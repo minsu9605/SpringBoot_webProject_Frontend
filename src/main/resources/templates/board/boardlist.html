@@ -43,7 +43,7 @@
                     </thead>
                     <tbody>
                     <tr id="list" th:each="board : ${boardList}" th:onclick="|location.href='@{/board/content(id=${board.id})}'|">
-                        <td th:text="${board.id}"></td>
+                        <td id="boardId" th:text="${board.id}"></td>
                         <td id="td-title" th:text="${board.title}"></td>
                         <td th:text="${board.writer.nickname}"></td>
                         <td th:text="${board.category.name}"></td>

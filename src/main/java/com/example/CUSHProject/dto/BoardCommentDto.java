@@ -17,6 +17,7 @@ public class BoardCommentDto {
     private Long id;
     private String comment;
     private LocalDateTime createDate;
+    private LocalDateTime updateDate;
     private String writer;
     private Long boardId;
 
@@ -25,14 +26,16 @@ public class BoardCommentDto {
                 .id(id)
                 .comment(comment)
                 .createDate(createDate)
+                .updateDate(updateDate)
                 .build();
     }
 
     @Builder
-    public BoardCommentDto(Long id, String comment, LocalDateTime createDate, String writer, Long boardId){
+    public BoardCommentDto(Long id, String comment, LocalDateTime createDate, LocalDateTime updateDate, String writer, Long boardId){
         this.id=id;
         this.comment=comment;
         this.createDate=createDate;
+        this.updateDate=updateDate;
         this.writer=writer;
         this.boardId=boardId;
     }
