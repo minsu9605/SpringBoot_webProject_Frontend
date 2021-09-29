@@ -22,7 +22,8 @@ public class BoardQueryRepository{
                     .and((QBoardEntity.boardEntity.title.contains(keyword))
                         .or(QBoardEntity.boardEntity.content.contains(keyword))
                         .or(QBoardEntity.boardEntity.writer.nickname.contains(keyword))
-                ))
+                    )
+                )
                 .fetchCount();
     }
 
@@ -34,19 +35,5 @@ public class BoardQueryRepository{
                 .set(QBoardEntity.boardEntity.hit, QBoardEntity.boardEntity.hit.add(1))
                 .where(QBoardEntity.boardEntity.id.eq(id))
                 .execute();
-    }
-
-    /*게시물 삭제*/
-    @Transactional
-    public void boardDeleteById(Long id) {
-        queryFactory.delete(QBoardEntity.boardEntity)
-                .where(QBoardEntity.boardEntity.id.eq(id))
-                .execute();
-    }
-
-    public BoardEntity noticeList(){
-        return queryFactory.selectFrom(QBoardEntity.boardEntity)
-                .where(QBoardEntity.boardEntity.notice.eq(1))
-                .fetchOne();
     }
 }

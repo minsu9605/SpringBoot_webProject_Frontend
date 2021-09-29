@@ -34,6 +34,12 @@ public class BoardCommentEntity {
     @Column(name = "UPDATEDATE")
     private LocalDateTime updateDate;
 
+    @Column(name = "CDEPTH")
+    private int cDepth;
+
+    @Column(name = "CGROUP")
+    private Long cGroup;
+
     @ManyToOne
     @JoinColumn(name = "COMMENT_WRITER")
     private MemberEntity writer;
@@ -58,15 +64,19 @@ public class BoardCommentEntity {
                 .updateDate(updateDate)
                 .writer(writer.getNickname())
                 .boardId(boardId.getId())
+                .cDepth(cDepth)
+                .cGroup(cGroup)
                 .build();
     }
 
 
     @Builder
-    public BoardCommentEntity(Long id, String comment, LocalDateTime createDate, LocalDateTime updateDate) {
+    public BoardCommentEntity(Long id, String comment, LocalDateTime createDate, LocalDateTime updateDate, int cDepth, Long cGroup) {
         this.id = id;
         this.comment = comment;
         this.createDate = createDate;
         this.updateDate = updateDate;
+        this.cDepth = cDepth;
+        this.cGroup = cGroup;
     }
 }

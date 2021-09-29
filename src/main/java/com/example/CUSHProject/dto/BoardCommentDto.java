@@ -20,6 +20,10 @@ public class BoardCommentDto {
     private LocalDateTime updateDate;
     private String writer;
     private Long boardId;
+    private int cDepth;
+    private Long cGroup;
+
+
 
     public BoardCommentEntity toEntity(){
         return BoardCommentEntity.builder()
@@ -27,16 +31,20 @@ public class BoardCommentDto {
                 .comment(comment)
                 .createDate(createDate)
                 .updateDate(updateDate)
+                .cDepth(cDepth)
+                .cGroup(cGroup)
                 .build();
     }
 
     @Builder
-    public BoardCommentDto(Long id, String comment, LocalDateTime createDate, LocalDateTime updateDate, String writer, Long boardId){
+    public BoardCommentDto(Long id, String comment, LocalDateTime createDate, LocalDateTime updateDate, String writer, Long boardId,  int cDepth, Long cGroup){
         this.id=id;
         this.comment=comment;
         this.createDate=createDate;
         this.updateDate=updateDate;
         this.writer=writer;
         this.boardId=boardId;
+        this.cDepth = cDepth;
+        this.cGroup = cGroup;
     }
 }
