@@ -96,7 +96,6 @@ public class BoardController {
     @ResponseBody
     @DeleteMapping("/board/delete")
     public void boardDelete(@RequestParam(required = false)Long id) {
-        System.out.println("받아온 id값 : " + id);
         boardService.boardDelete(id);
     }
 

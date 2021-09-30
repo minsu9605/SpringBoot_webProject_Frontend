@@ -43,6 +43,7 @@ public class BoardCommentQueryRepository {
                 .where(QBoardCommentEntity.boardCommentEntity.boardId.eq(boardEntity)
                         .and(QBoardCommentEntity.boardCommentEntity.cDepth.eq(0))
                 )
+                .orderBy(QBoardCommentEntity.boardCommentEntity.id.asc())
                 .fetch();
     }
 
@@ -50,5 +51,21 @@ public class BoardCommentQueryRepository {
         return queryFactory.selectFrom(QBoardCommentEntity.boardCommentEntity)
                 .where(QBoardCommentEntity.boardCommentEntity.cGroup.eq(cid))
                 .fetchCount();
+    }
+
+    public Long findReCommentCnt(Long cid){
+        return queryFactory.selectFrom(QBoardCommentEntity.boardCommentEntity)
+                .where(QBoardCommentEntity.boardCommentEntity.cGroup.eq(cid))
+                .fetchCount();
+    }
+
+    /*모댓글 삭제시 대댓글 삭제(관리자)*/
+    @Transactional
+    public void deleteByCid(Long cid){
+        queryFactory.delete(QBoardCommentEntity.boardCommentEntity)
+                .where(QBoardCommentEntity.boardCommentEntity.id.eq(cid)
+                        .or(QBoardCommentEntity.boardCommentEntity.cGroup.eq(cid))
+                )
+                .execute();
     }
 }

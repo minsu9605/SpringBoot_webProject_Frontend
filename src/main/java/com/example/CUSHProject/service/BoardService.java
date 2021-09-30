@@ -72,7 +72,6 @@ public class BoardService {
     //보드 글 상세보기
     public BoardDto boardContent(Long id) {
         BoardEntity boardEntity;
-
         if (id == null) {
             boardEntity = new BoardEntity();
         } else {

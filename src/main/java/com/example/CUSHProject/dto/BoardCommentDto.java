@@ -23,8 +23,6 @@ public class BoardCommentDto {
     private int cDepth;
     private Long cGroup;
 
-
-
     public BoardCommentEntity toEntity(){
         return BoardCommentEntity.builder()
                 .id(id)

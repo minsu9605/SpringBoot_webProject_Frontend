@@ -21,13 +21,15 @@ function commentPost() {
 }
 /*댓글 목록*/
 function getCommentList() {
+
+
     $.ajax({
         type: "get",
         url: "/comment/list",
         data: {"bid": $("#bid").val()},
         success: function (data) {
             let html = "";
-            const count = data.list.length;
+             const count = data.list.length;
 
             if (data.list.length > 0) {
                 for (let i = 0; i < data.list.length; i++) {
@@ -35,18 +37,23 @@ function getCommentList() {
                     html += "<input type='hidden' id='commentId' value='" + data.list[i].id + "'>"
                     html += "<b id='commentWriter'>" + data.list[i].writer + "</b>";
                     html += "<span style='float:right;' align='right' id='commentDate'> " + displayTime(data.list[i].updateDate) + " </span>";
-                    html += "<h5 id='commentText'>" + data.list[i].comment + "</h5>";
+                    html += "<div class='mb-1' >"
+                    html += "<h5 id='commentText' style='display: inline'>" + data.list[i].comment +"</h5>";
+                    html += "<span id='ccCount' style='color: red'> ["+data.commentCnt[i]+"]</span>"
+                    html += "</div>"
                     // html += "<a href='#none' id='reComment'>답글 달기 </a>";
-                    html += "<button type='button' id='reCommentBtn'>답글 달기 </button>";
-                    html += "<button type='button' style='display: none' id='reCommentCloseBtn'>답글 닫기 </button>";
+                    html += "<span style='cursor: pointer; color: blue' id='reCommentBtn'>답글 달기 </span>";
+                    html += "<span style='display:none; cursor: pointer; color: blue' id='reCommentCloseBtn'>답글 닫기 </span>";
                     if (data.list[i].writer === $("#sessionNickname").val()) {
-                        html += "<a href='#none' id='commentMod' data-toggle='modal' data-target='#modifyModal' >수정 </a>";
-                        html += "<a href='#none' id='commentDel'>삭제</a>";
+                        html += "<span style='cursor: pointer; color: blue' id='commentMod' data-toggle='modal' data-target='#modifyModal' >수정 </span>";
+                        html += "<span style='cursor: pointer; color: blue' id='commentDel'>삭제</span>";
+
+                    }  else if($("#sessionRole").val() === "ROLE_ADMIN"){
+                        html += "<span style='cursor: pointer; color: blue' id='commentDel'>삭제</span>";
                     }
                     html += "<hr>";
                     html += "<div class='mx-4' id='reCommentDiv'></div></div>";
                 }
-
             } else {
                 html += "<div class='mb-2'>";
                 html += "<h6><strong>등록된 댓글이 없습니다.</strong></h6>";
@@ -56,12 +63,10 @@ function getCommentList() {
             $("#commentList").html(html);
         },
         error: function (request, status, error) {
-            alert("code: " + request.status + "\n" + "message" + request.responseText + "\n" + "error: " + error);
+            alert("code: " + request.status + "\n"  + "error: " + error);
         }
     });
-
 }
-
 /*날짜 계산*/
 function displayTime(timeValue) {
     const dateObj = new Date(timeValue);
@@ -97,7 +102,6 @@ $(document).on("click","#reCommentBtn",function (){
         data: {"cid": cid},
         success: function (data) {
             let html = "";
-            const count = data.list.length;
 
             if (data.list.length > 0) {
                 for (let i = 0; i < data.list.length; i++) {
@@ -107,8 +111,10 @@ $(document).on("click","#reCommentBtn",function (){
                     html += "<span style='float:right;' align='right' id='commentDate'> " + displayTime(data.list[i].updateDate) + " </span>";
                     html += "<h5 id='commentText'>" + data.list[i].comment + "</h5>";
                     if (data.list[i].writer === $("#sessionNickname").val()) {
-                        html += "<a href='#none' id='commentMod' data-toggle='modal' data-target='#modifyModal' >수정 </a>";
-                        html += "<a href='#none' id='commentDel'>삭제</a>";
+                        html += "<span style='cursor: pointer; color: blue' id='commentMod' data-toggle='modal' data-target='#modifyModal' >수정 </span>";
+                        html += "<span style='cursor: pointer; color: blue' id='commentDel'>삭제</span>";
+                    } else if($("#sessionRole").val() === "ROLE_ADMIN"){
+                        html += "<span style='cursor: pointer; color: blue' id='commentDel'>삭제</span>";
                     }
                     html += "<hr></div>";
                 }
@@ -143,10 +149,8 @@ $(document).on("click","#reCommentBtn",function (){
             error: function (request, status, error) {
                 alert("code: " + request.status + "\n" + "error: " + error);
             }
-
         });
     });
-
 });
 
 /*모달창에 값 넣기*/
@@ -155,6 +159,9 @@ $(document).on("click", "#commentMod", function () {
     const comment_id = comment.find("#commentId").val()
     const comment_text = comment.find("#commentText").text();
     const comment_writer = comment.find("#commentWriter").text();
+
+
+    console.log("수정 id : "+comment_id);
 
     $("#comment_id").val(comment_id);
     $("#comment_text").val(comment_text);
@@ -166,6 +173,8 @@ $(document).on("click","#commentDel",function (){
     const comment = $(this).parent();
     const comment_id = comment.find("#commentId").val();
 
+    console.log("id : "+comment_id);
+
     if (!confirm("댓글을 삭제하시겠습니까?")) {
         return false;
     } else {
@@ -174,7 +183,6 @@ $(document).on("click","#commentDel",function (){
             url: "/comment/delete",
             data: {"cid": comment_id},
             success: function (count) {
-                console.log(count);
                 if(count == 0){
                     alert("댓글을 삭제하였습니다.");
                     location.reload();

@@ -10,6 +10,7 @@
 <th:block th:include="fragments/sidecategory"></th:block>
 
 <input type="hidden" id="sessionNickname" th:value="${session.memberNickname}">
+<input type="hidden" id="sessionRole" th:value="${session.memberRole}">
 <div class="container main-wrapper">
     <h2 class="mb-3" th:text="${boardForm.title}"></h2>
 

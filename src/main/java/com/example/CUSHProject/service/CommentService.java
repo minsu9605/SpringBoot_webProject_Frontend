@@ -4,12 +4,16 @@ import com.example.CUSHProject.dto.BoardCommentDto;
 import com.example.CUSHProject.entity.BoardCommentEntity;
 import com.example.CUSHProject.entity.BoardEntity;
 import com.example.CUSHProject.entity.MemberEntity;
+import com.example.CUSHProject.enums.Role;
 import com.example.CUSHProject.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,16 +28,21 @@ public class CommentService {
 
 
     /*댓글 등록*/
-    public void commentPost(BoardCommentDto boardCommentDto, String username) throws Exception {
+    public void commentPost(Long bid,String comment, int cDepth, Long cGroup, String username) throws Exception {
+
+        BoardCommentDto boardCommentDto = new BoardCommentDto();
+
+        boardCommentDto.setBoardId(bid);
+        boardCommentDto.setComment(comment);
+        boardCommentDto.setCDepth(cDepth);
+        boardCommentDto.setCGroup(cGroup);
+        boardCommentDto.setCreateDate(LocalDateTime.now());
+        boardCommentDto.setUpdateDate(LocalDateTime.now());
 
         Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
         Optional<BoardEntity> boardEntity = boardRepository.findById(boardCommentDto.getBoardId());
 
-        boardCommentDto.setCreateDate(LocalDateTime.now());
-        boardCommentDto.setUpdateDate(LocalDateTime.now());
-
         BoardCommentEntity boardCommentEntity = boardCommentDto.toEntity();
-
 
         boardCommentEntity.setCommentBoardId(boardEntity.get());
         boardCommentEntity.setCommentWriter(memberEntity.get());
@@ -41,10 +50,27 @@ public class CommentService {
         boardCommentRepository.save(boardCommentEntity);
     }
 
-    /*댓글 리스트*/
-    public List<BoardCommentDto> getCommentList(Long bid) throws Exception {
+    public HashMap<String, Object> getCommentList(Long bid) {
+        HashMap<String, Object> map = new HashMap<>();
         Optional<BoardEntity> boardEntity = boardRepository.findById(bid);
-        //List<BoardCommentEntity> boardCommentEntityList = boardCommentRepository.findByBoardId(boardEntity.get());
+        List<BoardCommentEntity> boardCommentEntityList = boardCommentQueryRepository.findByBoardId(boardEntity.get());
+
+        List<BoardCommentDto> boardCommentDtoList = new ArrayList<>(); // 댓글 리스트
+        List<Long> ccCountList = new ArrayList<>(); // 대댓글 갯수 카운트
+
+        for(int i = 0; i < boardCommentEntityList.size(); i++) {
+            boardCommentDtoList.add(boardCommentEntityList.get(i).toDto()); //댓글 리스트
+            ccCountList.add(boardCommentQueryRepository.findReCommentCnt(boardCommentEntityList.get(i).getId())); //대댓글 갯수 카운트
+        }
+        map.put("list",boardCommentDtoList);
+        map.put("commentCnt",ccCountList);
+
+        return map;
+    }
+
+    /*댓글 리스트*/
+    /*public List<BoardCommentDto> getCommentList(Long bid){
+        Optional<BoardEntity> boardEntity = boardRepository.findById(bid);
         List<BoardCommentEntity> boardCommentEntityList = boardCommentQueryRepository.findByBoardId(boardEntity.get());
         List<BoardCommentDto> boardCommentDtoList = new ArrayList<>();
 
@@ -52,18 +78,31 @@ public class CommentService {
             boardCommentDtoList.add(boardCommentEntityList.get(i).toDto());
         }
         return boardCommentDtoList;
-    }
+    }*/
+    /*대댓글 갯수 카운트*/
+   /* public List<Long> getCount(Long bid){
+        Optional<BoardEntity> boardEntity = boardRepository.findById(bid);
+        List<BoardCommentEntity> boardCommentEntityList = boardCommentQueryRepository.findByBoardId(boardEntity.get());
+        List<Long> ccCount = new ArrayList<>();
 
+        for(int i = 0; i < boardCommentEntityList.size(); i++) {
+            ccCount.add(boardCommentQueryRepository.findReCommentCnt(boardCommentEntityList.get(i).getId()));
+        }
+        return ccCount;
+    }*/
     /*댓글 삭제*/
-    public Long deleteComment(Long cid) {
+    public Long deleteComment(Long cid, Object roleSession) {
         Optional<BoardCommentEntity> boardCommentEntity = boardCommentRepository.findById(cid);
         int depth = boardCommentEntity.get().getCDepth();
         Long reCommentCnt = boardCommentQueryRepository.deleteCheck(cid);
 
-        /*if (boardCommentEntity.get().getWriter().getRole().getValue().equals("ROLE_ADMIN")) {
-            boardCommentRepository.deleteById(cid);
-        } else*/
+
         if (depth == 0) {
+            if(roleSession.equals(Role.ROLE_ADMIN)){
+                /*모댓글의 대댓글 까지 전부 삭제*/
+                boardCommentQueryRepository.deleteByCid(cid);
+                return 0L;
+            }
             if (boardCommentQueryRepository.deleteCheck(cid) == 0) {
                 boardCommentRepository.deleteById(cid);
             }
