@@ -1,6 +1,7 @@
 package com.example.CUSHProject.service;
 
 import com.example.CUSHProject.Pagination.Paging;
+import com.example.CUSHProject.dto.BoardCategoryDto;
 import com.example.CUSHProject.dto.BoardCommentDto;
 import com.example.CUSHProject.dto.BoardDto;
 import com.example.CUSHProject.entity.BoardCategoryEntity;
@@ -24,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -69,6 +71,33 @@ public class BoardService {
         return boardQueryRepository.findByKeyword(keyword, notice);
     }
 
+    public List<BoardDto> getBoardList(String searchType, String keyword, int notice, Long categoryId){
+        BoardCategoryEntity boardCategoryEntity = boardCategoryRepository.findById(categoryId).orElse(null);
+        List<BoardEntity> boardEntityList = null;
+        List<BoardDto> boardDtoList = new ArrayList<>();
+        if(notice == 0){
+            if(searchType.equals("title")) {
+                boardEntityList = boardRepository.findByNoticeAndCategory(notice,boardCategoryEntity);
+//                boardEntityList = boardRepository.findByNoticeAndCategoryAndTitleContaining(notice,category,keyword);
+            }else if (searchType.equals("content")){
+                boardEntityList = boardRepository.findByNoticeAndCategoryAndContentContaining(notice,boardCategoryEntity,keyword);
+            }else if(searchType.equals("writer")){
+                boardEntityList = boardRepository.findByNoticeAndCategoryAndWriterContaining(notice,boardCategoryEntity,keyword);
+            }
+        } else if(notice == 1){
+            if(searchType.equals("title")) {
+                boardEntityList = boardRepository.findByNoticeAndCategoryAndTitleContaining(notice,boardCategoryEntity,keyword);
+            }else if (searchType.equals("content")){
+                boardEntityList = boardRepository.findByNoticeAndCategoryAndContentContaining(notice,boardCategoryEntity,keyword);
+            }
+        }
+        for(BoardEntity boardEntity : boardEntityList){
+            boardDtoList.add(boardEntity.toDto());
+        }
+
+        return boardDtoList;
+    }
+
     //보드 글 상세보기
     public BoardDto boardContent(Long id) {
         BoardEntity boardEntity;
@@ -76,9 +105,7 @@ public class BoardService {
             boardEntity = new BoardEntity();
         } else {
             boardEntity = boardRepository.findById(id).orElse(null);
-           // boardHitUpdate(id);
         }
-
         return boardEntity.toDto();
     }
 
@@ -89,13 +116,14 @@ public class BoardService {
 
     /*게시글 등록 후 전송*/
     @Transactional
-    public BoardEntity boardWrite(BoardDto boardDto, String username) {
+    public BoardEntity boardWrite(BoardDto boardDto, BoardCategoryDto boardCategoryDto, String username) {
 
-        Optional<BoardCategoryEntity> boardCategoryEntity = boardCategoryRepository.findById(boardDto.getCategoryId());
+//        Optional<BoardEntity> boardEntityOptional = boardRepository.findById(boardDto.getId());
+        Optional<BoardCategoryEntity> boardCategoryEntity = boardCategoryRepository.findByName(boardDto.getCategoryName());
         Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
 
-        boardDto.setCreatedDate(LocalDateTime.now());
-        boardDto.setUpdatedDate(LocalDateTime.now());
+        boardDto.setCreatedDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        boardDto.setUpdatedDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
 
         BoardEntity boardEntity = boardDto.toEntity();
         boardEntity.setCategory(boardCategoryEntity.get());
@@ -106,10 +134,11 @@ public class BoardService {
     /*보드 수정 후 전송*/
     @Transactional
     public BoardEntity boardModifySave(BoardDto boardDto, String username) {
-        Optional<BoardCategoryEntity> boardCategoryEntity = boardCategoryRepository.findById(boardDto.getCategoryId());
+        Optional<BoardEntity> boardEntityOptional = boardRepository.findById(boardDto.getId());
+        Optional<BoardCategoryEntity> boardCategoryEntity = boardCategoryRepository.findById(boardEntityOptional.get().getCategory().getId());
         Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
 
-        boardDto.setUpdatedDate(LocalDateTime.now());
+        boardDto.setUpdatedDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
 
         BoardEntity boardEntity = boardDto.toEntity();
         boardEntity.setCategory(boardCategoryEntity.get());
@@ -146,8 +175,6 @@ public class BoardService {
         }
         return jsonObject;
     }
-
-
 
 }
 

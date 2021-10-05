@@ -1,21 +1,20 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link th:href="@{/css/sideCategory.css}" rel="stylesheet">
 </head>
 <body>
-<div id="sidebar-wrapper">
-    <ul class="sidebar-nav">
-        <li class="sidebar-brand">
-            <a th:href="@{/board/list}">게시판</a>
-        </li>
-        <li><a href="#">디지털기기</a></li>
-        <li><a href="#">가구/인테리어</a></li>
-        <li><a href="#">생활/가공식품</a></li>
-        <li><a href="#">스포츠/레저</a></li>
-        <li><a href="#">게임/취미</a></li>
-        <li><a href="#">도서/티켓/음반</a></li>
-        <li><a href="#">기타 중고물품</a></li>
-    </ul>
+<div th:fragment="sidecategory(categoryList)">
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand">
+                <a>게시판</a>
+            </li>
+            <li th:each="category : ${categoryList}">
+                <a th:text="${category.name}" th:href="@{'/board/list?category='+${category.getId}}"></a>
+            </li>
+        </ul>
+    </div>
 </div>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>

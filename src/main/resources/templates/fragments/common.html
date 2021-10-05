@@ -19,7 +19,7 @@
                     <a class="nav-link " th:href="@{/}">홈 </a>
                 </li>
                 <li class="nav-item" th:classappend="${menu} == 'board'">
-                    <a class="nav-link " th:href="@{/board/list}">장터게시판</a>
+                    <a class="nav-link " th:href="@{/board/list?category=1}">장터게시판</a>
                 </li>
                 <li class="nav-item" th:classappend="${menu} == 'map'">
                     <a class="nav-link " th:href="@{/map}">지도 </a>

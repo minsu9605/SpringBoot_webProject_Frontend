@@ -23,14 +23,9 @@ public class CategoryService {
         List<BoardCategoryDto> boardCategoryDtoList = new ArrayList<>();
 
         for(BoardCategoryEntity category: boardCategoryRepositoryAll){
-            BoardCategoryDto boardCategoryDto = BoardCategoryDto.builder()
-                    .id(category.getId())
-                    .name(category.getName())
-                    .build();
-            boardCategoryDtoList.add(boardCategoryDto);
+            boardCategoryDtoList.add(category.toDto());
         }
         return boardCategoryDtoList;
-
     }
 
     public String findCategoryById(Long id){

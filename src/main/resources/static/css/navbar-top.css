@@ -11,10 +11,11 @@ body {
 }
 .navbar{
     position: sticky;
+    z-index: 1023;
+    top: 0;
 }
 .navbar-brand{
-    font-size : 2rem;
-    margin-right: 3rem;
+    font-size : 1.5rem;
 }
 /*.btn-secondary{
     font-size: 1.4rem;

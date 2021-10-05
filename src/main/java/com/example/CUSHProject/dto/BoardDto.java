@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -18,13 +20,11 @@ public class BoardDto {
     private String writer;
     private String title;
     private String content;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime createdDate;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime updatedDate;
+    private String createdDate;
+    private String updatedDate;
     private int hit;
     private Rating rating;
-    private Long categoryId;
+    private String categoryName;
     private int notice;
 
     public BoardEntity toEntity() {
@@ -32,8 +32,8 @@ public class BoardDto {
                 .id(id)
                 .title(title)
                 .content(content)
-                .createdDate(createdDate)
-                .updatedDate(updatedDate)
+                .createdDate(LocalDateTime.parse(createdDate, DateTimeFormatter.ISO_DATE))
+                .updatedDate(LocalDateTime.parse(updatedDate, DateTimeFormatter.ISO_DATE))
                 .hit(hit)
                 .rating(rating)
                 .notice(notice)
@@ -41,7 +41,7 @@ public class BoardDto {
     }
 
     @Builder
-    public BoardDto(Long id, String writer, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate,int hit, Rating rating, Long categoryId,int notice) {
+    public BoardDto(Long id, String writer, String title, String content, String createdDate, String updatedDate,int hit, Rating rating, String categoryName,int notice) {
         this.id=id;
         this.writer=writer;
         this.title=title;
@@ -50,7 +50,7 @@ public class BoardDto {
         this.updatedDate=updatedDate;
         this.hit=hit;
         this.rating=rating;
-        this.categoryId=categoryId;
+        this.categoryName=categoryName;
         this.notice=notice;
     }
 }

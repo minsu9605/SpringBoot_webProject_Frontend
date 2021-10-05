@@ -9,7 +9,7 @@
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4" th:replace="fragments/common :: menu('board')"></nav>
 
-<div class="container">
+<div class="container mt-5">
     <h1>게시글 수정</h1>
     <form th:action="@{/board/modify}" method="post">
         <input type="hidden" th:field="${boardForm.id}"/>
@@ -20,9 +20,9 @@
         </div>
         <div class="inline-container">
             <b for="createdDate">작성 날짜</b>
-            <input id="createdDate" name="createdDate" th:value="${#temporals.format(boardForm.createdDate, 'yyyy-MM-dd HH:mm')}" readonly>
+            <input id="createdDate" name="createdDate" th:value="${boardForm.createdDate}" readonly>
             <b class="form-label" for="updatedDate">마지막 수정 날짜</b>
-            <input id="updatedDate" name="updatedDate" th:value="${#temporals.format(boardForm.updatedDate, 'yyyy-MM-dd HH:mm')}" readonly>
+            <input id="updatedDate" name="updatedDate" th:value="${boardForm.updatedDate}" readonly>
             <b for="hit">조회수</b>
             <input id="hit" name="hit" th:value="${boardForm.hit}" readonly>
         </div>
@@ -35,7 +35,7 @@
                     <option th:each="category : ${categoryList}"
                             th:value="${category.id}"
                             th:text="${category.name}"
-                            th:selected="${category.name} == ${boardForm.categoryId}">
+                            th:selected="${category.name} == ${boardForm.categoryName}">
                     </option>
                 </select>
             </div>

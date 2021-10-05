@@ -5,10 +5,12 @@ import com.example.CUSHProject.enums.Rating;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.lang.reflect.Member;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @NoArgsConstructor
 @Getter
@@ -37,11 +39,11 @@ public class BoardEntity{
     @Column(name = "CONTENT")
     private String content;
 
-    //@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     @Column(name = "CREATEDDATE")
     private LocalDateTime createdDate;
 
-    //@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     @Column(name = "UPDATEDDATE")
     private LocalDateTime updatedDate;
 
@@ -72,11 +74,11 @@ public class BoardEntity{
                 .title(title)
                 .writer(writer.getNickname())
                 .content(content)
-                .createdDate(createdDate)
-                .updatedDate(updatedDate)
+                .createdDate(createdDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
+                .updatedDate(updatedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                 .hit(hit)
                 .rating(rating)
-                .categoryId(category.getId())
+                .categoryName(category.getName())
                 .notice(notice)
                 .build();
     }

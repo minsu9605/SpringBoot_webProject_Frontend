@@ -1,5 +1,6 @@
 package com.example.CUSHProject.service;
 
+import com.example.CUSHProject.dto.BoardCategoryDto;
 import com.example.CUSHProject.dto.MemberDto;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class MemberLoginSuccessService implements AuthenticationSuccessHandler {
@@ -47,6 +49,7 @@ public class MemberLoginSuccessService implements AuthenticationSuccessHandler {
 
         /*로그인 완료시 세션저장*/
         MemberDto memberDto = memberService.memberInfo(authentication.getName());
+
         HttpSession session = request.getSession(false);
         session.setAttribute("memberId",memberDto.getId());
         session.setAttribute("memberUsername",memberDto.getUsername());

@@ -4,14 +4,15 @@
 <head th:replace="fragments/common :: head('게시판')"></head>
 <link th:href="@{/css/boardContent.css}" rel="stylesheet">
 <link th:href="@{/css/comment.css}" rel="stylesheet">
+<link th:href="@{/css/sideCategory.css}" rel="stylesheet">
 
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4" th:replace="fragments/common :: menu('board')"></nav>
-<th:block th:include="fragments/sidecategory"></th:block>
+<th:block th:include="fragments/sidecategory :: sidecategory(${categoryList})"></th:block>
 
-<input type="hidden" id="sessionNickname" th:value="${session.memberNickname}">
-<input type="hidden" id="sessionRole" th:value="${session.memberRole}">
 <div class="container main-wrapper">
+    <input type="hidden" id="sessionNickname" th:value="${session.memberNickname}">
+    <input type="hidden" id="sessionRole" th:value="${session.memberRole}">
     <h2 class="mb-3" th:text="${boardForm.title}"></h2>
 
     <div class="contentTop mb-5 mx-5">
@@ -20,13 +21,15 @@
         <b>조회수</b>
         <span class="mx-2" th:text="${boardForm.hit}"></span>
         <b>작성일</b>
-        <span class="mx-2" th:text="${#temporals.format(boardForm.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+<!--        <span class="mx-2" th:text="${#temporals.format(boardForm.createdDate, 'yyyy-MM-dd HH:mm')}"></span>-->
+        <span class="mx-2" th:text="${boardForm.createdDate}"></span>
         <b>수정일</b>
-        <span class="mx-2" th:text="${#temporals.format(boardForm.updatedDate, 'yyyy-MM-dd HH:mm')}"></span>
+        <span class="mx-2" th:text="${boardForm.updatedDate}"></span>
+<!--        <span class="mx-2" th:text="${#temporals.format(boardForm.updatedDate, 'yyyy-MM-dd HH:mm')}"></span>-->
     </div>
     <hr class="mb-2">
     <b>종류</b>
-    <span class="mx-2" th:text="${categoryName}"></span>
+    <span class="mx-2" th:text="${boardForm.categoryName}"></span>
     <b>상태</b>
     <span th:text="${boardForm.rating.title}"></span>
     <div class="mx-10" id="contentMain" th:utext="${boardForm.content}"></div>

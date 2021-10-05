@@ -1,5 +1,6 @@
 package com.example.CUSHProject.repository;
 
+import com.example.CUSHProject.dto.BoardDto;
 import com.example.CUSHProject.entity.BoardCategoryEntity;
 import com.example.CUSHProject.entity.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,5 +12,6 @@ import java.util.Optional;
 @Repository
 public interface BoardCategoryRepository extends JpaRepository<BoardCategoryEntity, Long> {
     Optional<BoardCategoryEntity> findById(Long id);
+    Optional<BoardCategoryEntity> findByName(String name);
     List<BoardCategoryEntity> findAll();
 }

@@ -3,16 +3,14 @@ package com.example.CUSHProject.dto;
 import com.example.CUSHProject.entity.BoardCategoryEntity;
 import com.example.CUSHProject.entity.BoardEntity;
 import com.example.CUSHProject.enums.Rating;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+//@Getter
+//@Setter
+@Data
 @NoArgsConstructor
 public class BoardCategoryDto {
     private Long id;

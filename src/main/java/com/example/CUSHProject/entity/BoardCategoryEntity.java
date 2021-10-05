@@ -1,5 +1,6 @@
 package com.example.CUSHProject.entity;
 
+import com.example.CUSHProject.dto.BoardCategoryDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,12 @@ public class BoardCategoryEntity {
     @Column(name = "CATEGORY_NAME")
     private String name;
 
+    public BoardCategoryDto toDto(){
+        return BoardCategoryDto.builder()
+                .id(id)
+                .name(name)
+                .build();
+    }
 
     @Builder
     public BoardCategoryEntity(Long id, String name) {

@@ -20,7 +20,7 @@
 #td-title{
     text-align: left;
 }
-#list{
+td[data-column-name=title]{
     cursor: pointer;
 }
 .container{

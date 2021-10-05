@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -37,9 +38,23 @@ public class BoardController {
         Page<BoardEntity> boardList = boardService.boardList(searchType, keyword, curPageNum, notice);
         double listCnt = boardService.getBoardListCnt(keyword,notice);
         paging.pageInfo(curPageNum, listCnt);
+        model.addAttribute("categoryList",categoryService.getCategory());
         model.addAttribute("boardList",boardList);
         model.addAttribute("paging",paging);
         return "board/boardlist";
+    }
+
+    @GetMapping("/board/list/table")
+    @ResponseBody
+    public HashMap<String, Object> getBoardList(@RequestParam(defaultValue = "title") String searchType,
+                                                @RequestParam(required = false, defaultValue = "")String keyword,
+                                                @RequestParam(required = false) Long categoryId){
+
+        HashMap<String, Object> map = new HashMap<>();
+        int notice =0;
+        List<BoardDto> boardDtoList = boardService.getBoardList(searchType, keyword, notice, categoryId);
+        map.put("list", boardDtoList);
+        return map;
     }
 
     //글쓰기
@@ -53,9 +68,9 @@ public class BoardController {
     }
 
     @PostMapping("/board/write")
-    public String boardWrite(BoardDto boardDto, Authentication authentication){
-        boardService.boardWrite(boardDto, authentication.getName());
-        return "redirect:/board/list";
+    public String boardWrite(BoardDto boardDto, BoardCategoryDto boardCategoryDto, Authentication authentication){
+        boardService.boardWrite(boardDto, boardCategoryDto, authentication.getName());
+        return "redirect:/board/list?category=1";
     }
 
     @GetMapping("/board/content")
@@ -63,10 +78,10 @@ public class BoardController {
         boardService.boardHitUpdate(id);
 
         BoardDto boardForm = boardService.boardContent(id);
-        String categoryName = categoryService.findCategoryById(boardForm.getCategoryId());
+        //String categoryName = categoryService.findCategoryById(boardForm.getCategoryId());
 
+        model.addAttribute("categoryList",categoryService.getCategory());
         model.addAttribute("boardForm",boardForm);
-        model.addAttribute("categoryName",categoryName);
         return "board/boardcontent";
     }
 
