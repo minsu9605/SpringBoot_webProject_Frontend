@@ -29,18 +29,8 @@ public class BoardController {
 
 
     @GetMapping("/board/list")
-    public String boardList(Model model,
-                            @RequestParam(value ="page", defaultValue = "1") Integer curPageNum,
-                            @RequestParam(defaultValue = "title") String searchType,
-                            @RequestParam(required = false, defaultValue = "")String keyword) {
-        int notice =0;
-        Paging paging = new Paging();
-        Page<BoardEntity> boardList = boardService.boardList(searchType, keyword, curPageNum, notice);
-        double listCnt = boardService.getBoardListCnt(keyword,notice);
-        paging.pageInfo(curPageNum, listCnt);
+    public String boardList(Model model) {
         model.addAttribute("categoryList",categoryService.getCategory());
-        model.addAttribute("boardList",boardList);
-        model.addAttribute("paging",paging);
         return "board/boardlist";
     }
 
@@ -68,8 +58,8 @@ public class BoardController {
     }
 
     @PostMapping("/board/write")
-    public String boardWrite(BoardDto boardDto, BoardCategoryDto boardCategoryDto, Authentication authentication){
-        boardService.boardWrite(boardDto, boardCategoryDto, authentication.getName());
+    public String boardWrite(BoardDto boardDto, Authentication authentication){
+        boardService.boardWrite(boardDto, authentication.getName());
         return "redirect:/board/list?category=1";
     }
 
@@ -99,7 +89,7 @@ public class BoardController {
     @PostMapping("/board/modify")
     public String boardModify(BoardDto boardDto, Authentication authentication){
         boardService.boardModifySave(boardDto, authentication.getName());
-        return "redirect:/board/list";
+        return "redirect:/board/list?category=1";
     }
 
     @ResponseBody

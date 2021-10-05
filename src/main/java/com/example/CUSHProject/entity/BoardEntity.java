@@ -69,13 +69,14 @@ public class BoardEntity{
     }
 
     public BoardDto toDto() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return BoardDto.builder()
                 .id(id)
                 .title(title)
                 .writer(writer.getNickname())
                 .content(content)
-                .createdDate(createdDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
-                .updatedDate(updatedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
+                .createdDate(createdDate.format(formatter))
+                .updatedDate(updatedDate.format(formatter))
                 .hit(hit)
                 .rating(rating)
                 .categoryName(category.getName())

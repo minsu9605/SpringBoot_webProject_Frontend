@@ -28,12 +28,13 @@ public class BoardDto {
     private int notice;
 
     public BoardEntity toEntity() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return BoardEntity.builder()
                 .id(id)
                 .title(title)
                 .content(content)
-                .createdDate(LocalDateTime.parse(createdDate, DateTimeFormatter.ISO_DATE))
-                .updatedDate(LocalDateTime.parse(updatedDate, DateTimeFormatter.ISO_DATE))
+                .createdDate(LocalDateTime.parse(createdDate, formatter))
+                .updatedDate(LocalDateTime.parse(updatedDate, formatter))
                 .hit(hit)
                 .rating(rating)
                 .notice(notice)
@@ -41,7 +42,7 @@ public class BoardDto {
     }
 
     @Builder
-    public BoardDto(Long id, String writer, String title, String content, String createdDate, String updatedDate,int hit, Rating rating, String categoryName,int notice) {
+    public BoardDto(Long id, String writer, String title, String content, String createdDate, String updatedDate, int hit, Rating rating, String categoryName,int notice) {
         this.id=id;
         this.writer=writer;
         this.title=title;

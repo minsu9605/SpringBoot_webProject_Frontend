@@ -2,7 +2,7 @@ const categoryId = $("#categoryId").val();
 let grid;
 
 $(function (){
-    grid = new tui.Grid( {
+    grid = new tui.Grid({
         el: document.getElementById('recruitGrid'),
         scrollX:false,
         scrollY:false,
@@ -39,10 +39,12 @@ $(function (){
                 name : 'hit',
                 align : 'center',
             }
-        ]
+        ],
+        pageOptions : {
+            useClient: true,
+            perPage : 5
+        }
     });
-
-    // td[data-column-name=title]
 
     grid.on('click', ev=>{
         if(ev.columnName === 'title'){
@@ -57,15 +59,18 @@ $(function (){
     });
 });
 
+/*게시글 목록*/
 $(function getBoardList(){
     $.ajax({
         method:'get',
         url : '/board/list/table?category=' + categoryId,
         data : {"categoryId" : categoryId},
         success : function (data){
-            if(data.list.length>0){
+            const dataLength = data.list.length;
+            if(dataLength>0){
+                $("#totalCount").text(dataLength);
                 grid.resetData(data.list);
-            }else if (data.list.length == 0){
+            }else if (dataLength == 0){
                 alert("게시물이 없습니다.");
             }
         },

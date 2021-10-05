@@ -61,7 +61,6 @@ public class BoardService {
                 boardEntityPage = boardRepository.findByNoticeAndContentContaining(notice,keyword, pageable);
             }
         }
-
         return boardEntityPage;
     }
 
@@ -115,36 +114,37 @@ public class BoardService {
     }
 
     /*게시글 등록 후 전송*/
-    @Transactional
-    public BoardEntity boardWrite(BoardDto boardDto, BoardCategoryDto boardCategoryDto, String username) {
-
-//        Optional<BoardEntity> boardEntityOptional = boardRepository.findById(boardDto.getId());
+    public BoardDto boardWrite(BoardDto boardDto, String username){
         Optional<BoardCategoryEntity> boardCategoryEntity = boardCategoryRepository.findByName(boardDto.getCategoryName());
         Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
 
-        boardDto.setCreatedDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
-        boardDto.setUpdatedDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
+        boardDto.setCreatedDate(LocalDateTime.now().format(formatter));
+        boardDto.setUpdatedDate(LocalDateTime.now().format(formatter));
         BoardEntity boardEntity = boardDto.toEntity();
+
         boardEntity.setCategory(boardCategoryEntity.get());
         boardEntity.setWriter(memberEntity.get());
-        return boardRepository.save(boardEntity);
+
+        return boardRepository.save(boardEntity).toDto();
     }
 
     /*보드 수정 후 전송*/
-    @Transactional
-    public BoardEntity boardModifySave(BoardDto boardDto, String username) {
+    public BoardDto boardModifySave(BoardDto boardDto, String username){
         Optional<BoardEntity> boardEntityOptional = boardRepository.findById(boardDto.getId());
         Optional<BoardCategoryEntity> boardCategoryEntity = boardCategoryRepository.findById(boardEntityOptional.get().getCategory().getId());
         Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
 
-        boardDto.setUpdatedDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        boardDto.setUpdatedDate(LocalDateTime.now().format(formatter));
 
         BoardEntity boardEntity = boardDto.toEntity();
+
         boardEntity.setCategory(boardCategoryEntity.get());
         boardEntity.setWriter(memberEntity.get());
 
-        return boardRepository.save(boardEntity);
+        return boardRepository.save(boardEntity).toDto();
     }
 
     /*게시글 삭제*/
