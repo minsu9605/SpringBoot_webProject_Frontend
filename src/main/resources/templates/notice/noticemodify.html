@@ -11,7 +11,7 @@
 
 <div class="container mt-5">
     <h1>게시글 수정</h1>
-    <form th:action="@{/board/modify}" method="post">
+    <form th:action="@{/notice/modify}" method="post">
         <input type="hidden" th:field="${boardForm.id}"/>
 
         <div class="mb-3 inline-container">
@@ -28,29 +28,10 @@
         </div>
         <hr>
 
-        <div class="mb-3" id="dropDown">
-            <div class="dropdown" id="divCategory">
-                <label class="form-label" for="categoryName">종류</label>
-                <select class="form-control" id="categoryName" name="categoryName">
-                    <option th:each="category : ${categoryList}"
-                            th:value="${category.name}"
-                            th:text="${category.name}"
-                            th:selected="${category.name} == ${boardForm.categoryName}">
-                    </option>
-                </select>
-            </div>
-
-            <div class="dropdown" id="divRating">
-                <label class="form-label" for="rating">상태</label>
-                <select class="form-control" id="rating" name="rating">
-                    <option th:each="ratingValue : ${T(com.example.CUSHProject.enums.Rating).values()}"
-                            th:value="${ratingValue.value}"
-                            th:text="${ratingValue.title}"
-                            th:selected="${ratingValue.title} == ${boardForm.rating.title}">
-                    </option>
-                </select>
-            </div>
-        </div>
+        <!--<div class="form-check" id="divNotice" sec:authorize="hasRole('ROLE_ADMIN')">
+            <input class="form-check-input" type="checkbox" value="1" id="notice" name="notice" th:checked="${boardForm.notice == 1}">
+            <label class="form-check-label" for="notice">공지사항</label>
+        </div>-->
 
         <div class="mb-3" id="divTitle">
             <label class="form-label" for="title"></label>
@@ -63,7 +44,7 @@
         </div>
 
         <div class="text-end">
-            <a type="button" class="btn btn-secondary" th:href="@{/board/list}">목록</a>
+            <a type="button" class="btn btn-secondary" th:href="@{/notice/list}">목록</a>
             <button type="button" class="btn btn-danger" id="boardDelete">삭제</button>
             <button type="submit" class="btn btn-primary">제출</button>
         </div>
@@ -72,6 +53,6 @@
 <script type="text/javascript" th:src="@{/js/summernote/summernote-ko-KR.js}"></script>
 <script type="text/javascript" th:src="@{/js/summernote/summernote-lite.js}" defer></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" th:src="@{/js/boardModify.js}"></script>
+<script type="text/javascript" th:src="@{/js/noticeModify.js}"></script>
 </body>
 </html>

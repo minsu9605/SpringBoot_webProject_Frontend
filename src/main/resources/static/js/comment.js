@@ -22,7 +22,6 @@ function commentPost() {
 /*댓글 목록*/
 function getCommentList() {
 
-
     $.ajax({
         type: "get",
         url: "/comment/list",
@@ -45,7 +44,7 @@ function getCommentList() {
                     html += "<span style='cursor: pointer; color: blue' id='reCommentBtn'>답글 달기 </span>";
                     html += "<span style='display:none; cursor: pointer; color: blue' id='reCommentCloseBtn'>답글 닫기 </span>";
                     if (data.list[i].writer === $("#sessionNickname").val()) {
-                        html += "<span style='cursor: pointer; color: blue' id='commentMod' data-toggle='modal' data-target='#modifyModal' >수정 </span>";
+                        html += "<span style='cursor: pointer; color: blue' id='commentMod' data-toggle='modal' data-target='#modifyModal'>수정 </span>";
                         html += "<span style='cursor: pointer; color: blue' id='commentDel'>삭제</span>";
 
                     }  else if($("#sessionRole").val() === "ROLE_ADMIN"){
@@ -67,6 +66,7 @@ function getCommentList() {
         }
     });
 }
+
 /*날짜 계산*/
 function displayTime(timeValue) {
     const dateObj = new Date(timeValue);
@@ -86,7 +86,7 @@ $(document).on("click","#reCommentCloseBtn",function (){
     reComment.find("#reCommentCloseBtn").hide();
 });
 
-/*답글 달기 버튼 클릭*/
+/*대댓글 버튼 클릭*/
 $(document).on("click","#reCommentBtn",function (){
 
     const reComment = $(this).parent();
@@ -134,6 +134,7 @@ $(document).on("click","#reCommentBtn",function (){
         }
     });
 
+    /*대댓글 작성*/
     $(document).on("click", "#reCommentSubmit", function () {
 
         const cComment = reComment.find("#reComment").val();
@@ -160,12 +161,39 @@ $(document).on("click", "#commentMod", function () {
     const comment_text = comment.find("#commentText").text();
     const comment_writer = comment.find("#commentWriter").text();
 
-
     console.log("수정 id : "+comment_id);
 
     $("#comment_id").val(comment_id);
     $("#comment_text").val(comment_text);
     $("#comment_writer").val(comment_writer);
+});
+
+
+
+/*모달창 수정 버튼*/
+$(".modalModBtn").on("click", function () {
+    const comment_id = $("#comment_id").val();
+    const comment_text = $("#comment_text").val();
+    if (!confirm("댓글을 수정하시겠습니까?")) {
+        return false;
+    } else {
+        $.ajax({
+            type: 'put',
+            url: "/comment/modify",
+            data: {"cid": comment_id, "comment": comment_text},
+            success: function (result) {
+                if (result == "success") {
+                    alert("댓글을 수정하였습니다.");
+                } else {
+                    alert("오류가 발생하였습니다. 다시 시도해주세요")
+                }
+                location.reload();
+            },
+            error: function (request, status, error) {
+                alert("code: " + request.status + "\n" + "error: " + error);
+            }
+        });
+    }
 });
 
 /*댓글 삭제*/
@@ -189,32 +217,6 @@ $(document).on("click","#commentDel",function (){
                 }else{
                     alert(count+"개의 답글이 있습니다. 댓글을 삭제 할 수 없습니다.")
                 }
-            },
-            error: function (request, status, error) {
-                alert("code: " + request.status + "\n" + "error: " + error);
-            }
-        });
-    }
-});
-
-/*댓글 수정*/
-$(".modalModBtn").on("click", function () {
-    const comment_id = $("#comment_id").val();
-    const comment_text = $("#comment_text").val();
-    if (!confirm("댓글을 수정하시겠습니까?")) {
-        return false;
-    } else {
-        $.ajax({
-            type: 'put',
-            url: "/comment/modify",
-            data: {"cid": comment_id, "comment": comment_text},
-            success: function (result) {
-                if (result == "success") {
-                    alert("댓글을 수정하였습니다.");
-                } else {
-                    alert("오류가 발생하였습니다. 다시 시도해주세요")
-                }
-                location.reload();
             },
             error: function (request, status, error) {
                 alert("code: " + request.status + "\n" + "error: " + error);

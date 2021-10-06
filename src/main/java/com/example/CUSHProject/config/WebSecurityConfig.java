@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/","/welcome","/account/register","/login","/board/list/**","/overlap/**").permitAll()
+                    .antMatchers("/","/welcome","/account/register","/login","/board/list/**","/overlap/**","/notice/**").permitAll()
                     .antMatchers("/admin/**").hasRole("ADMIN")
                     //.antMatchers("/hello").hasRole("MEMBER")
                     .anyRequest().authenticated()

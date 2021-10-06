@@ -44,17 +44,17 @@ function uploadSummernoteImageFile(file, editor) {
 }
 
 $("#boardDelete").on("click",function() {
-    if(!confirm("게시물을 삭제하시겠습니까?")){
+    if(!confirm("공지사항을 삭제하시겠습니까?")){
         return false;
     }else{
         $.ajax({
             type:"delete",
-            url : "/board/delete",
+            url : "/notice/delete",
             data : {"id" : $("#id").val()},
             success: function (result){
                     console.log("결과: " +result);
-                    alert("게시물을 삭제 하였습니다.");
-                    window.location.href='/board/list?category=1';
+                    alert("공지사항을 삭제 하였습니다.");
+                    window.location.href='/notice/list';
             },
             error: function (request, status, error){
                 alert("code : " +  request.status + "\n" + "error : " + error);

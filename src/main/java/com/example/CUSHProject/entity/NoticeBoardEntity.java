@@ -1,36 +1,35 @@
 package com.example.CUSHProject.entity;
 
 import com.example.CUSHProject.dto.BoardDto;
-import com.example.CUSHProject.enums.Rating;
+import com.example.CUSHProject.dto.NoticeBoardDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.lang.reflect.Member;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @NoArgsConstructor
 @Getter
 @Entity
-@Table(name="BOARD")
+@Table(name="NOTICEBOARD")
 @SequenceGenerator(
-        name = "BOARD_SEQ_GEN",
-        sequenceName = "BOARD_SEQ",
+        name = "NOTICEBOARD_SEQ_GEN",
+        sequenceName = "NOTICEBOARD_SEQ",
         initialValue = 1,
         allocationSize = 1
 )
 
-public class BoardEntity{
+public class NoticeBoardEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BOARD_SEQ_GEN")
-    @Column(name = "BOARD_ID")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "NOTICEBOARD_SEQ_GEN")
+    @Column(name = "NOTICE_ID")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "Board_WRITER")
+    @JoinColumn(name = "BOARD_WRITER")
     private MemberEntity writer;
 
     @Column(name = "TITLE")
@@ -50,24 +49,13 @@ public class BoardEntity{
     @Column(name = "HIT")
     private int hit;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "RATING")
-    private Rating rating;
-
-    @ManyToOne
-    @JoinColumn(name = "CATEGORY_ID")
-    private BoardCategoryEntity category;
-
-    public void setCategory(BoardCategoryEntity category){
-        this.category=category;
-    }
     public void setWriter(MemberEntity memberEntity){
         this.writer=memberEntity;
     }
 
-    public BoardDto toDto() {
+    public NoticeBoardDto toDto() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        return BoardDto.builder()
+        return NoticeBoardDto.builder()
                 .id(id)
                 .title(title)
                 .writer(writer.getNickname())
@@ -75,18 +63,15 @@ public class BoardEntity{
                 .createdDate(createdDate.format(formatter))
                 .updatedDate(updatedDate.format(formatter))
                 .hit(hit)
-                .rating(rating)
-                .categoryName(category.getName())
                 .build();
     }
     @Builder
-    public BoardEntity(Long id, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate,int hit, Rating rating) {
+    public NoticeBoardEntity(Long id, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate, int hit) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
         this.hit = hit;
-        this.rating = rating;
     }
 }
