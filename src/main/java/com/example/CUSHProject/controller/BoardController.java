@@ -27,7 +27,6 @@ public class BoardController {
     private final BoardService boardService;
     private final CategoryService categoryService;
 
-
     @GetMapping("/board/list")
     public String boardList(Model model) {
         model.addAttribute("categoryList",categoryService.getCategory());
@@ -36,13 +35,10 @@ public class BoardController {
 
     @GetMapping("/board/list/table")
     @ResponseBody
-    public HashMap<String, Object> getBoardList(@RequestParam(defaultValue = "title") String searchType,
-                                                @RequestParam(required = false, defaultValue = "")String keyword,
-                                                @RequestParam(required = false) Long categoryId){
-
+    public HashMap<String, Object> getBoardList(@RequestParam(required = false) Long categoryId){
         HashMap<String, Object> map = new HashMap<>();
         int notice =0;
-        List<BoardDto> boardDtoList = boardService.getBoardList(searchType, keyword, notice, categoryId);
+        List<BoardDto> boardDtoList = boardService.getBoardList(notice, categoryId);
         map.put("list", boardDtoList);
         return map;
     }

@@ -70,32 +70,17 @@ public class BoardService {
         return boardQueryRepository.findByKeyword(keyword, notice);
     }
 
-    public List<BoardDto> getBoardList(String searchType, String keyword, int notice, Long categoryId){
+    public List<BoardDto> getBoardList(int notice, Long categoryId){
         BoardCategoryEntity boardCategoryEntity = boardCategoryRepository.findById(categoryId).orElse(null);
-        List<BoardEntity> boardEntityList = null;
+        List<BoardEntity> boardEntityList = boardRepository.findByNoticeAndCategoryOrderByIdDesc(notice,boardCategoryEntity);
         List<BoardDto> boardDtoList = new ArrayList<>();
-        if(notice == 0){
-            if(searchType.equals("title")) {
-                boardEntityList = boardRepository.findByNoticeAndCategory(notice,boardCategoryEntity);
-//                boardEntityList = boardRepository.findByNoticeAndCategoryAndTitleContaining(notice,category,keyword);
-            }else if (searchType.equals("content")){
-                boardEntityList = boardRepository.findByNoticeAndCategoryAndContentContaining(notice,boardCategoryEntity,keyword);
-            }else if(searchType.equals("writer")){
-                boardEntityList = boardRepository.findByNoticeAndCategoryAndWriterContaining(notice,boardCategoryEntity,keyword);
-            }
-        } else if(notice == 1){
-            if(searchType.equals("title")) {
-                boardEntityList = boardRepository.findByNoticeAndCategoryAndTitleContaining(notice,boardCategoryEntity,keyword);
-            }else if (searchType.equals("content")){
-                boardEntityList = boardRepository.findByNoticeAndCategoryAndContentContaining(notice,boardCategoryEntity,keyword);
-            }
-        }
+
         for(BoardEntity boardEntity : boardEntityList){
             boardDtoList.add(boardEntity.toDto());
         }
-
         return boardDtoList;
     }
+
 
     //보드 글 상세보기
     public BoardDto boardContent(Long id) {
