@@ -98,6 +98,11 @@ public class BoardController {
         return "redirect:/board/list?category=1";
     }
 
+    @GetMapping("/board/map")
+    public String showMap(){
+        return "board/map";
+    }
+
     @ResponseBody
     @PostMapping("/uploadSummernoteImageFile")
     public JsonObject uploadSummernoteImageFile(@RequestParam("file")MultipartFile multipartFile) {

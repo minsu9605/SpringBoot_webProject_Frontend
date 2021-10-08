@@ -3,7 +3,6 @@
 
 <head th:replace="fragments/common :: head('게시판')"></head>
 
-
 <link th:href="@{/css/summernote/summernote-lite.css}" rel="stylesheet">
 <link th:href="@{/css/boardForm.css}" rel="stylesheet">
 
@@ -21,7 +20,7 @@
         </div>
         <hr>
 
-        <div class="mb-3" id="dropDown">
+        <div class="mb-3" id="options">
             <div class="dropdown" id="divCategory">
                 <label class="form-label" for="categoryName">종류</label>
                 <select class="form-control" id="categoryName" name="categoryName">
@@ -40,12 +39,16 @@
                     </option>
                 </select>
             </div>
+            <div class="mapDiv">
+                <button id="mapButton" type="button" class="btn btn-success">거래 장소 정하기</button>
+            </div>
         </div>
 
         <div class="mb-3" id="divTitle">
             <label class="form-label" for="title"></label>
             <input type="text" class="form-control" id="title" name="title" placeholder="제목을 작성해 주세요.">
         </div>
+
 
         <div class="mb-3" id="divContent">
             <label class="form-label" for="content"></label>
@@ -58,9 +61,11 @@
         </div>
     </form>
 </div>
-<script type="text/javascript" th:src="@{/js/summernote/summernote-ko-KR.js}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 <script type="text/javascript" th:src="@{/js/summernote/summernote-lite.js}" defer></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
 <script type="text/javascript" th:src="@{/js/boardForm.js}"></script>
+
 </body>
 </html>

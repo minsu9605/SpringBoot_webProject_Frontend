@@ -57,9 +57,7 @@ $(document).ready(function () {
     });
 });
 
-/**
- * 이미지 파일 업로드
- */
+/*이미지 파일 업로드*/
 function uploadSummernoteImageFile(file, editor) {
     const data = new FormData();
     data.append("file", file);
@@ -75,3 +73,10 @@ function uploadSummernoteImageFile(file, editor) {
         }
     });
 }
+
+$("#mapButton").on('click',function (){
+    window.open("/board/map","map","width=900,height=680,left=300,top=100");
+
+});
+
+
