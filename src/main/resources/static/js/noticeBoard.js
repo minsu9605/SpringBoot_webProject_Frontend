@@ -25,9 +25,9 @@ function getList(){
         columns: [
             {header: '번호', name: 'id', width: 'auto',align: 'center'},
             {header: '제목', name: 'title', width: 700},
-            {header: '작성자', name: 'writer', align: 'center'},
+            {header: '작성자', name: 'writer', width: 'auto', align: 'center'},
             {header: '작성일', name: 'createdDate', align: 'center', width: 120},
-            {header: '조회수', name: 'hit', align: 'center'}
+            {header: '조회수', name: 'hit', width: 'auto', align: 'center'}
         ],
         pageOptions: {
             perPage: 5

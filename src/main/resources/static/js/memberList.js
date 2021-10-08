@@ -48,11 +48,11 @@ function getList() {
         columns: [
             {header: 'NO', name: 'id', width: 'auto',align: 'center'},
             {header: '아이디', name: 'username', width: 300, align: 'center'},
-            {header: '이름(닉네임)', name: 'nickname', align: 'center'},
-            {header: '생년월일', name: 'birth', align: 'center'},
+            {header: '이름(닉네임)', name: 'nickname', width: 'auto',align: 'center'},
+            {header: '생년월일', name: 'birth', width: 'auto',align: 'center'},
             {header: '나이', name: 'age', align: 'center', width: 120},
-            {header: '성별', name: 'gender', align: 'center'},
-            {header: '권한', name: 'role_name', align: 'center'}
+            {header: '성별', name: 'gender', width: 'auto',align: 'center'},
+            {header: '권한', name: 'role_name', width: 'auto',align: 'center'}
         ],
         pageOptions: {
             perPage: 5

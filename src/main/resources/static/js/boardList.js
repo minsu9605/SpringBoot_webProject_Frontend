@@ -24,11 +24,11 @@ function getList() {
 
         columns: [
             {header: '번호', name: 'id', width: 'auto',align: 'center'},
-            {header: '제목', name: 'title', width: 700, filter: {type: 'text'}},
-            {header: '작성자', name: 'writer', align: 'center', filter: {type: 'text'}},
-            {header: '카테고리', name: 'categoryName', align: 'center'},
+            {header: '제목', name: 'title', width: 700},
+            {header: '작성자', name: 'writer', align: 'center', width : 'auto'},
+            {header: '카테고리', name: 'categoryName', width: 'auto',align: 'center'},
             {header: '작성일', name: 'createdDate', align: 'center', width: 120},
-            {header: '조회수', name: 'hit', align: 'center'}
+            {header: '조회수', name: 'hit', align: 'center', width: 'auto'}
         ],
         pageOptions: {
             //useClient: true,
