@@ -14,7 +14,7 @@ const marker = new kakao.maps.Marker({
 
 // 마커 위에 표시할 인포윈도우를 생성한다
 const infowindow = new kakao.maps.InfoWindow({
-    content : '<div style="padding:5px;">인포윈도우 :D</div>' // 인포윈도우에 표시할 내용
+    content : '<div style="padding:5px;">현재위치 :D</div>' // 인포윈도우에 표시할 내용
 });
 
 // 인포윈도우를 지도에 표시한다
@@ -28,9 +28,12 @@ function locationLoadSuccess(pos){
     map.panTo(currentPos);
 
     // 마커 생성
-    const marker = new kakao.maps.Marker({
+    marker.setPosition(currentPos);
+    infowindow.open(map, marker);
+
+    /*const marker = new kakao.maps.Marker({
         position: currentPos
-    });
+    });*/
 
     // 기존에 마커가 있다면 제거
     marker.setMap(null);
