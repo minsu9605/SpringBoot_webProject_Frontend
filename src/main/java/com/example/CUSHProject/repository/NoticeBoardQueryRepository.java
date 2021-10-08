@@ -1,11 +1,13 @@
 package com.example.CUSHProject.repository;
 
-import com.example.CUSHProject.entity.QBoardEntity;
-import com.example.CUSHProject.entity.QNoticeBoardEntity;
+import com.example.CUSHProject.entity.*;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Repository
@@ -21,4 +23,36 @@ public class NoticeBoardQueryRepository {
                 .where(QNoticeBoardEntity.noticeBoardEntity.id.eq(id))
                 .execute();
     }
+
+    /*조회된 리스트 전체 크기*/
+    public Long getTotalCount(String searchType, String keyword){
+        return queryFactory.selectFrom(QNoticeBoardEntity.noticeBoardEntity)
+                .where(eqSearchType(searchType,keyword))
+                .fetchCount();
+    }
+
+    /*한페이지 출력 리스트*/
+    public List<NoticeBoardEntity> getNoticeList(int page, int perPage, String searchType, String keyword){
+        int start = (page * perPage) - perPage;
+        return queryFactory.selectFrom(QNoticeBoardEntity.noticeBoardEntity)
+                .where(eqSearchType(searchType,keyword))
+                .orderBy(QNoticeBoardEntity.noticeBoardEntity.id.desc())
+                .offset(start)
+                .limit(perPage)
+                .fetch();
+    }
+
+    /*검색조건 분기 함수*/
+    private BooleanExpression eqSearchType(String searchType, String keyword){
+        if(!keyword.equals("")){
+            switch (searchType) {
+                case "title":
+                    return QNoticeBoardEntity.noticeBoardEntity.title.contains(keyword);
+                case "content":
+                    return QNoticeBoardEntity.noticeBoardEntity.content.contains(keyword);
+            }
+        }
+        return null;
+    }
+
 }

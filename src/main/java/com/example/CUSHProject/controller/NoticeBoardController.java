@@ -1,5 +1,6 @@
 package com.example.CUSHProject.controller;
 
+import com.example.CUSHProject.dto.BoardDto;
 import com.example.CUSHProject.dto.NoticeBoardDto;
 import com.example.CUSHProject.service.NoticeBoardService;
 import com.google.gson.JsonObject;
@@ -27,12 +28,25 @@ public class NoticeBoardController {
     /*공지사항 api*/
     @GetMapping("/notice/list/table")
     @ResponseBody
-    public HashMap<String, Object> getNoticeList(){
-        HashMap<String, Object> map = new HashMap<>();
+    public HashMap<String, Object> getNoticeList( @RequestParam(required = false) int page,
+                                                  @RequestParam(required = false) int perPage,
+                                                  @RequestParam(required = false) String searchType,
+                                                  @RequestParam(required = false, defaultValue = "") String keyword){
+        HashMap<String, Object> objectMap = new HashMap<>();
+        HashMap<String, Object> dataMap = new HashMap<>();
+        HashMap<String, Object> paginationMap = new HashMap<>();
 
-        List<NoticeBoardDto> noticeBoardDtoList = noticeBoardService.getNoticeBoardList();
-        map.put("list", noticeBoardDtoList);
-        return map;
+
+        int total = noticeBoardService.getTotalSize(searchType,keyword);
+        List<NoticeBoardDto> noticeBoardDtoList = noticeBoardService.getNoticeBoardList(page, perPage, searchType, keyword);
+
+        objectMap.put("result", true);
+        objectMap.put("data", dataMap);
+        dataMap.put("contents", noticeBoardDtoList);
+        dataMap.put("pagination", paginationMap);
+        paginationMap.put("page", page);
+        paginationMap.put("totalCount", total);
+        return objectMap;
     }
 
     //글쓰기

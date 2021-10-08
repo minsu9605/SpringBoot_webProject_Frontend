@@ -18,7 +18,7 @@ public class CategoryService {
 
     private final BoardCategoryRepository boardCategoryRepository;
 
-    public List<BoardCategoryDto> getCategory() {
+    public List<BoardCategoryDto> getCategoryList() {
         List<BoardCategoryEntity> boardCategoryRepositoryAll = boardCategoryRepository.findAll();
         List<BoardCategoryDto> boardCategoryDtoList = new ArrayList<>();
 

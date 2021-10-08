@@ -32,9 +32,10 @@ public class BoardService {
     private final BoardCommentRepository boardCommentRepository;
 
 
-    public List<BoardDto> getBoardList(Long categoryId){
+    /*한페이지 출력 리스트*/
+    public List<BoardDto> getBoardList(Long categoryId, int page, int perPage, String searchType, String keyword){
         BoardCategoryEntity boardCategoryEntity = boardCategoryRepository.findById(categoryId).orElse(null);
-        List<BoardEntity> boardEntityList = boardRepository.findByCategoryOrderByIdDesc(boardCategoryEntity);
+        List<BoardEntity> boardEntityList = boardQueryRepository.getBoardList(boardCategoryEntity,page,perPage,searchType,keyword);
         List<BoardDto> boardDtoList = new ArrayList<>();
 
         for(BoardEntity boardEntity : boardEntityList){
@@ -43,6 +44,11 @@ public class BoardService {
         return boardDtoList;
     }
 
+    /*조회된 전체 데이터 수*/
+    public int getTotalSize(Long categoryId, String searchType, String keyword){
+        BoardCategoryEntity boardCategoryEntity = boardCategoryRepository.findById(categoryId).orElse(null);
+        return Math.toIntExact(boardQueryRepository.getTotalCount(boardCategoryEntity,searchType,keyword));
+    }
 
     //보드 글 상세보기
     public BoardDto boardContent(Long id) {

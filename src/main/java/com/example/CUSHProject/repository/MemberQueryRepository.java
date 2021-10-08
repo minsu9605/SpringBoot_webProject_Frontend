@@ -2,13 +2,17 @@ package com.example.CUSHProject.repository;
 
 import com.example.CUSHProject.dto.MemberDto;
 import com.example.CUSHProject.entity.MemberEntity;
+import com.example.CUSHProject.entity.NoticeBoardEntity;
 import com.example.CUSHProject.entity.QMemberEntity;
+import com.example.CUSHProject.entity.QNoticeBoardEntity;
 import com.querydsl.core.QueryResults;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Repository
@@ -65,6 +69,37 @@ public class MemberQueryRepository {
                 .set(QMemberEntity.memberEntity.password, memberDto.getPassword())
                 .where(QMemberEntity.memberEntity.username.eq(memberDto.getUsername()))
                 .execute();
+    }
+
+    /*조회된 리스트 전체 크기*/
+    public Long getTotalCount(String searchType, String keyword){
+        return queryFactory.selectFrom(QMemberEntity.memberEntity)
+                .where(eqSearchType(searchType,keyword))
+                .fetchCount();
+    }
+
+    /*한페이지 출력 리스트*/
+    public List<MemberEntity> getMemberList(int page, int perPage, String searchType, String keyword){
+        int start = (page * perPage) - perPage;
+        return queryFactory.selectFrom(QMemberEntity.memberEntity)
+                .where(eqSearchType(searchType,keyword))
+                .orderBy(QMemberEntity.memberEntity.id.desc())
+                .offset(start)
+                .limit(perPage)
+                .fetch();
+    }
+
+    /*검색조건 분기 함수*/
+    private BooleanExpression eqSearchType(String searchType, String keyword){
+        if(!keyword.equals("")){
+            switch (searchType) {
+                case "username":
+                    return QMemberEntity.memberEntity.username.contains(keyword);
+                case "nickname":
+                    return QMemberEntity.memberEntity.nickname.contains(keyword);
+            }
+        }
+        return null;
     }
 
 

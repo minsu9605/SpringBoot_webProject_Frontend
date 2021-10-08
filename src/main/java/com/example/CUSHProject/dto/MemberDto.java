@@ -25,6 +25,8 @@ public class MemberDto implements Serializable {
     private String month;
     private String day;
     private Role role;
+    private String role_name;
+    private String gender_name;
 
     //나이 계산
     public int calAge(String birth){
@@ -46,12 +48,11 @@ public class MemberDto implements Serializable {
                 .birth(year +  "-" + month + "-" +day)
                 .age(calAge(year + month +day))
                 .role(role)
-                //.role(Role.valueOf(role))
                 .build();
     }
 
     @Builder
-    public MemberDto(Long id, String username, String password, String nickname, Gender gender, String year, String month, String day,Role role) {
+    public MemberDto(Long id, String username, String password, String nickname, Gender gender, String year, String month, String day, Role role, String role_name, String gender_name) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -61,6 +62,8 @@ public class MemberDto implements Serializable {
         this.month=month;
         this.day=day;
         this.role=role;
+        this.role_name = role.getTitle();
+        this.gender_name = role.getTitle();
 
     }
 

@@ -2,7 +2,11 @@ package com.example.CUSHProject.service;
 
 import com.example.CUSHProject.Pagination.Paging;
 import com.example.CUSHProject.dto.MemberDto;
+import com.example.CUSHProject.dto.NoticeBoardDto;
+import com.example.CUSHProject.entity.BoardCategoryEntity;
+import com.example.CUSHProject.entity.BoardEntity;
 import com.example.CUSHProject.entity.MemberEntity;
+import com.example.CUSHProject.entity.NoticeBoardEntity;
 import com.example.CUSHProject.enums.Role;
 import com.example.CUSHProject.repository.MemberQueryRepository;
 import com.example.CUSHProject.repository.MemberRepository;
@@ -23,6 +27,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,18 +46,10 @@ public class MemberService implements UserDetailsService {
     public Long singUp(MemberDto memberDto) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         memberDto.setPassword(passwordEncoder.encode(memberDto.getPassword()));
-
-        //memberDto.setRole(Role.ROLE_MEMBER.getValue());
         memberDto.setRole(Role.ROLE_MEMBER);
 
-        /*if(memberDto.getNickname().equals("admin")) {
-            memberDto.setRole(Role.ADMIN.getValue());
-        } else {
-            memberDto.setRole(Role.MEMBER.getValue());
-        }*/
         return memberRepository.save(memberDto.toEntity()).getId();
     }
-
 
     //로그인
     @Override
@@ -68,26 +65,13 @@ public class MemberService implements UserDetailsService {
     public MemberDto memberInfo(String email) {
         MemberEntity memberEntity = memberQueryRepository.findByUsername(email);
 
-        String[] str = memberEntity.getBirth().split("-");
-
-        MemberDto memberDto = MemberDto.builder()
-                .id(memberEntity.getId())
-                .username(memberEntity.getUsername())
-                .password(memberEntity.getPassword())
-                .nickname(memberEntity.getNickname())
-                .year(str[0])
-                .month(str[1])
-                .day(str[2])
-                .gender(memberEntity.getGender())
-                .role(memberEntity.getRole())
-                .build();
-        return memberDto;
+        return memberEntity.toDto();
     }
 
     public MemberDto findById(Long id) {
         Optional<MemberEntity> memberEntity = memberRepository.findById(id);
 
-        String[] str = memberEntity.get().getBirth().split("-");
+       /* String[] str = memberEntity.get().getBirth().split("-");
 
         MemberDto memberDto = MemberDto.builder()
                 .id(memberEntity.get().getId())
@@ -100,8 +84,8 @@ public class MemberService implements UserDetailsService {
                 .gender(memberEntity.get().getGender())
                 .role(memberEntity.get().getRole())
                 //    .role(memberEntity.get().getRole().getValue())
-                .build();
-        return memberDto;
+                .build();*/
+        return memberEntity.get().toDto();
     }
 
     public void memberUpdate(MemberDto memberDto) {
@@ -172,6 +156,22 @@ public class MemberService implements UserDetailsService {
         HashMap<String, Object> map = new HashMap<>();
         map.put("result", findNickname.contains(nickname));
         return map;
+    }
+
+    /*회원 목록*/
+    public List<MemberDto> getMemberList(int page, int perPage, String searchType, String keyword){
+        List<MemberEntity> memberEntityList = memberQueryRepository.getMemberList(page,perPage,searchType,keyword);
+        List<MemberDto> memberDtoList = new ArrayList<>();
+
+        for(MemberEntity memberEntity : memberEntityList){
+            memberDtoList.add(memberEntity.toDto());
+        }
+        return memberDtoList;
+    }
+
+    /*조회된 전체 데이터 수*/
+    public int getTotalSize(String searchType, String keyword){
+        return Math.toIntExact(memberQueryRepository.getTotalCount(searchType,keyword));
     }
 
 }

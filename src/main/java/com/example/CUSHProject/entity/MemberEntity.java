@@ -1,5 +1,6 @@
 package com.example.CUSHProject.entity;
 
+import com.example.CUSHProject.dto.BoardDto;
 import com.example.CUSHProject.dto.MemberDto;
 import com.example.CUSHProject.enums.Gender;
 import com.example.CUSHProject.enums.Role;
@@ -10,6 +11,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.lang.reflect.Member;
+import java.time.format.DateTimeFormatter;
 
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -52,6 +55,22 @@ public class MemberEntity {
     @Column
     private Role role;
 
+    public MemberDto toDto() {
+
+        String[] str = birth.split("-");
+
+        return MemberDto.builder()
+                .id(id)
+                .username(username)
+                .password(password)
+                .nickname(nickname)
+                .gender(gender)
+                .year(str[0])
+                .month(str[1])
+                .day(str[2])
+                .role(role)
+                .build();
+    }
 
     @Builder
     public MemberEntity(Long id, String username, String password, String nickname, Gender gender, String birth, int age, Role role){

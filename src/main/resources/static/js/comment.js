@@ -40,15 +40,14 @@ function getCommentList() {
                     html += "<h5 id='commentText' style='display: inline'>" + data.list[i].comment +"</h5>";
                     html += "<span id='ccCount' style='color: red'> ["+data.commentCnt[i]+"]</span>"
                     html += "</div>"
-                    // html += "<a href='#none' id='reComment'>답글 달기 </a>";
                     html += "<span style='cursor: pointer; color: blue' id='reCommentBtn'>답글 달기 </span>";
                     html += "<span style='display:none; cursor: pointer; color: blue' id='reCommentCloseBtn'>답글 닫기 </span>";
                     if (data.list[i].writer === $("#sessionNickname").val()) {
-                        html += "<span style='cursor: pointer; color: blue' id='commentMod' data-toggle='modal' data-target='#modifyModal'>수정 </span>";
-                        html += "<span style='cursor: pointer; color: blue' id='commentDel'>삭제</span>";
+                        html += "<span style='cursor: pointer; color: blue' class='commentMod' data-toggle='modal' data-target='#modifyModal'>수정 </span>";
 
+                        html += "<span style='cursor: pointer; color: blue' class='commentDel'>삭제</span>";
                     }  else if($("#sessionRole").val() === "ROLE_ADMIN"){
-                        html += "<span style='cursor: pointer; color: blue' id='commentDel'>삭제</span>";
+                        html += "<span style='cursor: pointer; color: blue' class='commentDel'>삭제</span>";
                     }
                     html += "<hr>";
                     html += "<div class='mx-4' id='reCommentDiv'></div></div>";
@@ -111,10 +110,10 @@ $(document).on("click","#reCommentBtn",function (){
                     html += "<span style='float:right;' align='right' id='commentDate'> " + displayTime(data.list[i].updateDate) + " </span>";
                     html += "<h5 id='commentText'>" + data.list[i].comment + "</h5>";
                     if (data.list[i].writer === $("#sessionNickname").val()) {
-                        html += "<span style='cursor: pointer; color: blue' id='commentMod' data-toggle='modal' data-target='#modifyModal' >수정 </span>";
-                        html += "<span style='cursor: pointer; color: blue' id='commentDel'>삭제</span>";
+                        html += "<span style='cursor: pointer; color: blue' class='commentMod' data-toggle='modal' data-target='#modifyModal' >수정 </span>";
+                        html += "<span style='cursor: pointer; color: blue' class='commentDel'>삭제</span>";
                     } else if($("#sessionRole").val() === "ROLE_ADMIN"){
-                        html += "<span style='cursor: pointer; color: blue' id='commentDel'>삭제</span>";
+                        html += "<span style='cursor: pointer; color: blue' class='commentDel'>삭제</span>";
                     }
                     html += "<hr></div>";
                 }
@@ -154,21 +153,18 @@ $(document).on("click","#reCommentBtn",function (){
     });
 });
 
-/*모달창에 값 넣기*/
-$(document).on("click", "#commentMod", function () {
+/*수정버튼 클릭*/
+$(document).on("click", ".commentMod", function () {
     const comment = $(this).parent();
     const comment_id = comment.find("#commentId").val()
     const comment_text = comment.find("#commentText").text();
     const comment_writer = comment.find("#commentWriter").text();
 
-    console.log("수정 id : "+comment_id);
-
     $("#comment_id").val(comment_id);
     $("#comment_text").val(comment_text);
     $("#comment_writer").val(comment_writer);
+
 });
-
-
 
 /*모달창 수정 버튼*/
 $(".modalModBtn").on("click", function () {
@@ -197,7 +193,7 @@ $(".modalModBtn").on("click", function () {
 });
 
 /*댓글 삭제*/
-$(document).on("click","#commentDel",function (){
+$(document).on("click",".commentDel",function (){
     const comment = $(this).parent();
     const comment_id = comment.find("#commentId").val();
 

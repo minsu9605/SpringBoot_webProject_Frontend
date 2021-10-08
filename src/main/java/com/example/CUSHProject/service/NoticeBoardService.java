@@ -33,15 +33,19 @@ public class NoticeBoardService {
     private final MemberRepository memberRepository;
     private final NoticeBoardQueryRepository noticeBoardQueryRepository;
 
-    public List<NoticeBoardDto> getNoticeBoardList(){
-        List<NoticeBoardEntity> noticeBoardEntityList = noticeBoardRepository.findAll();
+    public List<NoticeBoardDto> getNoticeBoardList(int page, int perPage, String searchType, String keyword){
+        List<NoticeBoardEntity> noticeBoardEntityList = noticeBoardQueryRepository.getNoticeList(page,perPage,searchType,keyword);
         List<NoticeBoardDto> noticeBoardDtoList = new ArrayList<>();
 
         for(NoticeBoardEntity noticeBoardEntity : noticeBoardEntityList){
             noticeBoardDtoList.add(noticeBoardEntity.toDto());
         }
         return noticeBoardDtoList;
+    }
 
+    /*조회된 전체 데이터 수*/
+    public int getTotalSize(String searchType, String keyword){
+        return Math.toIntExact(noticeBoardQueryRepository.getTotalCount(searchType,keyword));
     }
 
     /*글 작성 후 전송*/
