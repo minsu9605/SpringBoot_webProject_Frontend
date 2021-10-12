@@ -49,6 +49,9 @@ public class NoticeBoardEntity {
     @Column(name = "HIT")
     private int hit;
 
+    @Column(name = "WRITE_IP")
+    private String writeIp;
+
     public void setWriter(MemberEntity memberEntity){
         this.writer=memberEntity;
     }
@@ -63,15 +66,17 @@ public class NoticeBoardEntity {
                 .createdDate(createdDate.format(formatter))
                 .updatedDate(updatedDate.format(formatter))
                 .hit(hit)
+                .writeIp(writeIp)
                 .build();
     }
     @Builder
-    public NoticeBoardEntity(Long id, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate, int hit) {
+    public NoticeBoardEntity(Long id, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate, int hit, String writeIp) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
         this.hit = hit;
+        this.writeIp=writeIp;
     }
 }

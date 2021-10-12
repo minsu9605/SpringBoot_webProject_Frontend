@@ -31,10 +31,6 @@ function locationLoadSuccess(pos){
     marker.setPosition(currentPos);
     infowindow.open(map, marker);
 
-    /*const marker = new kakao.maps.Marker({
-        position: currentPos
-    });*/
-
     // 기존에 마커가 있다면 제거
     marker.setMap(null);
     marker.setMap(map);

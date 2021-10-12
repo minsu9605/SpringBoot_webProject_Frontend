@@ -11,6 +11,7 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -67,7 +68,7 @@ public class BoardService {
     }
 
     /*게시글 등록 후 전송*/
-    public BoardDto boardWrite(BoardDto boardDto, String username){
+    public BoardDto boardWrite(BoardDto boardDto, String username, HttpServletRequest request){
         Optional<BoardCategoryEntity> boardCategoryEntity = boardCategoryRepository.findByName(boardDto.getCategoryName());
         Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
 
@@ -75,8 +76,15 @@ public class BoardService {
 
         boardDto.setCreatedDate(LocalDateTime.now().format(formatter));
         boardDto.setUpdatedDate(LocalDateTime.now().format(formatter));
-        BoardEntity boardEntity = boardDto.toEntity();
 
+        /*ip찾는 로직*/
+        String ip = request.getHeader("X-Forwarded-For");
+        if (ip == null) {
+            ip = request.getRemoteAddr();
+        }
+        boardDto.setWriteIp(ip);
+
+        BoardEntity boardEntity = boardDto.toEntity();
         boardEntity.setCategory(boardCategoryEntity.get());
         boardEntity.setWriter(memberEntity.get());
 

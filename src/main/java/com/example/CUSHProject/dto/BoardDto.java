@@ -25,6 +25,7 @@ public class BoardDto {
     private int hit;
     private Rating rating;
     private String categoryName;
+    private String writeIp;
 
     public BoardEntity toEntity() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -36,11 +37,12 @@ public class BoardDto {
                 .updatedDate(LocalDateTime.parse(updatedDate, formatter))
                 .hit(hit)
                 .rating(rating)
+                .writeIp(writeIp)
                 .build();
     }
 
     @Builder
-    public BoardDto(Long id, String writer, String title, String content, String createdDate, String updatedDate, int hit, Rating rating, String categoryName) {
+    public BoardDto(Long id, String writer, String title, String content, String createdDate, String updatedDate, int hit, Rating rating, String categoryName, String writeIp) {
         this.id=id;
         this.writer=writer;
         this.title=title;
@@ -50,5 +52,6 @@ public class BoardDto {
         this.hit=hit;
         this.rating=rating;
         this.categoryName=categoryName;
+        this.writeIp=writeIp;
     }
 }

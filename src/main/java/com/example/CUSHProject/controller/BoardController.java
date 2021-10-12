@@ -67,8 +67,8 @@ public class BoardController {
     }
 
     @PostMapping("/board/write")
-    public String boardWrite(BoardDto boardDto, Authentication authentication){
-        boardService.boardWrite(boardDto, authentication.getName());
+    public String boardWrite(BoardDto boardDto, Authentication authentication, HttpServletRequest request){
+        boardService.boardWrite(boardDto, authentication.getName(), request);
         return "redirect:/board/list?category=1";
     }
 

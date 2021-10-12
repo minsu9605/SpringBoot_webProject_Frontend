@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 
@@ -59,8 +60,8 @@ public class NoticeBoardController {
     }
 
     @PostMapping("/notice/write")
-    public String noticeBoardWrite(NoticeBoardDto noticeBoardDto, Authentication authentication){
-        noticeBoardService.noticeBoardWrite(noticeBoardDto, authentication.getName());
+    public String noticeBoardWrite(NoticeBoardDto noticeBoardDto, Authentication authentication, HttpServletRequest request){
+        noticeBoardService.noticeBoardWrite(noticeBoardDto, authentication.getName(), request);
         return "redirect:/notice/list";
     }
 

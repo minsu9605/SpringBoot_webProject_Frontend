@@ -15,6 +15,7 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,13 +50,20 @@ public class NoticeBoardService {
     }
 
     /*글 작성 후 전송*/
-    public NoticeBoardDto noticeBoardWrite(NoticeBoardDto noticeBoardDto, String username){
+    public NoticeBoardDto noticeBoardWrite(NoticeBoardDto noticeBoardDto, String username, HttpServletRequest request){
         Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         noticeBoardDto.setCreatedDate(LocalDateTime.now().format(formatter));
         noticeBoardDto.setUpdatedDate(LocalDateTime.now().format(formatter));
+        /*ip찾는 로직*/
+        String ip = request.getHeader("X-Forwarded-For");
+        if (ip == null) {
+            ip = request.getRemoteAddr();
+        }
+        noticeBoardDto.setWriteIp(ip);
+
         NoticeBoardEntity noticeBoardEntity = noticeBoardDto.toEntity();
 
         noticeBoardEntity.setWriter(memberEntity.get());

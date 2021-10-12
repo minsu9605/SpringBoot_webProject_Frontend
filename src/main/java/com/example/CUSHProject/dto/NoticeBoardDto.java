@@ -22,6 +22,7 @@ public class NoticeBoardDto {
     private String createdDate;
     private String updatedDate;
     private int hit;
+    private String writeIp;
 
 
     public NoticeBoardEntity toEntity() {
@@ -33,11 +34,12 @@ public class NoticeBoardDto {
                 .createdDate(LocalDateTime.parse(createdDate, formatter))
                 .updatedDate(LocalDateTime.parse(updatedDate, formatter))
                 .hit(hit)
+                .writeIp(writeIp)
                 .build();
     }
 
     @Builder
-    public NoticeBoardDto(Long id, String writer, String title, String content, String createdDate, String updatedDate, int hit) {
+    public NoticeBoardDto(Long id, String writer, String title, String content, String createdDate, String updatedDate, int hit, String writeIp) {
         this.id=id;
         this.writer=writer;
         this.title=title;
@@ -45,5 +47,6 @@ public class NoticeBoardDto {
         this.createdDate=createdDate;
         this.updatedDate=updatedDate;
         this.hit=hit;
+        this.writeIp=writeIp;
     }
 }

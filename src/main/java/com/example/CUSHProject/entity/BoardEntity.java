@@ -50,6 +50,9 @@ public class BoardEntity{
     @Column(name = "HIT")
     private int hit;
 
+    @Column(name = "WRITE_IP")
+    private String writeIp;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "RATING")
     private Rating rating;
@@ -64,7 +67,6 @@ public class BoardEntity{
     public void setWriter(MemberEntity memberEntity){
         this.writer=memberEntity;
     }
-
     public BoardDto toDto() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return BoardDto.builder()
@@ -80,7 +82,7 @@ public class BoardEntity{
                 .build();
     }
     @Builder
-    public BoardEntity(Long id, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate,int hit, Rating rating) {
+    public BoardEntity(Long id, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate,int hit, Rating rating, String writeIp) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -88,5 +90,6 @@ public class BoardEntity{
         this.updatedDate = updatedDate;
         this.hit = hit;
         this.rating = rating;
+        this.writeIp = writeIp;
     }
 }
