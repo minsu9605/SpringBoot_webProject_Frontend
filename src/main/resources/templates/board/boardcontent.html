@@ -35,7 +35,7 @@
     <hr>
 
     <div class="text-end mb-3">
-        <a type="button" class="btn btn-secondary" th:href="@{/board/list}">게시글 목록</a>
+        <a style="color: white" type="button" class="btn btn-secondary" onclick="history.back()">게시글 목록</a>
         <a class="btn btn-primary" id="modify" th:if="${boardForm.writer.equals(session.memberNickname)}" th:href="@{/board/modify(id=${boardForm.id})}">수정</a>
     </div>
 
@@ -85,5 +85,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script type="text/javascript" th:src="@{/js/boardcontent.js}"></script>
 <script type="text/javascript" th:src="@{/js/comment.js}"></script>
+<script th:src="@{/js/emoji/jquery.emojiFace.js}"></script>
+
 </body>
 </html>

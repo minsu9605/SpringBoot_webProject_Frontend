@@ -72,6 +72,17 @@ public class BoardController {
         return "redirect:/board/list?category=1";
     }
 
+   /* @ResponseBody
+    @GetMapping("/board/write/map")
+    public String boardMap(@RequestParam(required = false) double myLat,
+                           @RequestParam(required = false) double myLng){
+        boardService.saveMap(myLat, myLng);
+
+        System.out.println("확인"+myLat);
+        System.out.println("확인"+myLng);
+        return "a";
+    }*/
+
     @GetMapping("/board/content")
     public String boardContent(Model model, @RequestParam(required = false) Long id){
         boardService.boardHitUpdate(id);

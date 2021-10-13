@@ -1,5 +1,9 @@
 $(function () {
     getCommentList();
+    $("#comment").emojiInit({
+        fontSize : 18
+    });
+
 });
 
 /*댓글 등록*/
@@ -33,15 +37,15 @@ function getCommentList() {
             if (data.list.length > 0) {
                 for (let i = 0; i < data.list.length; i++) {
                     html += "<div class='mb-2'>";
-                    html += "<input type='hidden' id='commentId' value='" + data.list[i].id + "'>"
-                    html += "<b id='commentWriter'>" + data.list[i].writer + "</b>";
-                    html += "<span style='float:right;' align='right' id='commentDate'> " + displayTime(data.list[i].updateDate) + " </span>";
-                    html += "<div class='mb-1' >"
-                    html += "<h5 id='commentText' style='display: inline'>" + data.list[i].comment +"</h5>";
-                    html += "<span id='ccCount' style='color: red'> ["+data.commentCnt[i]+"]</span>"
+                    html += "<input type='hidden' id='commentId_"+ data.list[i].id +"' value='" + data.list[i].id + "'>"
+                    html += "<b id='commentWriter_" + data.list[i].id + "'>" + data.list[i].writer + "</b>";
+                    html += "<span style='float:right;' align='right' id='commentDate_"+ data.list[i].id +"'> " + displayTime(data.list[i].updateDate) + " </span>";
+                    html += "<div class='mb-1 comment_container' >"
+                    html += "<h5 id='commentText_" + data.list[i].id + "' style='display: inline'>" + data.list[i].comment +"</h5>";
+                    html += "<span id='ccCount_" + data.list[i].id + "' style='color: red'> ["+data.commentCnt[i]+"]</span>"
                     html += "</div>"
-                    html += "<span style='cursor: pointer; color: blue' id='reCommentBtn'>답글 달기 </span>";
-                    html += "<span style='display:none; cursor: pointer; color: blue' id='reCommentCloseBtn'>답글 닫기 </span>";
+                    html += "<span style='cursor: pointer; color: blue' class='reCommentBtn' id='reCommentBtn_"+ data.list[i].id +"'>답글 달기 </span>";
+                    html += "<span style='display:none; cursor: pointer; color: blue' class='reCommentCloseBtn' id='reCommentCloseBtn_"+ data.list[i].id +"'>답글 닫기 </span>";
                     if (data.list[i].writer === $("#sessionNickname").val()) {
                         html += "<span style='cursor: pointer; color: blue' class='commentMod' data-toggle='modal' data-target='#modifyModal'>수정 </span>";
 
@@ -50,7 +54,7 @@ function getCommentList() {
                         html += "<span style='cursor: pointer; color: blue' class='commentDel'>삭제</span>";
                     }
                     html += "<hr>";
-                    html += "<div class='mx-4' id='reCommentDiv'></div></div>";
+                    html += "<div class='mx-4 reCommentDiv' id='reCommentDiv_" + data.list[i].id + "'></div></div>";
                 }
             } else {
                 html += "<div class='mb-2'>";
@@ -78,22 +82,22 @@ function displayTime(timeValue) {
 }
 
 /*답글 닫기 버튼*/
-$(document).on("click","#reCommentCloseBtn",function (){
-    const reComment = $(this).parent();
-    reComment.find("#reCommentDiv").hide();
-    reComment.find("#reCommentBtn").show();
-    reComment.find("#reCommentCloseBtn").hide();
+$(document).on("click",".reCommentCloseBtn",function (){
+    $(this).siblings('.reCommentDiv').hide();
+    $(this).siblings('.reCommentBtn').show();
+    $(this).hide();
 });
 
 /*대댓글 버튼 클릭*/
-$(document).on("click","#reCommentBtn",function (){
+$(document).on("click",".reCommentBtn",function (){
 
-    const reComment = $(this).parent();
-    const cid = reComment.find("#commentId").val();
+    const _this = $(this);
+    //const cid = reComment.find("#commentId").val();
+    const cid = $(this).siblings('input').val();
 
-    reComment.find("#reCommentDiv").show();
-    reComment.find("#reCommentBtn").hide();
-    reComment.find("#reCommentCloseBtn").show();
+    _this.siblings('.reCommentDiv').show();
+    _this.hide();
+    _this.siblings('.reCommentCloseBtn').show();
 
     $.ajax({
         type: "get",
@@ -105,10 +109,10 @@ $(document).on("click","#reCommentBtn",function (){
             if (data.list.length > 0) {
                 for (let i = 0; i < data.list.length; i++) {
                     html += "<div class='mb-2'>";
-                    html += "<input type='hidden' id='commentId' value='" + data.list[i].id + "'>"
-                    html += "<b id='commentWriter'>" + data.list[i].writer + "</b>";
+                    html += "<input type='hidden' id='commentId_"+ data.list[i].id +"' value='" + data.list[i].id + "'>"
+                    html += "<b id='commentWriter_" + data.list[i].id + "' >" + data.list[i].writer + "</b>";
                     html += "<span style='float:right;' align='right' id='commentDate'> " + displayTime(data.list[i].updateDate) + " </span>";
-                    html += "<h5 id='commentText'>" + data.list[i].comment + "</h5>";
+                    html += "<h5 id='commentText_"+ data.list[i].id +"'>" + data.list[i].comment + "</h5>";
                     if (data.list[i].writer === $("#sessionNickname").val()) {
                         html += "<span style='cursor: pointer; color: blue' class='commentMod' data-toggle='modal' data-target='#modifyModal' >수정 </span>";
                         html += "<span style='cursor: pointer; color: blue' class='commentDel'>삭제</span>";
@@ -122,11 +126,15 @@ $(document).on("click","#reCommentBtn",function (){
                 html += "<h6><strong>등록된 댓글이 없습니다.</strong></h6>";
                 html += "</div>";
             }
-            html += "<input style='width: 90%' id='reComment' name='reComment' placeholder='댓글을 입력해 주세요'>";
-            html += "<button class='btn btn-primary mx-2' id='reCommentSubmit'>등록</button>";
+            html += "<input style='width: 90%' id='reComment_"+cid+"' class='reComment' name='reComment' placeholder='댓글을 입력해 주세요'>";
+            html += "<button class='btn btn-primary mx-2 reCommentSubmit'>등록</button>";
 
-            reComment.find("#reCommentDiv").html(html);
+            _this.siblings(".reCommentDiv").html(html);
 
+            /*$("#reComment_"+cid+"").emojiInit({
+                fontSize: 14
+            });
+*/
         },
         error: function (request, status, error) {
             alert("code: " + request.status + "\n" + "error: " + error);
@@ -134,9 +142,9 @@ $(document).on("click","#reCommentBtn",function (){
     });
 
     /*대댓글 작성*/
-    $(document).on("click", "#reCommentSubmit", function () {
+    $(document).on("click", ".reCommentSubmit", function () {
 
-        const cComment = reComment.find("#reComment").val();
+        const cComment = $(this).siblings(".reComment").val();
         $.ajax({
             type: "post",
             url: "/comment/reComment/post",
@@ -153,12 +161,12 @@ $(document).on("click","#reCommentBtn",function (){
     });
 });
 
-/*수정버튼 클릭*/
+/*댓글 수정버튼 클릭*/
 $(document).on("click", ".commentMod", function () {
-    const comment = $(this).parent();
-    const comment_id = comment.find("#commentId").val()
-    const comment_text = comment.find("#commentText").text();
-    const comment_writer = comment.find("#commentWriter").text();
+
+    const comment_id = $(this).siblings('input').val();
+    const comment_text = $(this).siblings('.comment_container').children('h5').text();
+    const comment_writer = $(this).siblings('b').text();
 
     $("#comment_id").val(comment_id);
     $("#comment_text").val(comment_text);
@@ -194,8 +202,7 @@ $(".modalModBtn").on("click", function () {
 
 /*댓글 삭제*/
 $(document).on("click",".commentDel",function (){
-    const comment = $(this).parent();
-    const comment_id = comment.find("#commentId").val();
+    const comment_id = $(this).siblings('input').val();
 
     console.log("id : "+comment_id);
 

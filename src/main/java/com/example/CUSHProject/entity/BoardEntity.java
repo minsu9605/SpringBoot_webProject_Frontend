@@ -53,6 +53,12 @@ public class BoardEntity{
     @Column(name = "WRITE_IP")
     private String writeIp;
 
+    @Column(name = "MYLAT")
+    private double myLat;
+
+    @Column(name = "MYLNG")
+    private double myLng;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "RATING")
     private Rating rating;
@@ -79,10 +85,12 @@ public class BoardEntity{
                 .hit(hit)
                 .rating(rating)
                 .categoryName(category.getName())
+                .myLat(myLat)
+                .myLng(myLng)
                 .build();
     }
     @Builder
-    public BoardEntity(Long id, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate,int hit, Rating rating, String writeIp) {
+    public BoardEntity(Long id, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate,int hit, Rating rating, String writeIp, double myLat, double myLng ) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -91,5 +99,7 @@ public class BoardEntity{
         this.hit = hit;
         this.rating = rating;
         this.writeIp = writeIp;
+        this.myLat = myLat;
+        this.myLng = myLng;
     }
 }

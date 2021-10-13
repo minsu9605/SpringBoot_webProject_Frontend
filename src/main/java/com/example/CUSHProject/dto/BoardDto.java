@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -26,6 +27,8 @@ public class BoardDto {
     private Rating rating;
     private String categoryName;
     private String writeIp;
+    private double myLat;
+    private double myLng;
 
     public BoardEntity toEntity() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -38,11 +41,13 @@ public class BoardDto {
                 .hit(hit)
                 .rating(rating)
                 .writeIp(writeIp)
+                .myLat(myLat)
+                .myLng(myLng)
                 .build();
     }
 
     @Builder
-    public BoardDto(Long id, String writer, String title, String content, String createdDate, String updatedDate, int hit, Rating rating, String categoryName, String writeIp) {
+    public BoardDto(Long id, String writer, String title, String content, String createdDate, String updatedDate, int hit, Rating rating, String categoryName, String writeIp, double myLat, double myLng) {
         this.id=id;
         this.writer=writer;
         this.title=title;
@@ -53,5 +58,7 @@ public class BoardDto {
         this.rating=rating;
         this.categoryName=categoryName;
         this.writeIp=writeIp;
+        this.myLat = myLat;
+        this.myLng = myLng;
     }
 }

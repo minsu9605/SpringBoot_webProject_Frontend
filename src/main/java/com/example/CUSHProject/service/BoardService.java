@@ -91,6 +91,10 @@ public class BoardService {
         return boardRepository.save(boardEntity).toDto();
     }
 
+    public void saveMap(double myLat, double myLng){
+
+    }
+
     /*보드 수정 후 전송*/
     public BoardDto boardModifySave(BoardDto boardDto, String username){
         /*Optional<BoardEntity> boardEntityOptional = boardRepository.findById(boardDto.getId());

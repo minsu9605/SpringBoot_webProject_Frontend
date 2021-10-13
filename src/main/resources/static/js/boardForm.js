@@ -3,6 +3,8 @@ function nullCheck() {
         return false;
     } else if (!contentCheck()) {
         return false;
+    } else if (!mapCheck()){
+        return false;
     }
     return true;
 }
@@ -26,6 +28,16 @@ function contentCheck() {
         return false;
     } else if (content.length < 11) {
         alert("10글자 이상 입력해주세요!");
+        return false;
+    }
+    return true;
+}
+
+function mapCheck() {
+    const myLat = $("#myLat").val();
+    const myLng = $("#myLng").val();
+    if (myLat == "" || myLng == "") {
+        alert("장소를 선택해 주세요. 필수항목 입니다.");
         return false;
     }
     return true;
@@ -75,7 +87,7 @@ function uploadSummernoteImageFile(file, editor) {
 }
 
 $("#mapButton").on('click',function (){
-    window.open("/board/map","map","width=900,height=680,left=300,top=100");
+    window.open("/board/map","map","width=900,height=550,left=300,top=100");
 
 });
 

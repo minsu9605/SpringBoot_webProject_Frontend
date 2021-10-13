@@ -1,0 +1,13 @@
+#searchDiv{
+    padding: 10px;
+    margin-left: 5px;
+}
+
+#map{
+    margin-left: 15px;
+}
+
+#info{
+    color: blue;
+    font-weight: bold;
+}
