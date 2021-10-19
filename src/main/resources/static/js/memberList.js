@@ -4,34 +4,11 @@ $(function () {
 
 let grid;
 
-/*class CustomTextEditor {
-    constructor(gender) {
-        const el = document.createElement('input');
-
-        el.type = 'text';
-        el.value = String(gender.value);
-
-        this.el = el;
-    }
-
-    getElement() {
-        return this.el;
-    }
-
-    getValue() {
-        return this.el.value;
-    }
-
-    mounted() {
-        this.el.select();
-    }
-}*/
-
 function getList() {
     const datasource = {
         api: {
             readData: {
-                url: '/admin/list/table',
+                url: '/api/admin/list/table',
                 method: 'GET',
                 initParams: {searchType: $("#searchType").val(), keyword: $("#keyword").val()}
             }

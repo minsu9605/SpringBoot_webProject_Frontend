@@ -31,7 +31,7 @@ public class BoardController {
     }
 
     /*일반 게시판 api*/
-    @GetMapping("/board/list/table")
+    @GetMapping("/api/board/list/table")
     @ResponseBody
     public HashMap<String, Object> getBoardList(@RequestParam(required = false) Long categoryId,
                                                 @RequestParam(required = false) int page,
@@ -115,13 +115,13 @@ public class BoardController {
     }
 
     @ResponseBody
-    @PostMapping("/uploadSummernoteImageFile")
+    @PostMapping("/api/uploadSummernoteImageFile")
     public JsonObject uploadSummernoteImageFile(@RequestParam("file")MultipartFile multipartFile) {
         return boardService.boardImageUpload(multipartFile);
     }
 
     @ResponseBody
-    @DeleteMapping("/board/delete")
+    @DeleteMapping("/api/board/delete")
     public void boardDelete(@RequestParam(required = false)Long id) {
         boardService.boardDelete(id);
     }

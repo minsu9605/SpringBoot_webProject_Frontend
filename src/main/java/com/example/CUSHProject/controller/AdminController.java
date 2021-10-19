@@ -29,7 +29,7 @@ public class AdminController {
     }
 
     /*회원조회 list api*/
-    @GetMapping("/admin/list/table")
+    @GetMapping("/api/admin/list/table")
     @ResponseBody
     public HashMap<String, Object> getNoticeList( @RequestParam(required = false) int page,
                                                   @RequestParam(required = false) int perPage,
@@ -69,7 +69,7 @@ public class AdminController {
 
     //회원탈퇴
     @ResponseBody
-    @DeleteMapping("/admin/withdrawal")
+    @DeleteMapping("/api/admin/withdrawal")
     public Long withdrawalMember(@RequestParam(required = false) Long id) {
         memberService.deleteUser(id);
         return id;

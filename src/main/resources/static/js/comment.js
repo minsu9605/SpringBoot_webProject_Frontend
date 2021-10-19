@@ -10,7 +10,7 @@ $(function () {
 function commentPost() {
     $.ajax({
         type: "post",
-        url: "/comment/post",
+        url: "/api/comment/post",
         data: {"comment": $("#comment").val(), "bid": $("#bid").val()},
         success: function (data) {
             if (data == "success") {
@@ -28,7 +28,7 @@ function getCommentList() {
 
     $.ajax({
         type: "get",
-        url: "/comment/list",
+        url: "/api/comment/list",
         data: {"bid": $("#bid").val()},
         success: function (data) {
             let html = "";
@@ -101,7 +101,7 @@ $(document).on("click",".reCommentBtn",function (){
 
     $.ajax({
         type: "get",
-        url: "/comment/reComment/list",
+        url: "/api/comment/reComment/list",
         data: {"cid": cid},
         success: function (data) {
             let html = "";
@@ -147,7 +147,7 @@ $(document).on("click",".reCommentBtn",function (){
         const cComment = $(this).siblings(".reComment").val();
         $.ajax({
             type: "post",
-            url: "/comment/reComment/post",
+            url: "/api/comment/reComment/post",
             data: {"comment": cComment, "bid": $("#bid").val(), "cid": cid},
             success: function (data) {
                 if (data == "success") {
@@ -183,7 +183,7 @@ $(".modalModBtn").on("click", function () {
     } else {
         $.ajax({
             type: 'put',
-            url: "/comment/modify",
+            url: "/api/comment/modify",
             data: {"cid": comment_id, "comment": comment_text},
             success: function (result) {
                 if (result == "success") {
@@ -211,7 +211,7 @@ $(document).on("click",".commentDel",function (){
     } else {
         $.ajax({
             type: 'delete',
-            url: "/comment/delete",
+            url: "/api/comment/delete",
             data: {"cid": comment_id},
             success: function (count) {
                 if(count == 0){

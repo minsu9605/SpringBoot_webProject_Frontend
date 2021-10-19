@@ -40,7 +40,7 @@ function usernameCheck() {
     }
     $.ajax({
         type: "get",
-        url: "/overlap/usernameRegister",
+        url: "/api/overlap/usernameRegister",
         data: {"username": username},
         dataType: "JSON",
 
@@ -112,7 +112,7 @@ function nicknameCheck() {
     }
     $.ajax({
         type: "get",
-        url: "/overlap/nicknameRegister",
+        url: "/api/overlap/nicknameRegister",
         data: {"nickname":nickname},
         dataType: "JSON",
         success: function(result) {

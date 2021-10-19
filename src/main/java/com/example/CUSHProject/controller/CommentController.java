@@ -21,7 +21,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @ResponseBody
-    @PostMapping("/comment/post")
+    @PostMapping("/api/comment/post")
     public String commentPost(@RequestParam Long bid,
                               @RequestParam String comment,
                               Authentication authentication)throws Exception {
@@ -32,7 +32,7 @@ public class CommentController {
     }
 
     @ResponseBody
-    @GetMapping("/comment/list")
+    @GetMapping("/api/comment/list")
     public HashMap<String, Object> getCommentList(@RequestParam Long bid, HttpServletRequest request){
         /*HashMap<String, Object> map = new HashMap<>();
         map.put("commentCnt",commentService.getCount(bid));
@@ -42,7 +42,7 @@ public class CommentController {
     }
 
     @ResponseBody
-    @DeleteMapping("/comment/delete")
+    @DeleteMapping("/api/comment/delete")
     public Long deleteComment(@RequestParam Long cid, HttpSession session){
         Object roleSession = session.getAttribute("memberRole");
 
@@ -50,14 +50,14 @@ public class CommentController {
     }
 
     @ResponseBody
-    @PutMapping("/comment/modify")
+    @PutMapping("/api/comment/modify")
     public String modifyComment(@RequestParam Long cid, @RequestParam String comment){
         commentService.modifyComment(cid, comment);
         return "success";
     }
 
     @ResponseBody
-    @GetMapping("/comment/reComment/list")
+    @GetMapping("/api/comment/reComment/list")
     public HashMap<String, Object> getReCommentList(@RequestParam Long cid)throws Exception{
         HashMap<String, Object> map = new HashMap<>();
         map.put("list",commentService.getReCommentList(cid));
@@ -65,7 +65,7 @@ public class CommentController {
     }
 
     @ResponseBody
-    @PostMapping("/comment/reComment/post")
+    @PostMapping("/api/comment/reComment/post")
     public String reCommentPost(@RequestParam Long bid,
                                 @RequestParam String comment,
                                 @RequestParam Long cid, Authentication authentication)throws Exception {

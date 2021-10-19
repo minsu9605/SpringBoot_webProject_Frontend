@@ -19,7 +19,7 @@ function originalPwCheck(){
 
     $.ajax({
         type :"post",
-        url :"/pwCheck",
+        url :"/api/pwCheck",
         data : {"original_Pw" : original_Pw.val()},
         dataType : "JSON",
         success : function(result){

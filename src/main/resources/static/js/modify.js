@@ -10,7 +10,7 @@ function withdrawalSubmit() {
     }else {
         $.ajax({
             type: "delete",
-            url: "/admin/withdrawal",
+            url: "/api/admin/withdrawal",
             data: {"id": id.val()},
             success: function () {
                 alert("회원 탈퇴처리가 완료되었습니다.");
@@ -75,7 +75,7 @@ function nicknameModify(){
 
     $.ajax({
         type :"post",
-        url :"/nicknameModify",
+        url :"/api/nicknameModify",
         data : {"id" : id.val(), "nickname" : nickname.val()},
         dataType : "JSON",
         success : function(result){
@@ -100,7 +100,7 @@ function usernameModify(){
 
     $.ajax({
         type :"post",
-        url :"/usernameModify",
+        url :"/api/usernameModify",
         data : {"id" : id.val(), "username" : username.val()},
         dataType : "JSON",
         success : function(result){

@@ -8,7 +8,7 @@ function getList(){
     const datasource = {
         api: {
             readData: {
-                url: '/notice/list/table',
+                url: '/api/notice/list/table',
                 method: 'GET',
                 initParams: {searchType: $("#searchType").val(), keyword: $("#keyword").val()}
             }

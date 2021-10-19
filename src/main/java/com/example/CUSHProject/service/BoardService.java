@@ -91,10 +91,6 @@ public class BoardService {
         return boardRepository.save(boardEntity).toDto();
     }
 
-    public void saveMap(double myLat, double myLng){
-
-    }
-
     /*보드 수정 후 전송*/
     public BoardDto boardModifySave(BoardDto boardDto, String username){
         /*Optional<BoardEntity> boardEntityOptional = boardRepository.findById(boardDto.getId());
@@ -116,6 +112,15 @@ public class BoardService {
     /*게시글 삭제*/
     public void boardDelete(Long id) {
         boardRepository.deleteById(id);
+    }
+
+    public List<BoardDto> mapList(double startLat, double startLng, double endLat, double endLng){
+        List<BoardEntity> boardEntityList = boardQueryRepository.getMapList(startLat, startLng, endLat, endLng);
+        List<BoardDto> boardDtoList = new ArrayList<>();
+        for(BoardEntity boardEntity : boardEntityList){
+            boardDtoList.add(boardEntity.toDto());
+        }
+        return boardDtoList;
     }
 
     /*summernote 이미지 첨부*/

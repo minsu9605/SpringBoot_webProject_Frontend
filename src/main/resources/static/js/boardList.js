@@ -9,7 +9,7 @@ function getList() {
     const datasource = {
         api: {
             readData: {
-                url: '/board/list/table',
+                url: '/api/board/list/table',
                 method: 'GET',
                 initParams: {categoryId: categoryId, searchType: $("#searchType").val(), keyword: $("#keyword").val()}
             }

@@ -33,7 +33,7 @@ function uploadSummernoteImageFile(file, editor) {
     $.ajax({
         data: data,
         type: "POST",
-        url: "/uploadSummernoteImageFile",
+        url: "/api/uploadSummernoteImageFile",
         contentType: false,
         processData: false,
         success: function (data) {
@@ -49,7 +49,7 @@ $("#boardDelete").on("click",function() {
     }else{
         $.ajax({
             type:"delete",
-            url : "/notice/delete",
+            url : "/api/notice/delete",
             data : {"id" : $("#id").val()},
             success: function (result){
                     console.log("결과: " +result);

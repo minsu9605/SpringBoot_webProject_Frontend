@@ -42,27 +42,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .antMatchers("/css/**")
-                .antMatchers("/js/**");
+                .antMatchers("/js/**")
+                .antMatchers("/images/**");
+                //.antMatchers("/resources/**");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/","/welcome","/account/register","/login","/board/**","/overlap/**","/notice/**","/admin/**").permitAll()
+                    .antMatchers("/","/account/register","/login","/board/list","/api/**","/notice/list").permitAll()
                     .antMatchers("/admin/**").hasRole("ADMIN")
-                    //.antMatchers("/hello").hasRole("MEMBER")
                     .anyRequest().authenticated()
                     .and()
                 .csrf()
-                    .ignoringAntMatchers("/comment/**")
+                    .ignoringAntMatchers("/api/**")
+                    /*.ignoringAntMatchers("/comment/**")
                     .ignoringAntMatchers("/nicknameOverlap")
                     .ignoringAntMatchers("/board/delete")
                     .ignoringAntMatchers("/nicknameModify")
                     .ignoringAntMatchers("/usernameModify")
                     .ignoringAntMatchers("/pwCheck")
                     .ignoringAntMatchers("/admin/withdrawal")
-                    .ignoringAntMatchers("/uploadSummernoteImageFile")
+                    .ignoringAntMatchers("/uploadSummernoteImageFile")*/
                     .and()
                 .formLogin()
                     .loginPage("/account/login")

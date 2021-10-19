@@ -27,7 +27,7 @@ public class NoticeBoardController {
     }
 
     /*공지사항 api*/
-    @GetMapping("/notice/list/table")
+    @GetMapping("/api/notice/list/table")
     @ResponseBody
     public HashMap<String, Object> getNoticeList( @RequestParam(required = false) int page,
                                                   @RequestParam(required = false) int perPage,
@@ -90,7 +90,7 @@ public class NoticeBoardController {
     }
 
     @ResponseBody
-    @DeleteMapping("/notice/delete")
+    @DeleteMapping("/api/notice/delete")
     public void noticeBoardDelete(@RequestParam(required = false)Long id) {
         noticeBoardService.noticeBoardDelete(id);
     }

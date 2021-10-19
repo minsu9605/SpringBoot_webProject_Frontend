@@ -64,4 +64,14 @@ public class BoardQueryRepository{
         return null;
     }
 
+    /*한페이지 출력 리스트*/
+    public List<BoardEntity> getMapList(double startLat, double startLng, double endLat, double endLng){
+        return queryFactory.selectFrom(QBoardEntity.boardEntity)
+                .where(QBoardEntity.boardEntity.myLat.between(startLat,endLat)
+                        .and(QBoardEntity.boardEntity.myLng.between(startLng,endLng))
+                )
+                .orderBy(QBoardEntity.boardEntity.id.desc())
+                .fetch();
+    }
+
 }
