@@ -30,16 +30,14 @@
                 </select>
             </div>
             <input id="keyword" name="keyword" type="text" placeholder="검색어를 입력해주세요">
-            <button id="searchButton" type="submit" class="mx-2 btn btn-secondary">검색</button>
+            <button id="searchButton" type="submit" class="mx-2 btn btn-secondary btn-sm">검색</button>
         </div>
-
 
         <div id="recruitGrid"></div>
 
         <div class="d-flex justify-content-end">
-            <a type="button" class="btn btn-primary" th:href="@{/board/write}">쓰기</a>
+            <a type="button" class="btn btn-primary" th:href="@{/board/write(category=${#request.getParameter('category')})}">쓰기</a>
         </div>
-
     </main>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

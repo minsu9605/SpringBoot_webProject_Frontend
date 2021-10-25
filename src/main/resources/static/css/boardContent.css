@@ -8,3 +8,14 @@
     margin-left: 20%;
 
 }
+
+.contentTitle{
+    display: flex;
+}
+#contentMain{
+    /*height: 150px;*/
+}
+#soldOutBtn{
+    float:right;
+    margin-right: 35px;
+}

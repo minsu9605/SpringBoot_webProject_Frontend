@@ -1,6 +1,7 @@
 package com.example.CUSHProject.controller;
 
 import com.example.CUSHProject.dto.MemberDto;
+import com.example.CUSHProject.dto.NoticeBoardDto;
 import com.example.CUSHProject.repository.MemberQueryRepository;
 import com.example.CUSHProject.repository.MemberRepository;
 import com.example.CUSHProject.service.MemberService;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.Member;
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -71,6 +73,13 @@ public class MemberController {
     public String myPage() {
         return "account/mypage";
     }
+
+    //내정보 수정 페이지
+    @GetMapping("/account/myBoard")
+    public String myBoard(Authentication authentication, Model model) {
+        return "account/myboard";
+    }
+
 
     //내정보 수정 페이지
     @GetMapping("/account/myinfo")

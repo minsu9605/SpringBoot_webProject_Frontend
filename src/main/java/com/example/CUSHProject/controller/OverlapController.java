@@ -30,7 +30,6 @@ public class OverlapController {
     @ResponseBody
     @PostMapping("/api/usernameModify")
     public HashMap<String, Object> usernameModify(@RequestParam(required = false) Long id, String username) {
-        System.out.println("입력한 이름"+username);
         return memberService.usernameModify(username, id);
     }
 
@@ -38,7 +37,6 @@ public class OverlapController {
     @ResponseBody
     @PostMapping("/api/nicknameModify")
     public HashMap<String, Object> nicknameModify(@RequestParam(required = false) Long id, String nickname) {
-        System.out.println("입력한 이름"+ nickname);
         return memberService.nicknameModify(nickname, id);
     }
 }

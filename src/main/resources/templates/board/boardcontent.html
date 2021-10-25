@@ -13,7 +13,12 @@
 <div class="container main-wrapper">
     <input type="hidden" id="sessionNickname" th:value="${session.memberNickname}">
     <input type="hidden" id="sessionRole" th:value="${session.memberRole}">
-    <h2 class="mb-3" th:text="${boardForm.title}"></h2>
+    <input type="hidden" id="myLat" th:value="${boardForm.myLat}">
+    <input type="hidden" id="myLng" th:value="${boardForm.myLng}">
+    <div class="contentTitle">
+        <h3 class="mb-3" th:text="'[' + ${boardForm.status.title} + ']'"></h3>
+        <h2 class="mb-3" th:text="'&nbsp'+ ${boardForm.title}"></h2>
+    </div>
 
     <div class="contentTop mb-5 mx-5">
         <b>작성자</b>
@@ -30,13 +35,13 @@
     <span class="mx-2" th:text="${boardForm.categoryName}"></span>
     <b>상태</b>
     <span th:text="${boardForm.rating.title}"></span>
-    <div class="mx-10" id="contentMain" th:utext="${boardForm.content}"></div>
-
+    <button class="ml-2 btn btn-success btn-sm" id="showLocation">거래장소</button>
+    <div class="mx-10 mt-2" id="contentMain" th:utext="${boardForm.content}"></div>
     <hr>
-
     <div class="text-end mb-3">
-        <a style="color: white" type="button" class="btn btn-secondary" onclick="history.back()">게시글 목록</a>
-        <a class="btn btn-primary" id="modify" th:if="${boardForm.writer.equals(session.memberNickname)}" th:href="@{/board/modify(id=${boardForm.id})}">수정</a>
+        <a style="color: white" type="button" class="btn btn-secondary btn-sm" th:href="@{/board/list(category=${boardForm.categoryId})}">게시글 목록</a>
+        <a class="btn btn-primary btn-sm" id="modify" th:if="${boardForm.writer.equals(session.memberNickname)}" th:href="@{/board/modify(id=${boardForm.id})}">수정</a>
+        <button class="btn btn-success btn-sm" id="soldOutBtn" th:if="${boardForm.writer.equals(session.memberNickname) && #strings.equals(boardForm.status.value,'sell')}">판매완료</button>
     </div>
 
     <form class="mb-3" id="commentForm" name="commentForm" method="post">

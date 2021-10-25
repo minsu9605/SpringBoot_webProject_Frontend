@@ -62,3 +62,53 @@ $("#boardDelete").on("click",function() {
         });
     }
 });
+
+$("#mapButton").on('click',function (){
+    window.open("/board/map","map","width=900,height=550,left=300,top=100");
+});
+
+$("#modifyBtn").on('click',function nullCheck() {
+
+        if (!titleCheck()) {
+            return false;
+        } else if (!contentCheck()) {
+            return false;
+        } else if (!mapCheck()) {
+            return false;
+        }
+    if(!confirm("수정하시겠습니까?")) {
+        return false;
+    }
+    alert("수정되었습니다");
+    return true;
+});
+
+function titleCheck() {
+    const title = $("#title").val();
+    if (title == "") {
+        alert("제목을 입력해 주세요. 필수항목 입니다.");
+        return false;
+    } else if (title.length > 20) {
+        alert("제목은 20글자를 초과할수 없습니다");
+        return false;
+    }
+    return true;
+}
+
+function contentCheck() {
+    if ($('#content').summernote('isEmpty')) {
+        alert("내용을 입력해 주세요. 필수항목 입니다.");
+        return false;
+    }
+    return true;
+}
+
+function mapCheck() {
+    const myLat = $("#myLat").val();
+    const myLng = $("#myLng").val();
+    if (myLat == "" || myLng == "") {
+        alert("장소를 선택해 주세요. 필수항목 입니다.");
+        return false;
+    }
+    return true;
+}

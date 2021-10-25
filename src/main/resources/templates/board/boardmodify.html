@@ -11,7 +11,7 @@
 
 <div class="container mt-5">
     <h1>게시글 수정</h1>
-    <form th:action="@{/board/modify}" method="post">
+    <form th:action="@{/board/modify(id=${#request.getParameter('id')})}" method="post">
         <input type="hidden" th:field="${boardForm.id}"/>
 
         <div class="mb-3 inline-container">
@@ -23,8 +23,18 @@
             <input id="createdDate" name="createdDate" th:value="${boardForm.createdDate}" readonly>
             <b class="form-label" for="updatedDate">마지막 수정 날짜</b>
             <input id="updatedDate" name="updatedDate" th:value="${boardForm.updatedDate}" readonly>
+
             <b for="hit">조회수</b>
             <input id="hit" name="hit" th:value="${boardForm.hit}" readonly>
+
+            <label class="form-label" for="status"><b>판매상태</b></label>
+            <select class="form-control" id="status" name="status">
+                <option th:each="status : ${T(com.example.CUSHProject.enums.Status).values()}"
+                        th:value="${status.value}"
+                        th:text="${status.title}"
+                        th:selected="${status.value} == ${boardForm.status.value}">
+                </option>
+            </select>
         </div>
         <hr>
 
@@ -50,6 +60,11 @@
                     </option>
                 </select>
             </div>
+            <div class="mapDiv">
+                <button id="mapButton" type="button" class="btn btn-success">거래 장소 정하기</button>
+                <input type="hidden" th:value="${boardForm.myLat}" id="myLat" name="myLat" readonly>
+                <input type="hidden" th:value="${boardForm.myLng}" id="myLng" name="myLng" readonly>
+            </div>
         </div>
 
         <div class="mb-3" id="divTitle">
@@ -65,7 +80,7 @@
         <div class="text-end">
             <a type="button" class="btn btn-secondary" th:href="@{/board/list}">목록</a>
             <button type="button" class="btn btn-danger" id="boardDelete">삭제</button>
-            <button type="submit" class="btn btn-primary">제출</button>
+            <button id="modifyBtn" type="submit" class="btn btn-primary">수정</button>
         </div>
     </form>
 </div>

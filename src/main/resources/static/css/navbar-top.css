@@ -1,13 +1,13 @@
 /* Show it's not fixed to the top */
 body {
-    min-height: 75rem;
+    min-height: 50rem;
 }
 
 .mb-4, .my-4{
     margin-bottom: 3.0rem!important;
 }
 .bg-dark{
-    height : 60px;
+    height : 50px;
 }
 .navbar{
     position: sticky;
@@ -22,6 +22,6 @@ body {
 }*/
 
 .navbar-expand-md .navbar-nav{
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     position: sticky;
 }

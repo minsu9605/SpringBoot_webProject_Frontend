@@ -67,7 +67,8 @@ function modifyCheckAll(){
         return false;
     } else if (!confirm("정보를 수정하시겠습니까?")){
         return false;
-    } alert("수정되었습니다.");
+    } alert("수정되었습니다. 다시로그인해주세요");
+    location.href="/account/logout";
     return true;
 }
 

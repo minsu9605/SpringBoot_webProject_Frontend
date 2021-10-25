@@ -1,13 +1,16 @@
-function nullCheck() {
+$("#submitBtn").on('click',function nullCheck() {
     if (!titleCheck()) {
         return false;
     } else if (!contentCheck()) {
         return false;
     } else if (!mapCheck()){
         return false;
+    }if(!confirm("글을 작성하시겠습니까?")) {
+        return false;
     }
+    alert("작성되었습니다");
     return true;
-}
+});
 
 function titleCheck() {
     const title = $("#title").val();
@@ -22,12 +25,8 @@ function titleCheck() {
 }
 
 function contentCheck() {
-    const content = $("#content").val();
-    if (window.editor.getData() == "") {
+    if ($('#content').summernote('isEmpty')) {
         alert("내용을 입력해 주세요. 필수항목 입니다.");
-        return false;
-    } else if (content.length < 11) {
-        alert("10글자 이상 입력해주세요!");
         return false;
     }
     return true;
@@ -88,7 +87,6 @@ function uploadSummernoteImageFile(file, editor) {
 
 $("#mapButton").on('click',function (){
     window.open("/board/map","map","width=900,height=550,left=300,top=100");
-
 });
 
 

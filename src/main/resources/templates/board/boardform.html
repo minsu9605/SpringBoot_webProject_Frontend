@@ -11,7 +11,7 @@
 
 <div class="container mt-5">
     <h1>장터 게시판</h1>
-    <form th:action="@{/board/write}" method="post" onsubmit="return nullCheck()">
+    <form th:action="@{/board/write(category=${#request.getParameter('category')})}" method="post">
         <input type="hidden" th:field="${boardForm.id}"/>
 
         <div class="mb-3" id="divWriter">
@@ -26,7 +26,8 @@
                 <select class="form-control" id="categoryName" name="categoryName">
                     <option th:each="category : ${categoryList}"
                             th:value="${category.name}"
-                            th:text="${category.name}">
+                            th:text="${category.name}"
+                            th:selected="${category.id}==${#request.getParameter('category')}">
                     </option>
                 </select>
             </div>
@@ -59,7 +60,7 @@
 
         <div class="text-end">
             <a type="button" class="btn btn-secondary" th:href="@{/board/list}">취소</a>
-            <button type="submit" class="btn btn-primary">제출</button>
+            <button id="submitBtn" type="submit" class="btn btn-primary">제출</button>
         </div>
     </form>
 </div>
