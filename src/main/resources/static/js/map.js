@@ -65,7 +65,7 @@ $("#location").on('click', function () {
     navigator.geolocation.getCurrentPosition(locationLoadSuccess, locationLoadError);
 });
 
-/*검색*/
+/*검색버튼 클릭*/
 $("#searchBtn").on('click', function () {
     const keyword = $("#address").val()
 
@@ -90,6 +90,33 @@ $("#searchBtn").on('click', function () {
     });
 });
 
+/*엔터키 검색*/
+$("#address").on('keyup',function (e){
+    if(e.keyCode==13){
+        const keyword = $("#address").val()
+
+        // 주소로 좌표를 검색합니다
+        geocoder.addressSearch(keyword, function (result, status) {
+            // 정상적으로 검색이 완료됐으면
+            if (status === kakao.maps.services.Status.OK) {
+                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                showInfoWindow(coords);
+
+                marker.setPosition(coords);
+                marker.setMap(null);
+                marker.setMap(map)
+
+                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                map.setCenter(coords);
+
+                myLat = coords.getLat();
+                myLng = coords.getLng();
+            }
+        });
+    }
+});
+
 // 좌표로 법정동 상세 주소 정보를 요청합니다
 function searchDetailAddrFromCoords(coords, callback) {
     geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
@@ -99,8 +126,8 @@ function searchDetailAddrFromCoords(coords, callback) {
 function showInfoWindow(myLocation) {
     searchDetailAddrFromCoords(myLocation, function (result, status) {
         if (status === kakao.maps.services.Status.OK) {
-            var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
-                detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+            var detailAddr = !!result[0].road_address ? '<div style="width: max-content;">도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
+                detailAddr += '<div style="width: max-content;">지번 주소 : ' + result[0].address.address_name + '</div>';
 
             var content = '<div class="bAddr">'
                 + detailAddr +

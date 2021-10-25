@@ -23,7 +23,6 @@
     position:absolute;
     left:10px;
     top:10px;
-    border-radius: 2px;
     z-index:1;
     padding:5px;
 }
@@ -66,4 +65,21 @@
     width: 18%;
     display: block;
     margin-left: 0;
+}
+#address{
+    box-shadow: 2px 2px #c9c9c9;
+    width: 362px;
+    border:2px solid white;
+    border-radius: 5px;
+}
+
+#location{
+    cursor: pointer;
+    border: 0;
+}
+.location_btn{
+    position: absolute;
+    top: 22px;
+    z-index: 1;
+    left: 96%;
 }

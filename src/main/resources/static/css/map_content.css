@@ -1,12 +1,6 @@
 #map{
-    margin-left: 15px;
+    margin: 15px;
 }
-
-#info{
-    color: blue;
-    font-weight: bold;
-}
-
 .map_wrap {
     position:relative;
     width:100%;
@@ -31,10 +25,4 @@
     display:block;
     margin-top:2px;
     font-weight: normal;
-}
-#address{
-    box-shadow: 2px 2px #c9c9c9;
-    width: 500px;
-    border:2px solid gray;
-    border-radius: 5px;
 }
