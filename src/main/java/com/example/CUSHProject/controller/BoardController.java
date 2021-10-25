@@ -2,6 +2,8 @@ package com.example.CUSHProject.controller;
 
 import com.example.CUSHProject.dto.BoardCategoryDto;
 import com.example.CUSHProject.dto.BoardDto;
+import com.example.CUSHProject.dto.NoticeBoardDto;
+import com.example.CUSHProject.entity.BoardEntity;
 import com.example.CUSHProject.service.BoardService;
 import com.example.CUSHProject.service.CategoryService;
 import com.google.gson.JsonObject;
@@ -67,21 +69,10 @@ public class BoardController {
     }
 
     @PostMapping("/board/write")
-    public String boardWrite(BoardDto boardDto, Authentication authentication, HttpServletRequest request){
+    public String boardWrite(@RequestParam(required = false)Long category, BoardDto boardDto, Authentication authentication, HttpServletRequest request){
         boardService.boardWrite(boardDto, authentication.getName(), request);
-        return "redirect:/board/list?category=1";
+        return "redirect:/board/list?category="+category;
     }
-
-   /* @ResponseBody
-    @GetMapping("/board/write/map")
-    public String boardMap(@RequestParam(required = false) double myLat,
-                           @RequestParam(required = false) double myLng){
-        boardService.saveMap(myLat, myLng);
-
-        System.out.println("확인"+myLat);
-        System.out.println("확인"+myLng);
-        return "a";
-    }*/
 
     @GetMapping("/board/content")
     public String boardContent(Model model, @RequestParam(required = false) Long id){
@@ -91,6 +82,13 @@ public class BoardController {
         model.addAttribute("categoryList",categoryService.getCategoryList());
         model.addAttribute("boardForm",boardForm);
         return "board/boardcontent";
+    }
+
+    @ResponseBody
+    @GetMapping("/api/board/soldOut")
+    public String boardMap(@RequestParam(required = false) Long id){
+        boardService.setSoldOut(id);
+        return "success";
     }
 
     @GetMapping("/board/modify")
@@ -104,15 +102,21 @@ public class BoardController {
     }
 
     @PostMapping("/board/modify")
-    public String boardModify(BoardDto boardDto, Authentication authentication){
-        boardService.boardModifySave(boardDto, authentication.getName());
-        return "redirect:/board/list?category=1";
+    public String boardModify(@RequestParam(required = false) Long id, BoardDto boardDto, Authentication authentication,HttpServletRequest request){
+        boardService.boardModifySave(boardDto, authentication.getName(),request);
+        return "redirect:/board/content?id="+id;
     }
 
     @GetMapping("/board/map")
     public String showMap(){
         return "board/map";
     }
+
+    @GetMapping("/board/map_content")
+    public String showMapContent(){
+        return "board/map_content";
+    }
+
 
     @ResponseBody
     @PostMapping("/api/uploadSummernoteImageFile")
@@ -126,4 +130,27 @@ public class BoardController {
         boardService.boardDelete(id);
     }
 
+    /*내정보 수정 페이지 api*/
+    @GetMapping("/api/account/myBoard/table")
+    @ResponseBody
+    public HashMap<String, Object> getNoticeList( @RequestParam(required = false) int page,
+                                                  @RequestParam(required = false) int perPage,
+                                                  @RequestParam(required = false) String searchType,
+                                                  @RequestParam(required = false, defaultValue = "") String keyword,Authentication authentication){
+        HashMap<String, Object> objectMap = new HashMap<>();
+        HashMap<String, Object> dataMap = new HashMap<>();
+        HashMap<String, Object> paginationMap = new HashMap<>();
+
+
+        int total = boardService.getMyBoardTotalSize(authentication.getName(),searchType,keyword);
+        List<BoardDto> boardEntityList = boardService.getMyBoardList(authentication.getName(),page, perPage, searchType, keyword);
+
+        objectMap.put("result", true);
+        objectMap.put("data", dataMap);
+        dataMap.put("contents", boardEntityList);
+        dataMap.put("pagination", paginationMap);
+        paginationMap.put("page", page);
+        paginationMap.put("totalCount", total);
+        return objectMap;
+    }
 }

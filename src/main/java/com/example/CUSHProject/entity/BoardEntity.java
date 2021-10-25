@@ -2,6 +2,7 @@ package com.example.CUSHProject.entity;
 
 import com.example.CUSHProject.dto.BoardDto;
 import com.example.CUSHProject.enums.Rating;
+import com.example.CUSHProject.enums.Status;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -63,6 +64,10 @@ public class BoardEntity{
     @Column(name = "RATING")
     private Rating rating;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS")
+    private Status status;
+
     @ManyToOne
     @JoinColumn(name = "CATEGORY_ID")
     private BoardCategoryEntity category;
@@ -84,13 +89,16 @@ public class BoardEntity{
                 .updatedDate(updatedDate.format(formatter))
                 .hit(hit)
                 .rating(rating)
+                .status(status)
                 .categoryName(category.getName())
+                .categoryId(category.getId())
+                .writeIp(writeIp)
                 .myLat(myLat)
                 .myLng(myLng)
                 .build();
     }
     @Builder
-    public BoardEntity(Long id, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate,int hit, Rating rating, String writeIp, double myLat, double myLng ) {
+    public BoardEntity(Long id, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate,int hit, Rating rating, Status status,String writeIp, double myLat, double myLng ) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -98,6 +106,7 @@ public class BoardEntity{
         this.updatedDate = updatedDate;
         this.hit = hit;
         this.rating = rating;
+        this.status=status;
         this.writeIp = writeIp;
         this.myLat = myLat;
         this.myLng = myLng;

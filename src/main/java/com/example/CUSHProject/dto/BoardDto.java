@@ -2,6 +2,7 @@ package com.example.CUSHProject.dto;
 
 import com.example.CUSHProject.entity.BoardEntity;
 import com.example.CUSHProject.enums.Rating;
+import com.example.CUSHProject.enums.Status;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +26,9 @@ public class BoardDto {
     private String updatedDate;
     private int hit;
     private Rating rating;
+    private Status status;
     private String categoryName;
+    private Long categoryId;
     private String writeIp;
     private double myLat;
     private double myLng;
@@ -40,6 +43,7 @@ public class BoardDto {
                 .updatedDate(LocalDateTime.parse(updatedDate, formatter))
                 .hit(hit)
                 .rating(rating)
+                .status(status)
                 .writeIp(writeIp)
                 .myLat(myLat)
                 .myLng(myLng)
@@ -47,7 +51,7 @@ public class BoardDto {
     }
 
     @Builder
-    public BoardDto(Long id, String writer, String title, String content, String createdDate, String updatedDate, int hit, Rating rating, String categoryName, String writeIp, double myLat, double myLng) {
+    public BoardDto(Long id, String writer, String title, String content, String createdDate, String updatedDate, int hit, Rating rating, Status status, String categoryName, Long categoryId, String writeIp, double myLat, double myLng) {
         this.id=id;
         this.writer=writer;
         this.title=title;
@@ -56,7 +60,9 @@ public class BoardDto {
         this.updatedDate=updatedDate;
         this.hit=hit;
         this.rating=rating;
+        this.status=status;
         this.categoryName=categoryName;
+        this.categoryId=categoryId;
         this.writeIp=writeIp;
         this.myLat = myLat;
         this.myLng = myLng;

@@ -1,9 +1,7 @@
 package com.example.CUSHProject.repository;
 
-import com.example.CUSHProject.entity.BoardCategoryEntity;
-import com.example.CUSHProject.entity.BoardEntity;
-import com.example.CUSHProject.entity.QBoardEntity;
-import com.example.CUSHProject.entity.QMemberEntity;
+import com.example.CUSHProject.entity.*;
+import com.example.CUSHProject.enums.Status;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +25,15 @@ public class BoardQueryRepository{
                 .execute();
     }
 
+    /*판매완료 버튼*/
+    @Transactional
+    public void boardStatusUpdate(Long id){
+        queryFactory.update(QBoardEntity.boardEntity)
+                .set(QBoardEntity.boardEntity.status, Status.soldOut)
+                .where(QBoardEntity.boardEntity.id.eq(id))
+                .execute();
+    }
+
     /*조회된 리스트 전체 크기*/
     public Long getTotalCount(BoardCategoryEntity boardCategoryEntity,String searchType, String keyword){
         return queryFactory.selectFrom(QBoardEntity.boardEntity)
@@ -34,6 +41,27 @@ public class BoardQueryRepository{
                         .and(eqSearchType(searchType,keyword))
                 )
                 .fetchCount();
+    }
+
+    /*내가 쓴글 조회된 리스트 전체 크기*/
+    public Long getMyBoardTotalCount(MemberEntity memberEntity,String searchType, String keyword){
+        return queryFactory.selectFrom(QBoardEntity.boardEntity)
+                .where(QBoardEntity.boardEntity.writer.eq(memberEntity)
+                        .and(eqSearchType(searchType,keyword)))
+                .fetchCount();
+    }
+
+    /*내가 쓴글 한페이지 출력 리스트*/
+    public List<BoardEntity> getMyBoardList(MemberEntity memberEntity, int page, int perPage, String searchType, String keyword){
+        int start = (page * perPage) - perPage;
+        return queryFactory.selectFrom(QBoardEntity.boardEntity)
+                .where(QBoardEntity.boardEntity.writer.eq(memberEntity)
+                        .and(eqSearchType(searchType,keyword))
+                )
+                .orderBy(QBoardEntity.boardEntity.id.desc())
+                .offset(start)
+                .limit(perPage)
+                .fetch();
     }
 
     /*한페이지 출력 리스트*/
@@ -67,7 +95,8 @@ public class BoardQueryRepository{
     /*한페이지 출력 리스트*/
     public List<BoardEntity> getMapList(double startLat, double startLng, double endLat, double endLng){
         return queryFactory.selectFrom(QBoardEntity.boardEntity)
-                .where(QBoardEntity.boardEntity.myLat.between(startLat,endLat)
+                .where(QBoardEntity.boardEntity.status.eq(Status.sell)
+                        .and(QBoardEntity.boardEntity.myLat.between(startLat,endLat))
                         .and(QBoardEntity.boardEntity.myLng.between(startLng,endLng))
                 )
                 .orderBy(QBoardEntity.boardEntity.id.desc())

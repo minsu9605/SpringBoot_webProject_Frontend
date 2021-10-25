@@ -4,6 +4,7 @@ import com.example.CUSHProject.dto.BoardDto;
 import com.example.CUSHProject.entity.BoardCategoryEntity;
 import com.example.CUSHProject.entity.BoardEntity;
 import com.example.CUSHProject.entity.MemberEntity;
+import com.example.CUSHProject.enums.Status;
 import com.example.CUSHProject.repository.*;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
@@ -51,6 +52,24 @@ public class BoardService {
         return Math.toIntExact(boardQueryRepository.getTotalCount(boardCategoryEntity,searchType,keyword));
     }
 
+    /*한페이지 출력 리스트*/
+    public List<BoardDto> getMyBoardList(String username, int page, int perPage, String searchType, String keyword){
+        Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
+        List<BoardEntity> boardEntityList = boardQueryRepository.getMyBoardList(memberEntity.get(),page,perPage,searchType,keyword);
+        List<BoardDto> boardDtoList = new ArrayList<>();
+
+        for(BoardEntity boardEntity : boardEntityList){
+            boardDtoList.add(boardEntity.toDto());
+        }
+        return boardDtoList;
+    }
+
+    /*조회된 전체 데이터 수*/
+    public int getMyBoardTotalSize(String username, String searchType, String keyword){
+        Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
+        return Math.toIntExact(boardQueryRepository.getMyBoardTotalCount(memberEntity.get(),searchType,keyword));
+    }
+
     //보드 글 상세보기
     public BoardDto boardContent(Long id) {
         BoardEntity boardEntity;
@@ -67,6 +86,10 @@ public class BoardService {
         boardQueryRepository.boardHitUpdate(id);
     }
 
+    public void setSoldOut(Long id){
+        boardQueryRepository.boardStatusUpdate(id);
+    }
+
     /*게시글 등록 후 전송*/
     public BoardDto boardWrite(BoardDto boardDto, String username, HttpServletRequest request){
         Optional<BoardCategoryEntity> boardCategoryEntity = boardCategoryRepository.findByName(boardDto.getCategoryName());
@@ -74,6 +97,7 @@ public class BoardService {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
+        boardDto.setStatus(Status.sell);
         boardDto.setCreatedDate(LocalDateTime.now().format(formatter));
         boardDto.setUpdatedDate(LocalDateTime.now().format(formatter));
 
@@ -92,7 +116,7 @@ public class BoardService {
     }
 
     /*보드 수정 후 전송*/
-    public BoardDto boardModifySave(BoardDto boardDto, String username){
+    public BoardDto boardModifySave(BoardDto boardDto, String username,HttpServletRequest request){
         /*Optional<BoardEntity> boardEntityOptional = boardRepository.findById(boardDto.getId());
         Optional<BoardCategoryEntity> boardCategoryEntity = boardCategoryRepository.findById(boardEntityOptional.get().getCategory().getId());*/
         Optional<BoardCategoryEntity> boardCategoryEntity = boardCategoryRepository.findByName(boardDto.getCategoryName());
@@ -100,6 +124,14 @@ public class BoardService {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         boardDto.setUpdatedDate(LocalDateTime.now().format(formatter));
+
+        /*ip찾는 로직*/
+        String ip = request.getHeader("X-Forwarded-For");
+        if (ip == null) {
+            ip = request.getRemoteAddr();
+        }
+        boardDto.setWriteIp(ip);
+
 
         BoardEntity boardEntity = boardDto.toEntity();
 
