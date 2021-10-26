@@ -9,31 +9,30 @@
 </head>
 
 <body class="text-center">
-<main class="form-signin">
-    <a th:href="@{/}"><img class="mb-4" th:src="@{/image/log_icon.png}" alt="로고" width="72" height="57"></a>
-    <h1 class="h3 mb-3 fw-normal">My Page</h1>
-    <hr>
+    <main class="form-signin">
+        <a th:href="@{/}"><img class="mb-4" th:src="@{/image/log_icon.png}" alt="로고" width="72" height="57"></a>
+        <h1 class="h3 mb-3 fw-normal">My Page</h1>
+        <hr>
 
-    <div class="form-floating mb-3">
-        <a type="button" class="w-100 btn btn-lg btn-success" th:href="@{/account/myBoard}">작성한글</a>
-    </div>
+        <div class="form-floating mb-3">
+            <a type="button" class="w-100 btn btn-lg btn-success" th:href="@{/account/myBoard}">작성한글</a>
+        </div>
 
-    <div class="form-floating mb-3">
-        <a type="button" class="w-100 btn btn-lg btn-success" th:href="@{/account/myinfo}">회원정보 변경</a>
-    </div>
+        <div class="form-floating mb-3">
+            <a type="button" class="w-100 btn btn-lg btn-success" th:href="@{/account/myinfo}">회원정보 변경</a>
+        </div>
 
-    <div class="form-floating mb-3">
-        <a type="button" class="w-100 btn btn-lg btn-success" th:href="@{/account/password}">패스워드 변경</a>
-    </div>
+        <div class="form-floating mb-3">
+            <a type="button" class="w-100 btn btn-lg btn-success" th:href="@{/account/password}">패스워드 변경</a>
+        </div>
 
-    <div class="form-floating mb-3">
-        <a type="button" class="w-100 btn btn-lg btn-primary" th:href="@{/}">홈으로</a>
-    </div>
+        <div class="form-floating mb-3">
+            <a type="button" class="w-100 btn btn-lg btn-primary" th:href="@{/}">홈으로</a>
+        </div>
 
-    <div class="form-floating mb-3">
-        <a type="button" class="w-100 btn btn-lg btn-danger" th:href="@{/account/withdrawal}">회원탈퇴</a>
-    </div>
-
-</main>
+        <div class="form-floating mb-3">
+            <a type="button" class="w-100 btn btn-lg btn-danger" th:href="@{/account/withdrawal}">회원탈퇴</a>
+        </div>
+    </main>
 </body>
 </html>

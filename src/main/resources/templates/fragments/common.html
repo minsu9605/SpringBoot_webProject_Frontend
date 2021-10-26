@@ -31,50 +31,47 @@
             </ul>
         </div>
 
-            <a class="btn btn-outline-warning btn-sm mx-2" th:href="@{/account/login}" sec:authorize="!isAuthenticated()">로그인</a>
+        <a class="btn btn-outline-warning btn-sm mx-2" th:href="@{/account/login}" sec:authorize="!isAuthenticated()">로그인</a>
 
-            <a class="btn btn-outline-warning btn-sm mx-1" th:href="@{/account/register}" sec:authorize="!isAuthenticated()">회원가입</a>
+        <a class="btn btn-outline-warning btn-sm mx-1" th:href="@{/account/register}" sec:authorize="!isAuthenticated()">회원가입</a>
 
-            <form class="form-inline my-2 my-lg-0" th:action="@{/account/logout}" method="get" sec:authorize="isAuthenticated()">
-<!--                <span class="text-white mx-2" sec:authentication="name">사용자</span>-->
-                <span class="text-white mx-2" th:text="${session.memberNickname} + '님 환영합니다'">사용자</span>
-<!--                <span class="text-white mx-2" sec:authentication="principal.authorities">권한</span>-->
-                <span class="text-white mx-2" th:text="${session.memberRole.title}">권한</span>
+        <form class="form-inline my-2 my-lg-0" th:action="@{/account/logout}" method="get" sec:authorize="isAuthenticated()">
+            <!--                <span class="text-white mx-2" sec:authentication="name">사용자</span>-->
+            <span class="text-white mx-2" th:text="${session.memberNickname} + '님 환영합니다'">사용자</span>
+            <!--                <span class="text-white mx-2" sec:authentication="principal.authorities">권한</span>-->
+            <span class="text-white mx-2" th:text="${session.memberRole.title}">권한</span>
 
-                <a class="btn btn-outline-warning mx-2 btn-sm" th:href="@{/account/mypage}" sec:authorize="hasRole('ROLE_MEMBER')">내 정보</a>
+            <a class="btn btn-outline-warning mx-2 btn-sm" th:href="@{/account/mypage}" sec:authorize="hasRole('ROLE_MEMBER')">내 정보</a>
 
-                <a class="btn btn-outline-warning mx-2 btn-sm" th:href="@{/admin}" sec:authorize="hasRole('ROLE_ADMIN')">관리</a>
+            <a class="btn btn-outline-warning mx-2 btn-sm" th:href="@{/admin}" sec:authorize="hasRole('ROLE_ADMIN')">관리</a>
 
-                <button class="btn btn-outline-warning my-2 my-sm-0 btn-sm" type="submit">로그아웃</button>
-            </form>
+            <button class="btn btn-outline-warning my-2 my-sm-0 btn-sm" type="submit">로그아웃</button>
+        </form>
     </div>
 </nav>
 
 <div th:fragment="footer">
-    <div class="container">
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-            <div class="col-md-4 d-flex align-items-center">
-                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-                    <svg class="bi" width="30" height="24">
-                        <use xlink:href="#bootstrap"/>
-                    </svg>
-                </a>
-                <span class="text-muted">&copy; 2021 Company, Inc</span>
+    <footer class="border-top" id="footer">
+
+            <div class="footer_text mt-3">
+                <span class="text-muted">&copy; 2021 Company, Inc</span><br>
+                <span class="text-muted">서울특별시 영등포구 은행로 4,8층</span><br>
+                <span class="text-muted">웹개발 3팀 조민수</span><br>
+                <span class="text-muted">ms.jo@konai.com</span>
+            </div>
+            <div id="footer_icon">
+                <div>
+                    <a class="text-muted" href="https://konawiki.konai.com/spaces/viewspace.action?key=~ms.jo"><img src="/images/homepage_icon.png" width="30px"></a>
+                </div>
+
+                <div class="ml-2">
+                    <a class="text-muted" href="https://github.com/minsu9605?tab=repositories"><img src="/images/github_icon.png"></a>
+                </div>
+
             </div>
 
-            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-                <li class="ms-3"><a class="text-muted" href="#">
-                    <img src="/images/email_icon.png">
-                </a></li>
-                <li class="ms-3"><a class="text-muted" href="#">
-                    <img src="/images/github_icon.png">
-                </a></li>
-                <li class="ms-3"><a class="text-muted" href="#">
-                    <img src="/images/phone_icon.png">
-                </a></li>
-            </ul>
-        </footer>
-    </div>
+    </footer>
+</div>
 </div>
 
 

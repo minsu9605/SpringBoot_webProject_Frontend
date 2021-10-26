@@ -32,9 +32,8 @@
         <a type="button" class="btn btn-secondary" th:href="@{/notice/list}">공지사항 목록</a>
         <a class="btn btn-primary" id="modify" th:if="${boardForm.writer.equals(session.memberNickname)}" th:href="@{/board/modify(id=${boardForm.id})}">수정</a>
     </div>
-
-
 </div>
+<footer th:replace="fragments/common :: footer"></footer>
 <script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" th:src="@{/js/boardcontent.js}"></script>
