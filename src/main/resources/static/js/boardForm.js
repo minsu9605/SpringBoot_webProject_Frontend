@@ -69,18 +69,18 @@ $(document).ready(function () {
 });
 
 /*이미지 파일 업로드*/
-function uploadSummernoteImageFile(file, editor) {
+function uploadSummernoteImageFile(file) {
     const data = new FormData();
     data.append("file", file);
     $.ajax({
         data: data,
         type: "POST",
-        url: "/uploadSummernoteImageFile",
+        url: "/api/uploadSummernoteImageFile",
         contentType: false,
         processData: false,
         success: function (data) {
             //항상 업로드된 파일의 url이 있어야 한다.
-            $(editor).summernote('insertImage', data.url);
+            $("#content").summernote('insertImage', data.url);
         }
     });
 }

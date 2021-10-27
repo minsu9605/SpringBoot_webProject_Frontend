@@ -79,7 +79,7 @@ $("#searchBtn").on('click', function () {
 
             marker.setPosition(coords);
             marker.setMap(null);
-            marker.setMap(map)
+            marker.setMap(map);
 
             // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
             map.setCenter(coords);
@@ -105,7 +105,7 @@ $("#address").on('keyup',function (e){
 
                 marker.setPosition(coords);
                 marker.setMap(null);
-                marker.setMap(map)
+                marker.setMap(map);
 
                 // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
                 map.setCenter(coords);
@@ -169,9 +169,6 @@ function displayCenterInfo(result, status) {
 kakao.maps.event.addListener(marker, 'click', function (mouseEvent) {
     if (confirm("이 위치로 하시겠습니까?")) {
         alert("위치가 지정되었습니다");
-        /*console.log(myLat);
-        console.log(latlng.getLat());
-        console.log(myLng);*/
         opener.document.getElementById("myLat").value = myLat;
         opener.document.getElementById("myLng").value = myLng;
         close();

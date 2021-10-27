@@ -6,7 +6,6 @@ import com.example.CUSHProject.dto.NoticeBoardDto;
 import com.example.CUSHProject.entity.BoardEntity;
 import com.example.CUSHProject.service.BoardService;
 import com.example.CUSHProject.service.CategoryService;
-import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -120,7 +119,7 @@ public class BoardController {
 
     @ResponseBody
     @PostMapping("/api/uploadSummernoteImageFile")
-    public JsonObject uploadSummernoteImageFile(@RequestParam("file")MultipartFile multipartFile) {
+    public HashMap<String, Object> uploadSummernoteImageFile(@RequestParam("file")MultipartFile multipartFile) {
         return boardService.boardImageUpload(multipartFile);
     }
 

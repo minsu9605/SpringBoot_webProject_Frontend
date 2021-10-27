@@ -10,7 +10,6 @@ import com.example.CUSHProject.entity.NoticeBoardEntity;
 import com.example.CUSHProject.enums.Role;
 import com.example.CUSHProject.repository.MemberQueryRepository;
 import com.example.CUSHProject.repository.MemberRepository;
-import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -70,21 +69,6 @@ public class MemberService implements UserDetailsService {
 
     public MemberDto findById(Long id) {
         Optional<MemberEntity> memberEntity = memberRepository.findById(id);
-
-       /* String[] str = memberEntity.get().getBirth().split("-");
-
-        MemberDto memberDto = MemberDto.builder()
-                .id(memberEntity.get().getId())
-                .username(memberEntity.get().getUsername())
-//              .password(memberEntity.getPassword())
-                .nickname(memberEntity.get().getNickname())
-                .year(str[0])
-                .month(str[1])
-                .day(str[2])
-                .gender(memberEntity.get().getGender())
-                .role(memberEntity.get().getRole())
-                //    .role(memberEntity.get().getRole().getValue())
-                .build();*/
         return memberEntity.get().toDto();
     }
 

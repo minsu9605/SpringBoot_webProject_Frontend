@@ -6,7 +6,6 @@ import com.example.CUSHProject.entity.BoardEntity;
 import com.example.CUSHProject.entity.MemberEntity;
 import com.example.CUSHProject.enums.Status;
 import com.example.CUSHProject.repository.*;
-import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
@@ -18,10 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -117,8 +113,6 @@ public class BoardService {
 
     /*보드 수정 후 전송*/
     public BoardDto boardModifySave(BoardDto boardDto, String username,HttpServletRequest request){
-        /*Optional<BoardEntity> boardEntityOptional = boardRepository.findById(boardDto.getId());
-        Optional<BoardCategoryEntity> boardCategoryEntity = boardCategoryRepository.findById(boardEntityOptional.get().getCategory().getId());*/
         Optional<BoardCategoryEntity> boardCategoryEntity = boardCategoryRepository.findByName(boardDto.getCategoryName());
         Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
 
@@ -156,8 +150,8 @@ public class BoardService {
     }
 
     /*summernote 이미지 첨부*/
-    public JsonObject boardImageUpload(MultipartFile multipartFile){
-        JsonObject jsonObject = new JsonObject();
+    public HashMap<String,Object> boardImageUpload(MultipartFile multipartFile){
+        HashMap<String,Object> map = new HashMap<>();
 
         String fileRoot = "D:\\summernote_image\\";
 
@@ -169,14 +163,14 @@ public class BoardService {
         try {
             InputStream fileStream = multipartFile.getInputStream();
             FileUtils.copyInputStreamToFile(fileStream, targetFile);
-            jsonObject.addProperty("url", "/summernoteImage/"+savedFileName);
-            jsonObject.addProperty("responseCode", "success");
+            map.put("url", "/summernoteImage/"+savedFileName);
+            map.put("responseCode", "success");
         } catch (IOException e) {
             FileUtils.deleteQuietly(targetFile); //저장된 파일 삭제
-            jsonObject.addProperty("responseCode", "error");
+            map.put("responseCode", "error");
             e.printStackTrace();
         }
-        return jsonObject;
+        return map;
     }
 
 }
