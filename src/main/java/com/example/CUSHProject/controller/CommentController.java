@@ -34,10 +34,6 @@ public class CommentController {
     @ResponseBody
     @GetMapping("/api/comment/list")
     public HashMap<String, Object> getCommentList(@RequestParam Long bid, HttpServletRequest request){
-        /*HashMap<String, Object> map = new HashMap<>();
-        map.put("commentCnt",commentService.getCount(bid));
-        map.put("list",commentService.getCommentList(bid));
-        return map;*/
         return commentService.getCommentList(bid);
     }
 
