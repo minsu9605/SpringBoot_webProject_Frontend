@@ -1,30 +1,20 @@
 package com.example.CUSHProject.service;
 
-import com.example.CUSHProject.dto.BoardDto;
 import com.example.CUSHProject.dto.NoticeBoardDto;
-import com.example.CUSHProject.entity.BoardCategoryEntity;
-import com.example.CUSHProject.entity.BoardEntity;
 import com.example.CUSHProject.entity.MemberEntity;
 import com.example.CUSHProject.entity.NoticeBoardEntity;
 import com.example.CUSHProject.repository.MemberRepository;
 import com.example.CUSHProject.repository.NoticeBoardQueryRepository;
 import com.example.CUSHProject.repository.NoticeBoardRepository;
-import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
-import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @AllArgsConstructor

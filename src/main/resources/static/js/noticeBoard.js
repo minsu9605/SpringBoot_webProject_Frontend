@@ -30,7 +30,7 @@ function getList(){
             {header: '조회수', name: 'hit', width: 'auto', align: 'center'}
         ],
         pageOptions: {
-            perPage: 5
+            perPage: 10
         }
     });
 

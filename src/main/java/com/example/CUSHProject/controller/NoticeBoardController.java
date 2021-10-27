@@ -1,15 +1,12 @@
 package com.example.CUSHProject.controller;
 
-import com.example.CUSHProject.dto.BoardDto;
 import com.example.CUSHProject.dto.NoticeBoardDto;
 import com.example.CUSHProject.service.NoticeBoardService;
-import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
