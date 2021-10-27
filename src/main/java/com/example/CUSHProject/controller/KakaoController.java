@@ -36,7 +36,7 @@ public class KakaoController {
         @GetMapping(value = "/kakao/callback")
         public String kakaoOauthRedirect(@RequestParam String code,OAuthToken oauthToken, MemberRepository memberRepository) throws Exception {
             OAuthToken oAuthToken = kakaoService.getAccessToken(code);
-            return kakaoService.getKakaoProfile(oAuthToken,memberRepository);
-            //return "index";
+//            return kakaoService.getKakaoProfile(oAuthToken,memberRepository);
+            return "index";
         }
 }
