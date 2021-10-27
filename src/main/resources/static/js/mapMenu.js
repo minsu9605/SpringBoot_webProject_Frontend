@@ -1,8 +1,10 @@
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     mapOption = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-        level: 4 // 지도의 확대 레벨
+        center: new kakao.maps.LatLng(37.542879, 126.971314), // 지도의 중심좌표
+        level: 7 // 지도의 확대 레벨
     };
+
+var markerArrays=[];
 
 // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 var map = new kakao.maps.Map(mapContainer, mapOption);
@@ -17,10 +19,33 @@ var ps = new kakao.maps.services.Places();
 let positions = [];
 let bounds;
 
+var clusterer = new kakao.maps.MarkerClusterer({
+    map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+    averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+    minLevel: 7 // 클러스터 할 최소 지도 레벨
+});
+
+/*검색어 자동 초기화 & 엔터 검색*/
+$(document).on("keydown",function (a){
+    if(!a.altKey && (!a.ctrlKey && !(a.metaKey || "INPUT" == a.target.tagName))){
+        /*which : 키 코드 확인가능*/
+        var b = a.keyCode || a.which;
+        console.log(a.which);
+        if (47 < b && 58 > b || 64 < b && 91 > b || 95 < b && 106 > b)
+            $("#address").val(""),
+                $("#address").focus();
+    }else if(a.which == 13){
+        const keyword = $("#address").val();
+        ps.keywordSearch(keyword, placesSearchCB);
+        $("#address").blur();
+    }
+});
+
 
 // 키워드 검색 완료 시 호출되는 콜백함수 입니다
 function placesSearchCB (data, status) {
     if (status === kakao.maps.services.Status.OK) {
+        clusterer.clear();
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
         var bounds = new kakao.maps.LatLngBounds();
@@ -29,7 +54,9 @@ function placesSearchCB (data, status) {
             bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
         }
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-        map.setBounds(bounds);
+        // map.setBounds(bounds);
+        map.panTo(bounds);
+        showMarker(bounds);
     }
 }
 
@@ -40,17 +67,9 @@ $("#searchBtn").on('click', function () {
     ps.keywordSearch(keyword, placesSearchCB);
 });
 
-/*엔터키 검색*/
-$("#address").on('keyup',function (e){
-    if(e.keyCode==13){
-        const keyword = $("#address").val();
-        ps.keywordSearch(keyword, placesSearchCB);
-    }
-});
-
-
 /*현재위치 버튼 클릭*/
 $("#location").on('click', function () {
+    clusterer.clear();
     /*현재위치 받아오기*/
     function locationLoadSuccess(pos) {
         // 현재 위치 받아오기
@@ -60,6 +79,7 @@ $("#location").on('click', function () {
         map.panTo(currentPos);
         bounds = map.getBounds();
         showMarker(bounds);
+
     };
 
     function locationLoadError(pos) {
@@ -67,6 +87,7 @@ $("#location").on('click', function () {
     };
 
     navigator.geolocation.getCurrentPosition(locationLoadSuccess, locationLoadError);
+
 
 });
 
@@ -78,21 +99,26 @@ $(function () {
 
 /*드래그 이벤트*/
 kakao.maps.event.addListener(map, 'dragend', function () {
+    clusterer.clear();
     bounds = map.getBounds();
     showMarker(bounds);
 });
 
 /*DB연동 마커 표시*/
 function showMarker(bounds) {
-    positions.length = 0;
+
     $.ajax({
         method: 'get',
         url: "/api/mapMenu/list",
         data: {startLat: bounds.qa, startLng: bounds.ha, endLat: bounds.pa, endLng: bounds.oa},
         success: function (success) {
+
+            positions.length = 0;
             for (let i = 0; i < success.data.length; i++) {
                 positions.push({title: success.data[i].title, latlng: new kakao.maps.LatLng(success.data[i].myLat, success.data[i].myLng), id: success.data[i].id, category : success.data[i].categoryName});
             }
+            console.log(positions);
+            console.log(positions.length);
 
             for (let i = 0; i < positions.length; i++) {
                 let imageSrc;
@@ -136,7 +162,9 @@ function showMarker(bounds) {
                 /*for문 밖에 있으면 마지막 마커에만 적용*/
                 kakao.maps.event.addListener(marker, 'click', clickMarker(map, marker, iwContent, iwPosition));
 
+                clusterer.addMarker(marker);
             }
+
         },
         error: function (request, status, error) {
             alert("code: " + request.status + "\n" + "error: " + error);
