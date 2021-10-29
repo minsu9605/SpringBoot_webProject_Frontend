@@ -3,11 +3,14 @@ $("#submitBtn").on('click',function nullCheck() {
         return false;
     } else if (!contentCheck()) {
         return false;
+    } else if (!priceCheck()){
+      return false;
     } else if (!mapCheck()){
         return false;
     }if(!confirm("글을 작성하시겠습니까?")) {
         return false;
     }
+    eraseComma()
     alert("작성되었습니다");
     return true;
 });
@@ -31,6 +34,14 @@ function contentCheck() {
     }
     return true;
 }
+function priceCheck() {
+    if ($('#price').val()=="") {
+        alert("금액을 입력해주세요. 필수항목 입니다.");
+        return false;
+    }
+    return true;
+}
+
 
 function mapCheck() {
     const myLat = $("#myLat").val();
@@ -41,6 +52,21 @@ function mapCheck() {
     }
     return true;
 }
+
+/*가격 콤마생성*/
+$("#price").on("focusout", function()	{
+    $(this).val( $(this).val().replace(",","") );
+    $(this).val( $(this).val().replace(/[^-\.0-9]/gi,"") );
+    $(this).val( $(this).val().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") );
+});
+
+/*db로 보낼 때 콤마 제거*/
+function eraseComma(){
+    const temp = $("#price").val().replace(/,/gi,"");
+    $("input[name=price]").val(temp);
+}
+
+
 
 $(document).ready(function () {
 

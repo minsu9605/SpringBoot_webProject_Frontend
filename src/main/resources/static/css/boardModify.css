@@ -26,3 +26,18 @@
 #status{
     display: inline-block;
 }
+#divPrice{
+    margin-left: 3%;
+}
+.dFlex{
+    display: flex;
+}
+#priceUnit{
+    margin-top: 10px;
+    margin-left: 3px;
+    font-size: 17px;
+}
+#price{
+    text-align: right;
+    width: 181px;
+}

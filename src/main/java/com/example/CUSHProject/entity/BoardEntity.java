@@ -51,6 +51,9 @@ public class BoardEntity{
     @Column(name = "HIT")
     private int hit;
 
+    @Column(name = "PRICE")
+    private int price;
+
     @Column(name = "WRITE_IP")
     private String writeIp;
 
@@ -88,6 +91,7 @@ public class BoardEntity{
                 .createdDate(createdDate.format(formatter))
                 .updatedDate(updatedDate.format(formatter))
                 .hit(hit)
+                .price(price)
                 .rating(rating)
                 .status(status)
                 .categoryName(category.getName())
@@ -98,13 +102,14 @@ public class BoardEntity{
                 .build();
     }
     @Builder
-    public BoardEntity(Long id, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate,int hit, Rating rating, Status status,String writeIp, double myLat, double myLng ) {
+    public BoardEntity(Long id, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate,int hit, int price, Rating rating, Status status,String writeIp, double myLat, double myLng ) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
         this.hit = hit;
+        this.price = price;
         this.rating = rating;
         this.status=status;
         this.writeIp = writeIp;

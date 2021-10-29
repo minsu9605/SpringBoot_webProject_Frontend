@@ -38,7 +38,7 @@
         </div>
         <hr>
 
-        <div class="mb-3" id="dropDown">
+        <div class="mb-1" id="dropDown">
             <div class="dropdown" id="divCategory">
                 <label class="form-label" for="categoryName">종류</label>
                 <select class="form-control" id="categoryName" name="categoryName">
@@ -60,6 +60,15 @@
                     </option>
                 </select>
             </div>
+
+            <div class="mb-3" id="divPrice">
+                <label class="form-label" for="price">판매금액</label>
+                <div class="dFlex">
+                    <input type="text" class="form-control" id="price" name="price" th:value="${boardForm.price}" placeholder="가격을 입력해 주세요.">
+                    <span id="priceUnit">원</span>
+                </div>
+            </div>
+
             <div class="mapDiv">
                 <button id="mapButton" type="button" class="btn btn-success">거래 장소 정하기</button>
                 <input type="hidden" th:value="${boardForm.myLat}" id="myLat" name="myLat" readonly>

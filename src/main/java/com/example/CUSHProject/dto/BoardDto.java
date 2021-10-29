@@ -25,6 +25,7 @@ public class BoardDto {
     private String createdDate;
     private String updatedDate;
     private int hit;
+    private int price;
     private Rating rating;
     private Status status;
     private String categoryName;
@@ -42,6 +43,7 @@ public class BoardDto {
                 .createdDate(LocalDateTime.parse(createdDate, formatter))
                 .updatedDate(LocalDateTime.parse(updatedDate, formatter))
                 .hit(hit)
+                .price(price)
                 .rating(rating)
                 .status(status)
                 .writeIp(writeIp)
@@ -51,7 +53,7 @@ public class BoardDto {
     }
 
     @Builder
-    public BoardDto(Long id, String writer, String title, String content, String createdDate, String updatedDate, int hit, Rating rating, Status status, String categoryName, Long categoryId, String writeIp, double myLat, double myLng) {
+    public BoardDto(Long id, String writer, String title, String content, String createdDate, String updatedDate, int hit, int price, Rating rating, Status status, String categoryName, Long categoryId, String writeIp, double myLat, double myLng) {
         this.id=id;
         this.writer=writer;
         this.title=title;
@@ -59,6 +61,7 @@ public class BoardDto {
         this.createdDate=createdDate;
         this.updatedDate=updatedDate;
         this.hit=hit;
+        this.price=price;
         this.rating=rating;
         this.status=status;
         this.categoryName=categoryName;
