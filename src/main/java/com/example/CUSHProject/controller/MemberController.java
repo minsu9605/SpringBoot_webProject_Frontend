@@ -75,13 +75,6 @@ public class MemberController {
     }
 
     //내정보 수정 페이지
-    @GetMapping("/account/myBoard")
-    public String myBoard(Authentication authentication, Model model) {
-        return "account/myboard";
-    }
-
-
-    //내정보 수정 페이지
     @GetMapping("/account/myinfo")
     public String myInfo(Authentication authentication, Model model) {
         MemberDto memberDto = memberService.memberInfo(authentication.getName());

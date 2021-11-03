@@ -64,7 +64,9 @@ function converter(value){
         result=value.replace(/sell/gi,"[판매중]");
     }else if(value=="soldOut"){
         result=value.replace(/soldOut/gi,"[판매완료]");
-    }
+    }else
+        result=value.replace(/old/gi,"[판매중]");
+
     return result;
 }
 

@@ -22,7 +22,7 @@
     <input type="hidden" id="myLat" th:value="${boardForm.myLat}">
     <input type="hidden" id="myLng" th:value="${boardForm.myLng}">
     <div class="contentTitle">
-        <h3 class="mb-3" th:text="'[' + ${boardForm.status.title} + ']'"></h3>
+        <h3 class="mb-3" id="boardStatus" th:text="'[' + ${boardForm.status.title} + ']'"></h3>
         <h2 class="mb-3" th:text="'&nbsp'+ ${boardForm.title}"></h2>
     </div>
 

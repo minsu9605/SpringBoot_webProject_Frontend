@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/common :: head('작성글')"></head>
 <link th:href="@{/css/myBoard.css}" rel="stylesheet">
+<link th:href="@{/css/OldBoardSide.css}" rel="stylesheet">
 
 <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css"/>
 <link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css"/>
@@ -10,6 +11,23 @@
 
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4" th:replace="fragments/common :: menu('board')"></nav>
+<div>
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand">
+                <a>오래된 게시물 알림</a>
+            </li>
+            <div th:each="boardDto : ${boardDtoList}" class="card border-primary mb-3" style="max-width: 18rem;">
+<!--                <div class="card-header">게시물을 확인해주세요!</div>-->
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${boardDto.title}"></h5>
+                    <p class="card-text text-danger">물건을 올린지 1주일이 지났어요! 물건의 가격을 변경해보세요!</p>
+                    <a th:href="@{'/board/content?id='+${boardDto.id}}" class="btn btn-primary">게시물로 이동</a>
+                </div>
+            </div>
+        </ul>
+    </div>
+</div>
 
 <div class="container main-wrapper">
     <h1 class="container mt-5">작성글</h1>
@@ -31,6 +49,9 @@
 
     </main>
 </div>
+
+
+
 <footer th:replace="fragments/common :: footer"></footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" th:src="@{/js/myBoard.js}"></script>

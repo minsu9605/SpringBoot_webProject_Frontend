@@ -66,6 +66,17 @@ public class BoardService {
         return Math.toIntExact(boardQueryRepository.getMyBoardTotalCount(memberEntity.get(),searchType,keyword));
     }
 
+    public List<BoardDto> getMyOldBoardList(String username){
+        Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
+        List<BoardEntity> boardEntityList = boardQueryRepository.getMyOldBoardList(memberEntity.get());
+        List<BoardDto> boardDtoList = new ArrayList<>();
+
+        for(BoardEntity boardEntity : boardEntityList){
+            boardDtoList.add(boardEntity.toDto());
+        }
+        return boardDtoList;
+    }
+
     //보드 글 상세보기
     public BoardDto boardContent(Long id) {
         BoardEntity boardEntity;

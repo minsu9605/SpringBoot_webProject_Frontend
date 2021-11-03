@@ -81,6 +81,10 @@ public class BoardEntity{
     public void setWriter(MemberEntity memberEntity){
         this.writer=memberEntity;
     }
+    public BoardEntity setStatus(Status status){
+        this.status=status;
+        return this;
+    }
     public BoardDto toDto() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return BoardDto.builder()

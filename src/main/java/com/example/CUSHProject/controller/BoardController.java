@@ -129,8 +129,16 @@ public class BoardController {
         boardService.boardDelete(id);
     }
 
-    /*내정보 수정 페이지 api*/
-    @GetMapping("/api/account/myBoard/table")
+    //내가 쓴 게시물
+    @GetMapping("/board/myBoard")
+    public String myBoard(Authentication authentication, Model model) {
+        List<BoardDto> boardDtoList = boardService.getMyOldBoardList(authentication.getName());
+        model.addAttribute("boardDtoList",boardDtoList);
+        return "account/myboard";
+    }
+
+    /*내rk 쓴 게시물 api*/
+    @GetMapping("/api/board/myBoard/table")
     @ResponseBody
     public HashMap<String, Object> getNoticeList( @RequestParam(required = false) int page,
                                                   @RequestParam(required = false) int perPage,
@@ -152,4 +160,6 @@ public class BoardController {
         paginationMap.put("totalCount", total);
         return objectMap;
     }
+
+
 }

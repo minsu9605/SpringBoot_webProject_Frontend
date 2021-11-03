@@ -27,7 +27,7 @@ $(function (){
     $("#contentPrice").text( $("#contentPrice").text()+'원');
 });
 
-
+/*이미지 태그 추출*/
 $(function getImageByTagName(){
     const dbValue = document.getElementById('contentMain');
     const tag = dbValue.getElementsByTagName('img');
@@ -38,17 +38,18 @@ $(function getImageByTagName(){
         }
     }else if(tag.length==0){
         $(".contentImg").append('<img src="/images/no_image.png">');
-
     }
-
 });
 
-
-
-
+/*이미지 슬라이더*/
 $(function(){
     $('.contentImg').slick({
         prevArrow:'.arrow_prev',
         nextArrow:'.arrow_next'
     });
+    const a = $("#boardStatus").text();
+
+    $("#boardStatus").text(a.replace("[오래된 판매중 게시물]","[판매중]"));
+    // $("#boardStatus").text().replace("[오래된 판매중 게시물]","[판매중]");
 });
+

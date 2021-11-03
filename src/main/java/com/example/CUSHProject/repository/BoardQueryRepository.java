@@ -9,6 +9,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Member;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -51,6 +54,14 @@ public class BoardQueryRepository{
                 .fetchCount();
     }
 
+    public List<BoardEntity> getMyOldBoardList(MemberEntity memberEntity){
+        return queryFactory.selectFrom(QBoardEntity.boardEntity)
+                .where(QBoardEntity.boardEntity.writer.eq(memberEntity)
+                        .and(QBoardEntity.boardEntity.status.eq(Status.old))
+                )
+                .orderBy(QBoardEntity.boardEntity.updatedDate.asc())
+                .fetch();
+    }
     /*내가 쓴글 한페이지 출력 리스트*/
     public List<BoardEntity> getMyBoardList(MemberEntity memberEntity, int page, int perPage, String searchType, String keyword){
         int start = (page * perPage) - perPage;
@@ -101,6 +112,23 @@ public class BoardQueryRepository{
                 )
                 .orderBy(QBoardEntity.boardEntity.id.desc())
                 .fetch();
+    }
+
+    public List<BoardEntity> getOldBoard(){
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime weeksAgo = now.minusWeeks(1);
+
+        return queryFactory.selectFrom(QBoardEntity.boardEntity)
+                .where(QBoardEntity.boardEntity.updatedDate.before(weeksAgo)
+                .and(QBoardEntity.boardEntity.status.eq(Status.sell)))
+                .orderBy(QBoardEntity.boardEntity.updatedDate.asc())
+                .fetch();
+    }
+
+    public void setStatusByDate() {
+        queryFactory.update(QBoardEntity.boardEntity)
+                .set(QBoardEntity.boardEntity.status, Status.old)
+                .execute();
     }
 
 }
