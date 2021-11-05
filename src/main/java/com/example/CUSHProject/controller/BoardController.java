@@ -129,12 +129,20 @@ public class BoardController {
         boardService.boardDelete(id);
     }
 
-    //내가 쓴 게시물
+    //내가 쓴 게시물(내정보)
     @GetMapping("/board/myBoard")
     public String myBoard(Authentication authentication, Model model) {
-        List<BoardDto> boardDtoList = boardService.getMyOldBoardList(authentication.getName());
-        model.addAttribute("boardDtoList",boardDtoList);
+//        List<BoardDto> boardDtoList = boardService.getMyOldBoardList(authentication.getName());
+//        model.addAttribute("boardDtoList",boardDtoList);
         return "account/myboard";
+    }
+    @GetMapping("/api/board/getMyOldBoardList")
+    @ResponseBody
+    public HashMap<String, Object> oldBoardList(Authentication authentication){
+        HashMap<String, Object> map = new HashMap<>();
+        List<BoardDto> boardDtoList = boardService.getMyOldBoardList(authentication.getName());
+        map.put("data", boardDtoList);
+        return map;
     }
 
     /*내rk 쓴 게시물 api*/

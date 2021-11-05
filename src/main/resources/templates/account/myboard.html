@@ -11,26 +11,10 @@
 
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4" th:replace="fragments/common :: menu('board')"></nav>
-<div>
-    <div id="sidebar-wrapper">
-        <ul class="sidebar-nav">
-            <li class="sidebar-brand">
-                <a>오래된 게시물 알림</a>
-            </li>
-            <div th:each="boardDto : ${boardDtoList}" class="card border-primary mb-3" style="max-width: 18rem;">
-<!--                <div class="card-header">게시물을 확인해주세요!</div>-->
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${boardDto.title}"></h5>
-                    <p class="card-text text-danger">물건을 올린지 1주일이 지났어요! 물건의 가격을 변경해보세요!</p>
-                    <a th:href="@{'/board/content?id='+${boardDto.id}}" class="btn btn-primary">게시물로 이동</a>
-                </div>
-            </div>
-        </ul>
-    </div>
-</div>
+<div th:include="fragments/mypagesidebar"> </div>
 
 <div class="container main-wrapper">
-    <h1 class="container mt-5">작성글</h1>
+    <h1 class="container mt-5">내 작성글</h1>
 
     <main class="container">
         <br>
@@ -49,8 +33,6 @@
 
     </main>
 </div>
-
-
 
 <footer th:replace="fragments/common :: footer"></footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

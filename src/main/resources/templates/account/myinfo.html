@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <title>로그인</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<head th:replace="fragments/common :: head('내 정보 수정')"></head>
 
-    <link th:href="@{/css/signin.css}" rel="stylesheet">
-    <link th:href="@{/css/birth.css}" rel="stylesheet">
-</head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-<body class="text-center">
+<link th:href="@{/css/myInfo.css}" rel="stylesheet">
+<link th:href="@{/css/birth.css}" rel="stylesheet">
+
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4" th:replace="fragments/common :: menu('board')"></nav>
+<div th:include="fragments/mypagesidebar"> </div>
     <form class="form-signin" th:action="@{/account/myinfo}" method="post" th:object="${member}">
 
-        <a th:href="@{/}"><img class="mb-4" th:src="@{/image/log_icon.png}" alt="로고" width="72" height="57"></a>
-        <h1 class="h3 mb-3 fw-normal">My Page</h1>
+        <h1 class="h3 mb-3 fw-normal">내 정보 수정</h1>
         <hr>
 
         <input type="hidden" class="form-control" th:field="*{id}" th:readonly="readonly" >
@@ -86,10 +84,11 @@
         </div>
 
     </form>
+<footer th:replace="fragments/common :: footer"></footer>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript" th:src="@{/js/modify.js}"></script>
-    <script type="text/javascript" th:src="@{/js/calAge.js}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{/js/modify.js}"></script>
+<script type="text/javascript" th:src="@{/js/calAge.js}"></script>
 
 </body>
 </html>

@@ -10,7 +10,7 @@ body {
     height : 50px;
 }
 .navbar{
-    position: sticky;
+    position: sticky !important;
     z-index: 1023;
     top: 0;
 }

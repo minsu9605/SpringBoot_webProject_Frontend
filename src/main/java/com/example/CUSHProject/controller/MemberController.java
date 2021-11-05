@@ -68,11 +68,11 @@ public class MemberController {
         return "redirect:/";
     }
 
-    //내정보
+    /*//내정보
     @GetMapping("/account/mypage")
     public String myPage() {
-        return "account/mypage";
-    }
+        return "account/myboard";
+    }*/
 
     //내정보 수정 페이지
     @GetMapping("/account/myinfo")

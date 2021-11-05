@@ -41,7 +41,7 @@
             <!--                <span class="text-white mx-2" sec:authentication="principal.authorities">권한</span>-->
             <span class="text-white mx-2" th:text="${session.memberRole.title}">권한</span>
 
-            <a class="btn btn-outline-warning mx-2 btn-sm" th:href="@{/account/mypage}" sec:authorize="hasRole('ROLE_MEMBER')">내 정보</a>
+            <a class="btn btn-outline-warning mx-2 btn-sm" th:href="@{/board/myBoard}" sec:authorize="hasRole('ROLE_MEMBER')">마이페이지</a>
 
             <a class="btn btn-outline-warning mx-2 btn-sm" th:href="@{/admin}" sec:authorize="hasRole('ROLE_ADMIN')">관리</a>
 

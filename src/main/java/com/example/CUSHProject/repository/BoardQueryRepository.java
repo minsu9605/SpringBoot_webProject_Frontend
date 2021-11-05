@@ -62,6 +62,7 @@ public class BoardQueryRepository{
                 .orderBy(QBoardEntity.boardEntity.updatedDate.asc())
                 .fetch();
     }
+
     /*내가 쓴글 한페이지 출력 리스트*/
     public List<BoardEntity> getMyBoardList(MemberEntity memberEntity, int page, int perPage, String searchType, String keyword){
         int start = (page * perPage) - perPage;
