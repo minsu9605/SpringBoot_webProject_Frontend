@@ -66,15 +66,21 @@ public class BoardService {
         return Math.toIntExact(boardQueryRepository.getMyBoardTotalCount(memberEntity.get(),searchType,keyword));
     }
 
-    public List<BoardDto> getMyOldBoardList(String username){
+    /*페이징 하면서 조회*/
+    public List<BoardDto> getMyOldBoardList(String username, int startIndex, int searchStep){
         Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
-        List<BoardEntity> boardEntityList = boardQueryRepository.getMyOldBoardList(memberEntity.get());
+        List<BoardEntity> boardEntityList = boardQueryRepository.getMyOldBoardList(memberEntity.get(),startIndex,searchStep);
         List<BoardDto> boardDtoList = new ArrayList<>();
 
         for(BoardEntity boardEntity : boardEntityList){
             boardDtoList.add(boardEntity.toDto());
         }
         return boardDtoList;
+    }
+    /*전체 갯수 카운트*/
+    public int getMyOldBoardListCnt(String username){
+        Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
+        return Math.toIntExact(boardQueryRepository.getMyOldBoardTotalCount(memberEntity.get()));
     }
 
     //보드 글 상세보기

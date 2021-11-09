@@ -13,7 +13,9 @@
 
 <div class="container main-wrapper">
     <h1 class="container mt-5">공지사항</h1>
-
+    <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Bottom popover">
+        Popover on bottom
+    </button>
     <main class="container">
         <br>
 
@@ -38,5 +40,7 @@
 <footer th:replace="fragments/common :: footer"></footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" th:src="@{/js/noticeBoard.js}"></script>
+<script type="text/javascript" th:src="@{/js/nav_top.js}"></script>
+
 </body>
 </html>

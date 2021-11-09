@@ -132,20 +132,34 @@ public class BoardController {
     //내가 쓴 게시물(내정보)
     @GetMapping("/board/myBoard")
     public String myBoard(Authentication authentication, Model model) {
-//        List<BoardDto> boardDtoList = boardService.getMyOldBoardList(authentication.getName());
-//        model.addAttribute("boardDtoList",boardDtoList);
         return "account/myboard";
     }
+
     @GetMapping("/api/board/getMyOldBoardList")
     @ResponseBody
-    public HashMap<String, Object> oldBoardList(Authentication authentication){
+    public HashMap<String, Object> oldBoardList(Authentication authentication,
+                                                @RequestParam(required = false) int startIndex,
+                                                @RequestParam(required = false) int searchStep){
         HashMap<String, Object> map = new HashMap<>();
-        List<BoardDto> boardDtoList = boardService.getMyOldBoardList(authentication.getName());
+        List<BoardDto> boardDtoList = boardService.getMyOldBoardList(authentication.getName(),startIndex,searchStep);
+        map.put("totalCnt",boardService.getMyOldBoardListCnt(authentication.getName()));
         map.put("data", boardDtoList);
         return map;
     }
 
-    /*내rk 쓴 게시물 api*/
+    @GetMapping("/api/board/getMyOldBoardCnt")
+    @ResponseBody
+    public HashMap<String, Object> getMyOldBoardCnt(Authentication authentication){
+        HashMap<String, Object> map = new HashMap<>();
+
+        if(authentication!=null) {
+            map.put("totalCnt", boardService.getMyOldBoardListCnt(authentication.getName()));
+        }else map.put("totalCnt",0);
+
+        return map;
+    }
+
+    /*내가 쓴 게시물 api*/
     @GetMapping("/api/board/myBoard/table")
     @ResponseBody
     public HashMap<String, Object> getNoticeList( @RequestParam(required = false) int page,
@@ -155,7 +169,6 @@ public class BoardController {
         HashMap<String, Object> objectMap = new HashMap<>();
         HashMap<String, Object> dataMap = new HashMap<>();
         HashMap<String, Object> paginationMap = new HashMap<>();
-
 
         int total = boardService.getMyBoardTotalSize(authentication.getName(),searchType,keyword);
         List<BoardDto> boardEntityList = boardService.getMyBoardList(authentication.getName(),page, perPage, searchType, keyword);
@@ -168,6 +181,7 @@ public class BoardController {
         paginationMap.put("totalCount", total);
         return objectMap;
     }
+
 
 
 }

@@ -14,7 +14,9 @@
 <div th:include="fragments/mypagesidebar"> </div>
 
 <div class="container main-wrapper">
-    <h1 class="container mt-5">내 작성글</h1>
+
+
+    <h1 class="container mt-5 myboardTitle">내 작성글</h1>
 
     <main class="container">
         <br>
@@ -37,5 +39,6 @@
 <footer th:replace="fragments/common :: footer"></footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" th:src="@{/js/myBoard.js}"></script>
+<script type="text/javascript" th:src="@{/js/nav_top.js}"></script>
 </body>
 </html>

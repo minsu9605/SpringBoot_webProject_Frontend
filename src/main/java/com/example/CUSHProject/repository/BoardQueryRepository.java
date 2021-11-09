@@ -54,14 +54,33 @@ public class BoardQueryRepository{
                 .fetchCount();
     }
 
-    public List<BoardEntity> getMyOldBoardList(MemberEntity memberEntity){
+    public List<BoardEntity> getMyOldBoardList(MemberEntity memberEntity,int startIndex, int searchStep){
+        return queryFactory.selectFrom(QBoardEntity.boardEntity)
+                .where(QBoardEntity.boardEntity.writer.eq(memberEntity)
+                        .and(QBoardEntity.boardEntity.status.eq(Status.old))
+                )
+                .orderBy(QBoardEntity.boardEntity.updatedDate.asc())
+                .offset(startIndex)
+                .limit(searchStep)
+                .fetch();
+    }
+
+    public Long getMyOldBoardTotalCount(MemberEntity memberEntity){
+        return queryFactory.selectFrom(QBoardEntity.boardEntity)
+                .where(QBoardEntity.boardEntity.writer.eq(memberEntity)
+                        .and(QBoardEntity.boardEntity.status.eq(Status.old))
+                )
+                .fetchCount();
+    }
+
+    /*public List<BoardEntity> getMyOldBoardList(MemberEntity memberEntity){
         return queryFactory.selectFrom(QBoardEntity.boardEntity)
                 .where(QBoardEntity.boardEntity.writer.eq(memberEntity)
                         .and(QBoardEntity.boardEntity.status.eq(Status.old))
                 )
                 .orderBy(QBoardEntity.boardEntity.updatedDate.asc())
                 .fetch();
-    }
+    }*/
 
     /*내가 쓴글 한페이지 출력 리스트*/
     public List<BoardEntity> getMyBoardList(MemberEntity memberEntity, int page, int perPage, String searchType, String keyword){

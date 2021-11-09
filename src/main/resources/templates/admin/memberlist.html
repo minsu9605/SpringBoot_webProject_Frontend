@@ -17,7 +17,6 @@
 
     <main class="container">
         <br>
-
         <div class="btn-group mb-3" role="group" aria-label="Basic example">
             <div class="w100" style="padding-right:10px">
                 <select class="form-control form-control-sm" id="searchType" name="searchType">
@@ -28,13 +27,12 @@
             <input id="keyword" name="keyword" type="text" placeholder="검색어를 입력해주세요">
             <button id="searchButton" type="submit" class="mx-2 btn btn-secondary">검색</button>
         </div>
-
         <div id="recruitGrid"></div>
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script type="text/javascript" th:src="@{/js/memberList.js}"></script>
     </main>
 </div>
 <footer th:replace="fragments/common :: footer"></footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{/js/memberList.js}"></script>
+<script type="text/javascript" th:src="@{/js/nav_top.js}"></script>
 </body>
 </html>

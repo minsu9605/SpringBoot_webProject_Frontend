@@ -5,24 +5,15 @@
 </head>
 <body>
 <div th:fragment="myOldBoardList">
-  <div id="sidebar-wrapper">
-    <ul class="sidebar-nav">
-      <li class="sidebar-brand">
-        <a>오래된 게시물 알림</a>
-      </li>
-      <div class="oldBoardMessage"></div>
-      <!--<div th:each="boardDto : ${boardDtoList}" class="card border-primary mb-3" style="max-width: 18rem;">
-&lt;!&ndash;                <div class="card-header">게시물을 확인해주세요!</div>&ndash;&gt;
-          <div class="card-body">
-              <h5 class="card-title" th:text="${boardDto.title}"></h5>
-              <p class="card-text text-danger">물건을 올린지 1주일이 지났어요! 물건의 가격을 변경해보세요!</p>
-              <a th:href="@{'/board/content?id='+${boardDto.id}}" class="btn btn-primary">게시물로 이동</a>
-          </div>
-      </div>-->
-    </ul>
-  </div>
+    <h5 class="m-4">
+        오래된 게시물
+    </h5>
+    <div id="oldList">
+
+    </div>
+    <button type="button" id="searchMoreNotify" class="btn btn-outline-primary btn-block col-sm-10 mx-auto">더 보기</button>
 </div>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" th:src="@{/js/oldBoard.js}"></script>
 </body>

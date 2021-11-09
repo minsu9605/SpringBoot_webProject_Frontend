@@ -42,7 +42,6 @@ public class AdminController {
         int total = memberService.getTotalSize(searchType,keyword);
         List<MemberDto> memberDtoList = memberService.getMemberList(page, perPage, searchType, keyword);
 
-
         objectMap.put("result", true);
         objectMap.put("data", dataMap);
         dataMap.put("contents", memberDtoList);

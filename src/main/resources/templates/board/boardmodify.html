@@ -30,6 +30,7 @@
             <label class="form-label" for="status"><b>판매상태</b></label>
             <select class="form-control" id="status" name="status">
                 <option th:each="status : ${T(com.example.CUSHProject.enums.Status).values()}"
+                        th:if="${status.value} == 'old'" hidden
                         th:value="${status.value}"
                         th:text="${status.title}"
                         th:selected="${status.value} == ${boardForm.status.value}">
@@ -97,5 +98,7 @@
 <script type="text/javascript" th:src="@{/js/summernote/summernote-lite.js}" defer></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" th:src="@{/js/boardModify.js}"></script>
+<script type="text/javascript" th:src="@{/js/nav_top.js}"></script>
+
 </body>
 </html>
