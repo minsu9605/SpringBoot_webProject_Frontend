@@ -26,7 +26,7 @@ public class JobScheduler {
     @Autowired
     private OldBoardJobConfiguration oldBoardJobConfiguration;
 
-    @Scheduled(cron = "0 20 * * * *") //초 분 시 일 월 요일
+    @Scheduled(cron = "0 48 * * * *") //초 분 시 일 월 요일
     public void runJob() {
 
         Map<String, JobParameter> map = new HashMap<>();

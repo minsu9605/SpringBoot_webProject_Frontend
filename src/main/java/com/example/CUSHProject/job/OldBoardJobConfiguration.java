@@ -1,5 +1,7 @@
 package com.example.CUSHProject.job;
 
+import com.example.CUSHProject.dto.ddDto;
+import com.example.CUSHProject.entity.BoardCountEntity;
 import com.example.CUSHProject.entity.BoardEntity;
 import com.example.CUSHProject.enums.Status;
 import com.example.CUSHProject.repository.BoardRepository;
@@ -12,16 +14,25 @@ import org.springframework.batch.core.configuration.annotation.JobScope;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.data.RepositoryItemReader;
 import org.springframework.batch.item.data.RepositoryItemWriter;
 import org.springframework.batch.item.data.builder.RepositoryItemReaderBuilder;
 import org.springframework.batch.item.data.builder.RepositoryItemWriterBuilder;
+import org.springframework.batch.item.database.JpaItemWriter;
+import org.springframework.batch.item.database.JpaPagingItemReader;
+import org.springframework.batch.item.database.builder.JpaItemWriterBuilder;
+import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Sort;
 
+import javax.persistence.EntityManagerFactory;
+import java.lang.reflect.Field;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collections;
+import java.util.*;
 
 @Slf4j
 @AllArgsConstructor
@@ -31,17 +42,20 @@ public class OldBoardJobConfiguration {
     private final BoardRepository boardRepository;
     private final StepBuilderFactory stepBuilderFactory;
     private final JobBuilderFactory jobBuilderFactory;
+    private final EntityManagerFactory entityManagerFactory;
     private static final int chunkSize = 10;
 
 
     @Bean
-    public Job oldBoardJob(){
+    public Job oldBoardJob() {
         return jobBuilderFactory.get("oldBoardJob")
-                .start(oldBoardJobStep())
+                .start(cntByStatusStep())
+                //.start(oldBoardJobStep())
+                //.next(cntByStatusStep())
                 .build();
     }
 
-    @Bean
+   /* @Bean
     @JobScope
     public Step oldBoardJobStep(){
         return stepBuilderFactory.get("oldBoardJobStep")
@@ -80,7 +94,60 @@ public class OldBoardJobConfiguration {
         return new RepositoryItemWriterBuilder<BoardEntity>()
                 .repository(boardRepository)
                 .build();
+    }*/
+
+    @Bean
+    @JobScope
+    public Step cntByStatusStep() {
+        return stepBuilderFactory
+                .get("cntByStatusStep")
+                .<BoardEntity, BoardCountEntity>chunk(chunkSize)
+                .reader(cntByStatusReader()) //구현해야함 게시물을 올린지 1주일 이상된 보드를 읽어온다
+                .processor(processor())
+                .writer(cntByStatusWriter()) //구현해야함 처리된 게시물을 DB에 저장한다
+                .build();
+    }
+
+    @Bean
+    @StepScope
+    public JpaPagingItemReader<BoardEntity> cntByStatusReader() {
+        return new JpaPagingItemReaderBuilder<BoardEntity>()
+                .queryString("select b.status as status ,count(b.status) as count from BoardEntity b group by b.status")
+                .pageSize(chunkSize)
+                .entityManagerFactory(entityManagerFactory)
+                .name("cntByStatusReader")
+                .build();
+    }
+
+    @Bean
+    @StepScope
+    public ItemProcessor<Object, BoardCountEntity> processor() {
+        return items -> {
+            Object[] objects = (Object[]) items;
+            Iterator<Object> iterator = Arrays.stream(objects).iterator();
+            List<String> list = new ArrayList<>();
+
+            while(iterator.hasNext()){
+                String value = iterator.next().toString();
+                list.add(value);
+            }
+
+            return BoardCountEntity.builder()
+                    .statusName(list.get(0))
+                    .statusCount(Long.parseLong(list.get(1)))
+                    .batchDate(LocalDateTime.now())
+                    .build();
+        };
+    }
+
+    @Bean
+    @StepScope
+    public JpaItemWriter<BoardCountEntity> cntByStatusWriter() {
+        return new JpaItemWriterBuilder<BoardCountEntity>()
+                .entityManagerFactory(entityManagerFactory)
+                .build();
     }
 }
+
 
 
