@@ -16,4 +16,6 @@ import java.util.List;
 public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
     List<BoardEntity> findByCategoryOrderByIdDesc(BoardCategoryEntity categoryId);
     Page<BoardEntity> findByUpdatedDateBeforeAndStatusEquals(LocalDateTime localDateTime, Status status, Pageable pageable);
+    Page<Long> countByStatus(LocalDateTime localDateTime, Status status, Pageable pageable);
+
 }

@@ -73,4 +73,13 @@ public class AdminController {
         memberService.deleteUser(id);
         return id;
     }
+
+    //회원 정보 폼
+    @GetMapping("/admin/boardChart")
+    public String adminBoardChart() {
+
+        return "admin/adminBoardChart";
+    }
+
+
 }

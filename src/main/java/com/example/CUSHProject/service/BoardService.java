@@ -27,7 +27,7 @@ public class BoardService {
     private final MemberRepository memberRepository;
     private final BoardQueryRepository boardQueryRepository;
     private final BoardCategoryRepository boardCategoryRepository;
-    private final BoardCommentRepository boardCommentRepository;
+    private final BoardCountQueryRepository boardCountQueryRepository;
 
 
     /*한페이지 출력 리스트*/
@@ -189,6 +189,16 @@ public class BoardService {
         }
         return map;
     }
+
+    public HashMap<String, Object> getBoardCount(String yearOption,String monthOption){
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("sell",boardCountQueryRepository.findByStatus(Status.sell.getValue(),yearOption,monthOption));
+        map.put("old",boardCountQueryRepository.findByStatus(Status.old.getValue(),yearOption,monthOption));
+        map.put("soldOut",boardCountQueryRepository.findByStatus(Status.soldOut.getValue(),yearOption,monthOption));
+
+        return map;
+    }
+
 
 }
 
