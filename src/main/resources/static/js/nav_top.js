@@ -1,7 +1,7 @@
 $(function () {
     $("#oldBoardButton").on('click',function () {    // [1]
         $(".popup_bg").show();
-        $(".popup").show(700);
+        $(".popup").show(300);
     });
 
     $(".popup_bg, .close").on('click',function () {    // [2]
@@ -14,12 +14,16 @@ $(function () {
         method : 'get',
         success : function(success){
             let totalCnt = success.totalCnt;
-            $("#oldBoardCnt").text(totalCnt);
+            if(!totalCnt==0){
+                $("#oldBoardCnt").text(totalCnt);
+            }else{
+                $("#oldBoardCnt").hide();
+            }
+
         },
         error: function (request, status, error) {
             alert("code: " + request.status + "\n" + "error: " + error);
         }
-
     });
 });
 

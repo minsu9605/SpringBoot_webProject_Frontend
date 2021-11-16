@@ -30,7 +30,6 @@
             <label class="form-label" for="status"><b>판매상태</b></label>
             <select class="form-control" id="status" name="status">
                 <option th:each="status : ${T(com.example.CUSHProject.enums.Status).values()}"
-                        th:if="${status.value} == 'old'" hidden
                         th:value="${status.value}"
                         th:text="${status.title}"
                         th:selected="${status.value} == ${boardForm.status.value}">

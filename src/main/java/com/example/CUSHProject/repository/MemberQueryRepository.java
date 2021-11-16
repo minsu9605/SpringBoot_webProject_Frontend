@@ -41,13 +41,6 @@ public class MemberQueryRepository {
                 .fetchResults();
     }
 
-    //검색어를 통해 아이디찾기
-    public double findByKeyword(String keyword) {
-        return queryFactory.selectFrom(QMemberEntity.memberEntity)
-                .where(QMemberEntity.memberEntity.username.contains(keyword))
-                .fetchCount();
-    }
-
     /*회원정보 수정*/
     @Transactional
     public void updateMemberInfo(MemberDto memberDto) {

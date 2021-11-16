@@ -2,18 +2,13 @@ package com.example.CUSHProject.service;
 
 import com.example.CUSHProject.Pagination.Paging;
 import com.example.CUSHProject.dto.MemberDto;
-import com.example.CUSHProject.dto.NoticeBoardDto;
-import com.example.CUSHProject.entity.BoardCategoryEntity;
-import com.example.CUSHProject.entity.BoardEntity;
 import com.example.CUSHProject.entity.MemberEntity;
-import com.example.CUSHProject.entity.NoticeBoardEntity;
 import com.example.CUSHProject.enums.Role;
 import com.example.CUSHProject.repository.MemberQueryRepository;
 import com.example.CUSHProject.repository.MemberRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,7 +21,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +31,6 @@ import java.util.Optional;
 public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
-
     private final MemberQueryRepository memberQueryRepository;
 
 
@@ -99,11 +92,6 @@ public class MemberService implements UserDetailsService {
         return memberRepository.findByUsernameContaining(keyword, PageRequest.of(curPageNum - 1, paging.getRecordPerPage(), Sort.by(Sort.Direction.ASC, "id")));
     }
 
-    //리스트 크기
-    public double getMemberListCntByKeyword(String keyword) {
-        return memberQueryRepository.findByKeyword(keyword);
-    }
-
     //멤버 탈퇴
     public void deleteUser(Long id) {
         memberRepository.deleteById(id);
@@ -157,5 +145,6 @@ public class MemberService implements UserDetailsService {
     public int getTotalSize(String searchType, String keyword){
         return Math.toIntExact(memberQueryRepository.getTotalCount(searchType,keyword));
     }
+
 
 }

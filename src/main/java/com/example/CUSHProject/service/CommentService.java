@@ -68,28 +68,6 @@ public class CommentService {
         return map;
     }
 
-    /*댓글 리스트*/
-    /*public List<BoardCommentDto> getCommentList(Long bid){
-        Optional<BoardEntity> boardEntity = boardRepository.findById(bid);
-        List<BoardCommentEntity> boardCommentEntityList = boardCommentQueryRepository.findByBoardId(boardEntity.get());
-        List<BoardCommentDto> boardCommentDtoList = new ArrayList<>();
-
-        for(int i = 0; i < boardCommentEntityList.size(); i++) {
-            boardCommentDtoList.add(boardCommentEntityList.get(i).toDto());
-        }
-        return boardCommentDtoList;
-    }*/
-    /*대댓글 갯수 카운트*/
-   /* public List<Long> getCount(Long bid){
-        Optional<BoardEntity> boardEntity = boardRepository.findById(bid);
-        List<BoardCommentEntity> boardCommentEntityList = boardCommentQueryRepository.findByBoardId(boardEntity.get());
-        List<Long> ccCount = new ArrayList<>();
-
-        for(int i = 0; i < boardCommentEntityList.size(); i++) {
-            ccCount.add(boardCommentQueryRepository.findReCommentCnt(boardCommentEntityList.get(i).getId()));
-        }
-        return ccCount;
-    }*/
     /*댓글 삭제*/
     public Long deleteComment(Long cid, Object roleSession) {
         Optional<BoardCommentEntity> boardCommentEntity = boardCommentRepository.findById(cid);

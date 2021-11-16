@@ -30,7 +30,10 @@ td[data-column-name=title]{
 #page-wrapper {
     padding-left: 233px;
 }
- .main-wrapper{
+.main-wrapper{
      margin-top: 5%;
-     margin-left: 12%;
- }
+     margin-left: 14%;
+}
+#recruitGrid{
+    width: 96%;
+}

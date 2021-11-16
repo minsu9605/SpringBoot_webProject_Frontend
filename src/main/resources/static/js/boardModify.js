@@ -136,3 +136,8 @@ function eraseComma(){
     const temp = $("#price").val().replace(/,/gi,"");
     $("input[name=price]").val(temp);
 }
+
+/*status 옵션 제거*/
+$(function (){
+    $("#status option[value='old']").remove();
+});

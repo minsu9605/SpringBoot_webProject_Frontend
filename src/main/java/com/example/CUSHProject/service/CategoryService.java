@@ -27,9 +27,4 @@ public class CategoryService {
         }
         return boardCategoryDtoList;
     }
-
-    public String findCategoryById(Long id){
-        Optional<BoardCategoryEntity> boardCategoryEntity = boardCategoryRepository.findById(id);
-        return boardCategoryEntity.get().getName();
-    }
 }

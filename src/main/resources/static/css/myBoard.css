@@ -33,10 +33,13 @@ td[data-column-name=title]{
 }
 .main-wrapper{
      margin-top: 5%;
-     margin-left: 12%;
+     margin-left: 15%;
 }
 
 .myboardTitle{
     display: inline;
     margin-left: 95px;
+}
+#recruitGrid{
+    width: 93%;
 }

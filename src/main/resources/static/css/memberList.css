@@ -1,3 +1,10 @@
 td[data-column-name=username]{
     cursor: pointer;
 }
+#recruitGrid{
+    width: 78%;
+}
+.main-wrapper{
+    margin-top: 5%;
+    margin-left: 24%;
+}

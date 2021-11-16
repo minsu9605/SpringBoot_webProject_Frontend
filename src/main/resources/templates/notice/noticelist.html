@@ -13,9 +13,6 @@
 
 <div class="container main-wrapper">
     <h1 class="container mt-5">공지사항</h1>
-    <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Bottom popover">
-        Popover on bottom
-    </button>
     <main class="container">
         <br>
 
@@ -32,6 +29,7 @@
         <div id="recruitGrid"></div>
 
         <div class="d-flex justify-content-end" sec:authorize="hasRole('ROLE_ADMIN')">
+
             <a type="button" class="btn btn-primary" th:href="@{/notice/write}">쓰기</a>
         </div>
 
