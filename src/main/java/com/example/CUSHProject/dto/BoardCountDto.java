@@ -23,7 +23,7 @@ public class BoardCountDto {
     private Long id;
     private String statusName;
     private Long statusCount;
-    private LocalDateTime batchDate;
+    private LocalDate batchDate;
 
     public BoardCountEntity toEntity() {
         return BoardCountEntity.builder()
@@ -35,7 +35,7 @@ public class BoardCountDto {
     }
 
     @Builder
-    public BoardCountDto(Long id, String statusName, Long statusCount, LocalDateTime batchDate) {
+    public BoardCountDto(Long id, String statusName, Long statusCount, LocalDate batchDate) {
         this.id=id;
         this.statusName=statusName;
         this.statusCount=statusCount;

@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.EntityManagerFactory;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -124,7 +125,7 @@ public class OldBoardJobConfiguration {
             return BoardCountEntity.builder()
                     .statusName(list.get(0))
                     .statusCount(Long.parseLong(list.get(1)))
-                    .batchDate(LocalDateTime.now())
+                    .batchDate(LocalDate.now())
                     .build();
         };
     }

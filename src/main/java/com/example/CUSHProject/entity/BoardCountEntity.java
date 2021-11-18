@@ -39,7 +39,7 @@ public class BoardCountEntity {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     @Column(name = "BATCHDATE")
-    private LocalDateTime batchDate;
+    private LocalDate batchDate;
 
 
     public BoardCountDto toDto() {
@@ -51,7 +51,7 @@ public class BoardCountEntity {
                 .build();
     }
     @Builder
-    public BoardCountEntity(Long id, String statusName, Long statusCount, LocalDateTime batchDate ){
+    public BoardCountEntity(Long id, String statusName, Long statusCount, LocalDate batchDate ){
         this.id = id;
         this.statusName = statusName;
         this.statusCount = statusCount;

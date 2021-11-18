@@ -2,10 +2,8 @@ var ctx = document.getElementById('myChart').getContext('2d');
 
 // 각 게시글
 const now = new Date();
-
 const nowYear = now.getFullYear();
 const nowMonth = now.getMonth();
-
 let monthOption = nowMonth + 1;
 let yearOption = nowYear;
 
@@ -87,7 +85,7 @@ function boardData() {
 }
 
 /*month를 변경 시*/
-$("#month,#year").change(function (){
+$("#month").change(function (){
     sellData =[];
     soldOutData=[];
     oldData=[];
@@ -102,6 +100,22 @@ $("#month,#year").change(function (){
     });
 
     monthOption = $(this).val();
-    yearOption = $(this).val();
+    boardData();
+});
+
+$("#year").change(function (){
+    sellData =[];
+    soldOutData=[];
+    oldData=[];
+    labels=[];
+
+    const dataNameArr = [sellData,soldOutData,oldData];
+    let i=0;
+    boardCountChart.data.labels=labels;
+    boardCountChart.data.datasets.forEach((dataset) => {
+        dataset.data=dataNameArr[i];
+        i++
+    });
+        yearOption = $(this).val();
     boardData();
 });
