@@ -1,15 +1,11 @@
 package com.example.CUSHProject.service;
 
-import com.example.CUSHProject.Pagination.Paging;
 import com.example.CUSHProject.dto.MemberDto;
 import com.example.CUSHProject.entity.MemberEntity;
 import com.example.CUSHProject.enums.Role;
 import com.example.CUSHProject.repository.MemberQueryRepository;
 import com.example.CUSHProject.repository.MemberRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -83,13 +79,6 @@ public class MemberService implements UserDetailsService {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         memberDto.setPassword(passwordEncoder.encode(memberDto.getPassword()));
         memberQueryRepository.updateMemberPassword(memberDto);
-    }
-
-    private final Paging paging;
-
-    //멤버 리스트 페이징 & 검색
-    public Page<MemberEntity> memberList(String keyword, Integer curPageNum) {
-        return memberRepository.findByUsernameContaining(keyword, PageRequest.of(curPageNum - 1, paging.getRecordPerPage(), Sort.by(Sort.Direction.ASC, "id")));
     }
 
     //멤버 탈퇴

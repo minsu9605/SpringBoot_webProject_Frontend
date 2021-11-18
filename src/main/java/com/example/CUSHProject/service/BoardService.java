@@ -31,54 +31,55 @@ public class BoardService {
 
 
     /*한페이지 출력 리스트*/
-    public List<BoardDto> getBoardList(Long categoryId, int page, int perPage, String searchType, String keyword){
+    public List<BoardDto> getBoardList(Long categoryId, int page, int perPage, String searchType, String keyword) {
         BoardCategoryEntity boardCategoryEntity = boardCategoryRepository.findById(categoryId).orElse(null);
-        List<BoardEntity> boardEntityList = boardQueryRepository.getBoardList(boardCategoryEntity,page,perPage,searchType,keyword);
+        List<BoardEntity> boardEntityList = boardQueryRepository.getBoardList(boardCategoryEntity, page, perPage, searchType, keyword);
         List<BoardDto> boardDtoList = new ArrayList<>();
 
-        for(BoardEntity boardEntity : boardEntityList){
+        for (BoardEntity boardEntity : boardEntityList) {
             boardDtoList.add(boardEntity.toDto());
         }
         return boardDtoList;
     }
 
     /*조회된 전체 데이터 수*/
-    public int getTotalSize(Long categoryId, String searchType, String keyword){
+    public int getTotalSize(Long categoryId, String searchType, String keyword) {
         BoardCategoryEntity boardCategoryEntity = boardCategoryRepository.findById(categoryId).orElse(null);
-        return Math.toIntExact(boardQueryRepository.getTotalCount(boardCategoryEntity,searchType,keyword));
+        return Math.toIntExact(boardQueryRepository.getTotalCount(boardCategoryEntity, searchType, keyword));
     }
 
     /*한페이지 출력 리스트*/
-    public List<BoardDto> getMyBoardList(String username, int page, int perPage, String searchType, String keyword){
+    public List<BoardDto> getMyBoardList(String username, int page, int perPage, String searchType, String keyword) {
         Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
-        List<BoardEntity> boardEntityList = boardQueryRepository.getMyBoardList(memberEntity.get(),page,perPage,searchType,keyword);
+        List<BoardEntity> boardEntityList = boardQueryRepository.getMyBoardList(memberEntity.get(), page, perPage, searchType, keyword);
         List<BoardDto> boardDtoList = new ArrayList<>();
 
-        for(BoardEntity boardEntity : boardEntityList){
+        for (BoardEntity boardEntity : boardEntityList) {
             boardDtoList.add(boardEntity.toDto());
         }
         return boardDtoList;
     }
 
     /*조회된 전체 데이터 수*/
-    public int getMyBoardTotalSize(String username, String searchType, String keyword){
+    public int getMyBoardTotalSize(String username, String searchType, String keyword) {
         Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
-        return Math.toIntExact(boardQueryRepository.getMyBoardTotalCount(memberEntity.get(),searchType,keyword));
+        return Math.toIntExact(boardQueryRepository.getMyBoardTotalCount(memberEntity.get(), searchType, keyword));
     }
 
     /*페이징 하면서 조회*/
-    public List<BoardDto> getMyOldBoardList(String username, int startIndex, int searchStep){
+    public List<BoardDto> getMyOldBoardList(String username, int startIndex, int searchStep) {
         Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
-        List<BoardEntity> boardEntityList = boardQueryRepository.getMyOldBoardList(memberEntity.get(),startIndex,searchStep);
+        List<BoardEntity> boardEntityList = boardQueryRepository.getMyOldBoardList(memberEntity.get(), startIndex, searchStep);
         List<BoardDto> boardDtoList = new ArrayList<>();
 
-        for(BoardEntity boardEntity : boardEntityList){
+        for (BoardEntity boardEntity : boardEntityList) {
             boardDtoList.add(boardEntity.toDto());
         }
         return boardDtoList;
     }
+
     /*전체 갯수 카운트*/
-    public int getMyOldBoardListCnt(String username){
+    public int getMyOldBoardListCnt(String username) {
         Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
         return Math.toIntExact(boardQueryRepository.getMyOldBoardTotalCount(memberEntity.get()));
     }
@@ -95,16 +96,16 @@ public class BoardService {
     }
 
     /*조회수 증가*/
-    public void boardHitUpdate(Long id){
+    public void boardHitUpdate(Long id) {
         boardQueryRepository.boardHitUpdate(id);
     }
 
-    public void setSoldOut(Long id){
+    public void setSoldOut(Long id) {
         boardQueryRepository.boardStatusUpdate(id);
     }
 
     /*게시글 등록 후 전송*/
-    public BoardDto boardWrite(BoardDto boardDto, String username, HttpServletRequest request){
+    public BoardDto boardWrite(BoardDto boardDto, String username, HttpServletRequest request) {
         Optional<BoardCategoryEntity> boardCategoryEntity = boardCategoryRepository.findByName(boardDto.getCategoryName());
         Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
 
@@ -129,7 +130,7 @@ public class BoardService {
     }
 
     /*보드 수정 후 전송*/
-    public BoardDto boardModifySave(BoardDto boardDto, String username,HttpServletRequest request){
+    public BoardDto boardModifySave(BoardDto boardDto, String username, HttpServletRequest request) {
         Optional<BoardCategoryEntity> boardCategoryEntity = boardCategoryRepository.findByName(boardDto.getCategoryName());
         Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
 
@@ -142,7 +143,6 @@ public class BoardService {
             ip = request.getRemoteAddr();
         }
         boardDto.setWriteIp(ip);
-
 
         BoardEntity boardEntity = boardDto.toEntity();
 
@@ -157,18 +157,18 @@ public class BoardService {
         boardRepository.deleteById(id);
     }
 
-    public List<BoardDto> mapList(double startLat, double startLng, double endLat, double endLng){
+    public List<BoardDto> mapList(double startLat, double startLng, double endLat, double endLng) {
         List<BoardEntity> boardEntityList = boardQueryRepository.getMapList(startLat, startLng, endLat, endLng);
         List<BoardDto> boardDtoList = new ArrayList<>();
-        for(BoardEntity boardEntity : boardEntityList){
+        for (BoardEntity boardEntity : boardEntityList) {
             boardDtoList.add(boardEntity.toDto());
         }
         return boardDtoList;
     }
 
     /*summernote 이미지 첨부*/
-    public HashMap<String,Object> boardImageUpload(MultipartFile multipartFile){
-        HashMap<String,Object> map = new HashMap<>();
+    public HashMap<String, Object> boardImageUpload(MultipartFile multipartFile) {
+        HashMap<String, Object> map = new HashMap<>();
 
         String fileRoot = "D:\\summernote_image\\";
 
@@ -180,7 +180,7 @@ public class BoardService {
         try {
             InputStream fileStream = multipartFile.getInputStream();
             FileUtils.copyInputStreamToFile(fileStream, targetFile);
-            map.put("url", "/summernoteImage/"+savedFileName);
+            map.put("url", "/summernoteImage/" + savedFileName);
             map.put("responseCode", "success");
         } catch (IOException e) {
             FileUtils.deleteQuietly(targetFile); //저장된 파일 삭제
@@ -190,11 +190,11 @@ public class BoardService {
         return map;
     }
 
-    public HashMap<String, Object> getBoardCount(String yearOption,String monthOption){
+    public HashMap<String, Object> getBoardCount(String yearOption, String monthOption) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("sell",boardCountQueryRepository.findByStatus(Status.sell.getValue(),yearOption,monthOption));
-        map.put("old",boardCountQueryRepository.findByStatus(Status.old.getValue(),yearOption,monthOption));
-        map.put("soldOut",boardCountQueryRepository.findByStatus(Status.soldOut.getValue(),yearOption,monthOption));
+        map.put("sell", boardCountQueryRepository.findByStatus(Status.sell.getValue(), yearOption, monthOption));
+        map.put("old", boardCountQueryRepository.findByStatus(Status.old.getValue(), yearOption, monthOption));
+        map.put("soldOut", boardCountQueryRepository.findByStatus(Status.soldOut.getValue(), yearOption, monthOption));
 
         return map;
     }

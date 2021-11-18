@@ -24,23 +24,23 @@ public class NoticeBoardService {
     private final MemberRepository memberRepository;
     private final NoticeBoardQueryRepository noticeBoardQueryRepository;
 
-    public List<NoticeBoardDto> getNoticeBoardList(int page, int perPage, String searchType, String keyword){
-        List<NoticeBoardEntity> noticeBoardEntityList = noticeBoardQueryRepository.getNoticeList(page,perPage,searchType,keyword);
+    public List<NoticeBoardDto> getNoticeBoardList(int page, int perPage, String searchType, String keyword) {
+        List<NoticeBoardEntity> noticeBoardEntityList = noticeBoardQueryRepository.getNoticeList(page, perPage, searchType, keyword);
         List<NoticeBoardDto> noticeBoardDtoList = new ArrayList<>();
 
-        for(NoticeBoardEntity noticeBoardEntity : noticeBoardEntityList){
+        for (NoticeBoardEntity noticeBoardEntity : noticeBoardEntityList) {
             noticeBoardDtoList.add(noticeBoardEntity.toDto());
         }
         return noticeBoardDtoList;
     }
 
     /*조회된 전체 데이터 수*/
-    public int getTotalSize(String searchType, String keyword){
-        return Math.toIntExact(noticeBoardQueryRepository.getTotalCount(searchType,keyword));
+    public int getTotalSize(String searchType, String keyword) {
+        return Math.toIntExact(noticeBoardQueryRepository.getTotalCount(searchType, keyword));
     }
 
     /*글 작성 후 전송*/
-    public NoticeBoardDto noticeBoardWrite(NoticeBoardDto noticeBoardDto, String username, HttpServletRequest request){
+    public NoticeBoardDto noticeBoardWrite(NoticeBoardDto noticeBoardDto, String username, HttpServletRequest request) {
         Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -62,7 +62,7 @@ public class NoticeBoardService {
     }
 
     /*글 수정 후 전송*/
-    public NoticeBoardDto boardModifySave(NoticeBoardDto noticeBoardDto, String username){
+    public NoticeBoardDto boardModifySave(NoticeBoardDto noticeBoardDto, String username) {
         Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -76,7 +76,7 @@ public class NoticeBoardService {
     }
 
     /*조회수 증가*/
-    public void noticeBoardHitUpdate(Long id){
+    public void noticeBoardHitUpdate(Long id) {
         noticeBoardQueryRepository.noticeHitUpdate(id);
     }
 

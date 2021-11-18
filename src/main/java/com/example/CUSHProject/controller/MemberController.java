@@ -1,26 +1,19 @@
 package com.example.CUSHProject.controller;
 
 import com.example.CUSHProject.dto.MemberDto;
-import com.example.CUSHProject.dto.NoticeBoardDto;
-import com.example.CUSHProject.repository.MemberQueryRepository;
-import com.example.CUSHProject.repository.MemberRepository;
 import com.example.CUSHProject.service.MemberService;
-import com.example.CUSHProject.validator.ModifyValidator;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.lang.reflect.Member;
 import java.util.HashMap;
-import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -68,12 +61,6 @@ public class MemberController {
         return "redirect:/";
     }
 
-    /*//내정보
-    @GetMapping("/account/mypage")
-    public String myPage() {
-        return "account/myboard";
-    }*/
-
     //내정보 수정 페이지
     @GetMapping("/account/myinfo")
     public String myInfo(Authentication authentication, Model model) {
@@ -82,7 +69,7 @@ public class MemberController {
 
         return "account/myinfo";
     }
-    //내정보 수정 페이지
+    //내정보 수정 페이지 처리
     @PostMapping("/account/myinfo")
     public String memberUpdate(MemberDto memberDto) {
         memberService.memberUpdate(memberDto);

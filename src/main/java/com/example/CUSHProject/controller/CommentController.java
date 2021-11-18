@@ -1,9 +1,5 @@
 package com.example.CUSHProject.controller;
 
-import com.example.CUSHProject.dto.BoardCommentDto;
-import com.example.CUSHProject.entity.BoardCommentEntity;
-import com.example.CUSHProject.enums.Role;
-import com.example.CUSHProject.service.BoardService;
 import com.example.CUSHProject.service.CommentService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -12,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
-import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -24,39 +19,39 @@ public class CommentController {
     @PostMapping("/api/comment/post")
     public String commentPost(@RequestParam Long bid,
                               @RequestParam String comment,
-                              Authentication authentication)throws Exception {
+                              Authentication authentication) throws Exception {
         int cDepth = 0;
         Long cGroup = 0L;
-        commentService.commentPost(bid, comment, cDepth, cGroup,authentication.getName());
+        commentService.commentPost(bid, comment, cDepth, cGroup, authentication.getName());
         return "success";
     }
 
     @ResponseBody
     @GetMapping("/api/comment/list")
-    public HashMap<String, Object> getCommentList(@RequestParam Long bid, HttpServletRequest request){
+    public HashMap<String, Object> getCommentList(@RequestParam Long bid, HttpServletRequest request) {
         return commentService.getCommentList(bid);
     }
 
     @ResponseBody
     @DeleteMapping("/api/comment/delete")
-    public Long deleteComment(@RequestParam Long cid, HttpSession session){
+    public Long deleteComment(@RequestParam Long cid, HttpSession session) {
         Object roleSession = session.getAttribute("memberRole");
 
-        return commentService.deleteComment(cid,roleSession);
+        return commentService.deleteComment(cid, roleSession);
     }
 
     @ResponseBody
     @PutMapping("/api/comment/modify")
-    public String modifyComment(@RequestParam Long cid, @RequestParam String comment){
+    public String modifyComment(@RequestParam Long cid, @RequestParam String comment) {
         commentService.modifyComment(cid, comment);
         return "success";
     }
 
     @ResponseBody
     @GetMapping("/api/comment/reComment/list")
-    public HashMap<String, Object> getReCommentList(@RequestParam Long cid)throws Exception{
+    public HashMap<String, Object> getReCommentList(@RequestParam Long cid) throws Exception {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("list",commentService.getReCommentList(cid));
+        map.put("list", commentService.getReCommentList(cid));
         return map;
     }
 
@@ -64,7 +59,7 @@ public class CommentController {
     @PostMapping("/api/comment/reComment/post")
     public String reCommentPost(@RequestParam Long bid,
                                 @RequestParam String comment,
-                                @RequestParam Long cid, Authentication authentication)throws Exception {
+                                @RequestParam Long cid, Authentication authentication) throws Exception {
         int cDepth = 1;
 
         commentService.commentPost(bid, comment, cDepth, cid, authentication.getName());

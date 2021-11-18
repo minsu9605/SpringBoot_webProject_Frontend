@@ -2,8 +2,6 @@ package com.example.CUSHProject.controller;
 
 import com.example.CUSHProject.dto.BoardCategoryDto;
 import com.example.CUSHProject.dto.BoardDto;
-import com.example.CUSHProject.dto.NoticeBoardDto;
-import com.example.CUSHProject.entity.BoardEntity;
 import com.example.CUSHProject.service.BoardService;
 import com.example.CUSHProject.service.CategoryService;
 import lombok.AllArgsConstructor;
@@ -27,7 +25,7 @@ public class BoardController {
     /*일반 게시판*/
     @GetMapping("/board/list")
     public String boardList(Model model) {
-        model.addAttribute("categoryList",categoryService.getCategoryList());
+        model.addAttribute("categoryList", categoryService.getCategoryList());
         return "board/boardlist";
     }
 
@@ -39,13 +37,13 @@ public class BoardController {
                                                 @RequestParam(required = false) int perPage,
                                                 @RequestParam(required = false) String searchType,
                                                 @RequestParam(required = false, defaultValue = "") String keyword
-                                                ){
+    ) {
         HashMap<String, Object> objectMap = new HashMap<>();
         HashMap<String, Object> dataMap = new HashMap<>();
         HashMap<String, Object> paginationMap = new HashMap<>();
 
 
-        int total = boardService.getTotalSize(categoryId,searchType,keyword);
+        int total = boardService.getTotalSize(categoryId, searchType, keyword);
         List<BoardDto> boardDtoList = boardService.getBoardList(categoryId, page, perPage, searchType, keyword);
 
         objectMap.put("result", true);
@@ -62,70 +60,70 @@ public class BoardController {
     public String boardWrite(Model model) {
         BoardDto boardForm = new BoardDto();
         List<BoardCategoryDto> categoryList = categoryService.getCategoryList();
-        model.addAttribute("boardForm",boardForm);
-        model.addAttribute("categoryList",categoryList);
+        model.addAttribute("boardForm", boardForm);
+        model.addAttribute("categoryList", categoryList);
         return "board/boardform";
     }
 
     @PostMapping("/board/write")
-    public String boardWrite(@RequestParam(required = false)Long category, BoardDto boardDto, Authentication authentication, HttpServletRequest request){
+    public String boardWrite(@RequestParam(required = false) Long category, BoardDto boardDto, Authentication authentication, HttpServletRequest request) {
         boardService.boardWrite(boardDto, authentication.getName(), request);
-        return "redirect:/board/list?category="+category;
+        return "redirect:/board/list?category=" + category;
     }
 
     @GetMapping("/board/content")
-    public String boardContent(Model model, @RequestParam(required = false) Long id){
+    public String boardContent(Model model, @RequestParam(required = false) Long id) {
         boardService.boardHitUpdate(id);
         BoardDto boardForm = boardService.boardContent(id);
 
-        model.addAttribute("categoryList",categoryService.getCategoryList());
-        model.addAttribute("boardForm",boardForm);
+        model.addAttribute("categoryList", categoryService.getCategoryList());
+        model.addAttribute("boardForm", boardForm);
         return "board/boardcontent";
     }
 
     @ResponseBody
     @GetMapping("/api/board/soldOut")
-    public String boardMap(@RequestParam(required = false) Long id){
+    public String boardMap(@RequestParam(required = false) Long id) {
         boardService.setSoldOut(id);
         return "success";
     }
 
     @GetMapping("/board/modify")
-    public String boardModify(Model model, @RequestParam(required = false) Long id){
+    public String boardModify(Model model, @RequestParam(required = false) Long id) {
         BoardDto boardForm = boardService.boardContent(id);
 
         List<BoardCategoryDto> categoryList = categoryService.getCategoryList();
-        model.addAttribute("boardForm",boardForm);
-        model.addAttribute("categoryList",categoryList);
+        model.addAttribute("boardForm", boardForm);
+        model.addAttribute("categoryList", categoryList);
         return "board/boardmodify";
     }
 
     @PostMapping("/board/modify")
-    public String boardModify(@RequestParam(required = false) Long id, BoardDto boardDto, Authentication authentication,HttpServletRequest request){
-        boardService.boardModifySave(boardDto, authentication.getName(),request);
-        return "redirect:/board/content?id="+id;
+    public String boardModify(@RequestParam(required = false) Long id, BoardDto boardDto, Authentication authentication, HttpServletRequest request) {
+        boardService.boardModifySave(boardDto, authentication.getName(), request);
+        return "redirect:/board/content?id=" + id;
     }
 
     @GetMapping("/board/map")
-    public String showMap(){
+    public String showMap() {
         return "board/map";
     }
 
     @GetMapping("/board/map_content")
-    public String showMapContent(){
+    public String showMapContent() {
         return "board/map_content";
     }
 
 
     @ResponseBody
     @PostMapping("/api/uploadSummernoteImageFile")
-    public HashMap<String, Object> uploadSummernoteImageFile(@RequestParam("file")MultipartFile multipartFile) {
+    public HashMap<String, Object> uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
         return boardService.boardImageUpload(multipartFile);
     }
 
     @ResponseBody
     @DeleteMapping("/api/board/delete")
-    public void boardDelete(@RequestParam(required = false)Long id) {
+    public void boardDelete(@RequestParam(required = false) Long id) {
         boardService.boardDelete(id);
     }
 
@@ -139,22 +137,22 @@ public class BoardController {
     @ResponseBody
     public HashMap<String, Object> oldBoardList(Authentication authentication,
                                                 @RequestParam(required = false) int startIndex,
-                                                @RequestParam(required = false) int searchStep){
+                                                @RequestParam(required = false) int searchStep) {
         HashMap<String, Object> map = new HashMap<>();
-        List<BoardDto> boardDtoList = boardService.getMyOldBoardList(authentication.getName(),startIndex,searchStep);
-        map.put("totalCnt",boardService.getMyOldBoardListCnt(authentication.getName()));
+        List<BoardDto> boardDtoList = boardService.getMyOldBoardList(authentication.getName(), startIndex, searchStep);
+        map.put("totalCnt", boardService.getMyOldBoardListCnt(authentication.getName()));
         map.put("data", boardDtoList);
         return map;
     }
 
     @GetMapping("/api/board/getMyOldBoardCnt")
     @ResponseBody
-    public HashMap<String, Object> getMyOldBoardCnt(Authentication authentication){
+    public HashMap<String, Object> getMyOldBoardCnt(Authentication authentication) {
         HashMap<String, Object> map = new HashMap<>();
 
-        if(authentication!=null) {
+        if (authentication != null) {
             map.put("totalCnt", boardService.getMyOldBoardListCnt(authentication.getName()));
-        }else map.put("totalCnt",0);
+        } else map.put("totalCnt", 0);
 
         return map;
     }
@@ -162,16 +160,16 @@ public class BoardController {
     /*내가 쓴 게시물 api*/
     @GetMapping("/api/board/myBoard/table")
     @ResponseBody
-    public HashMap<String, Object> getNoticeList( @RequestParam(required = false) int page,
-                                                  @RequestParam(required = false) int perPage,
-                                                  @RequestParam(required = false) String searchType,
-                                                  @RequestParam(required = false, defaultValue = "") String keyword,Authentication authentication){
+    public HashMap<String, Object> getNoticeList(@RequestParam(required = false) int page,
+                                                 @RequestParam(required = false) int perPage,
+                                                 @RequestParam(required = false) String searchType,
+                                                 @RequestParam(required = false, defaultValue = "") String keyword, Authentication authentication) {
         HashMap<String, Object> objectMap = new HashMap<>();
         HashMap<String, Object> dataMap = new HashMap<>();
         HashMap<String, Object> paginationMap = new HashMap<>();
 
-        int total = boardService.getMyBoardTotalSize(authentication.getName(),searchType,keyword);
-        List<BoardDto> boardEntityList = boardService.getMyBoardList(authentication.getName(),page, perPage, searchType, keyword);
+        int total = boardService.getMyBoardTotalSize(authentication.getName(), searchType, keyword);
+        List<BoardDto> boardEntityList = boardService.getMyBoardList(authentication.getName(), page, perPage, searchType, keyword);
 
         objectMap.put("result", true);
         objectMap.put("data", dataMap);
@@ -184,11 +182,11 @@ public class BoardController {
 
     @ResponseBody
     @GetMapping("/api/admin/adminBoardChart")
-    public HashMap<String,Object> adminBoardCnt(@RequestParam(required = false) String monthOption,
-                                                @RequestParam(required = false) String yearOption) {
+    public HashMap<String, Object> adminBoardCnt(@RequestParam(required = false) String monthOption,
+                                                 @RequestParam(required = false) String yearOption) {
         System.out.println(yearOption);
         System.out.println(monthOption);
-        return boardService.getBoardCount(yearOption,monthOption);
+        return boardService.getBoardCount(yearOption, monthOption);
     }
 
 }

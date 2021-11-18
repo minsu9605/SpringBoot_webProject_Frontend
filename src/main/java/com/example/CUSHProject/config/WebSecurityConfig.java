@@ -44,7 +44,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**")
                 .antMatchers("/js/**")
                 .antMatchers("/images/**");
-                //.antMatchers("/resources/**");
     }
 
     @Override
@@ -57,18 +56,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                 .csrf()
                     .ignoringAntMatchers("/api/**")
-                    /*.ignoringAntMatchers("/comment/**")
-                    .ignoringAntMatchers("/nicknameOverlap")
-                    .ignoringAntMatchers("/board/delete")
-                    .ignoringAntMatchers("/nicknameModify")
-                    .ignoringAntMatchers("/usernameModify")
-                    .ignoringAntMatchers("/pwCheck")
-                    .ignoringAntMatchers("/admin/withdrawal")
-                    .ignoringAntMatchers("/uploadSummernoteImageFile")*/
                     .and()
                 .formLogin()
                     .loginPage("/account/login")
-                    //.loginProcessingUrl("/account/login")
                     .successHandler(successHandler())
                     .failureHandler(failureHandler())
                     .permitAll();

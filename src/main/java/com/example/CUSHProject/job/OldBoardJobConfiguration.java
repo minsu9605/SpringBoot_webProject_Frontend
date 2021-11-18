@@ -2,6 +2,7 @@ package com.example.CUSHProject.job;
 
 import com.example.CUSHProject.entity.BoardCountEntity;
 import com.example.CUSHProject.entity.BoardEntity;
+import com.example.CUSHProject.enums.Status;
 import com.example.CUSHProject.repository.BoardRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,12 +13,17 @@ import org.springframework.batch.core.configuration.annotation.JobScope;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.data.RepositoryItemReader;
+import org.springframework.batch.item.data.RepositoryItemWriter;
+import org.springframework.batch.item.data.builder.RepositoryItemReaderBuilder;
+import org.springframework.batch.item.data.builder.RepositoryItemWriterBuilder;
 import org.springframework.batch.item.database.JpaItemWriter;
 import org.springframework.batch.item.database.JpaPagingItemReader;
 import org.springframework.batch.item.database.builder.JpaItemWriterBuilder;
 import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.Sort;
 
 import javax.persistence.EntityManagerFactory;
 import java.time.LocalDate;
@@ -39,13 +45,13 @@ public class OldBoardJobConfiguration {
     @Bean
     public Job oldBoardJob() {
         return jobBuilderFactory.get("oldBoardJob")
-                .start(cntByStatusStep())
-                //.start(oldBoardJobStep())
-                //.next(cntByStatusStep())
+//                .start(cntByStatusStep())
+                .start(oldBoardJobStep())
+                .next(cntByStatusStep())
                 .build();
     }
 
-   /* @Bean
+    @Bean
     @JobScope
     public Step oldBoardJobStep(){
         return stepBuilderFactory.get("oldBoardJobStep")
@@ -84,7 +90,8 @@ public class OldBoardJobConfiguration {
         return new RepositoryItemWriterBuilder<BoardEntity>()
                 .repository(boardRepository)
                 .build();
-    }*/
+    }
+
 
     @Bean
     @JobScope
