@@ -14,9 +14,14 @@
 <div th:include="fragments/mypagesidebar"> </div>
 
 <div class="container main-wrapper">
-    <h1 class="container mt-5 myboardTitle">내 작성글</h1>
+
+
+    <h1 class="container mt-5 myboardTitle">오래된 게시물</h1>
+    <h6 class="container mt-2">물건을 올린지 1주일이 지났어요! 물건의 가격을 변경해보세요!</h6>
+
     <main class="container">
         <br>
+
         <div class="btn-group mb-3" role="group" aria-label="Basic example">
             <div class="w100" style="padding-right:10px">
                 <select class="form-control form-control-sm" id="searchType" name="searchType">
@@ -26,13 +31,15 @@
             <input id="keyword" name="keyword" type="text" placeholder="검색어를 입력해주세요">
             <button id="searchButton" type="submit" class="mx-2 btn btn-secondary">검색</button>
         </div>
+
         <div id="recruitGrid"></div>
+
     </main>
 </div>
 
 <footer th:replace="fragments/common :: footer"></footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" th:src="@{/js/myBoard.js}"></script>
+<script type="text/javascript" th:src="@{/js/myOldBoard.js}"></script>
 <script type="text/javascript" th:src="@{/js/nav_top.js}"></script>
 </body>
 </html>

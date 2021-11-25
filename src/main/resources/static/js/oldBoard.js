@@ -1,5 +1,7 @@
 $(function (){
 
+    $('#moveOldBoardPage').hide();
+
     let startIndex = 0;
     let searchStep = 2;
 
@@ -33,6 +35,11 @@ $(function (){
                 // 더보기 버튼 삭제
                 if(startIndex + searchStep > oldListCnt){
                     $('#searchMoreNotify').remove();
+                }
+                if(startIndex>=2){
+                    $('#moveOldBoardPage').show();
+                    $('#searchMoreNotify').remove();
+
                 }
             },
             error: function (request, status, error) {

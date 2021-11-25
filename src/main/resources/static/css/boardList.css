@@ -14,26 +14,27 @@
 #listHit{
     margin-left:auto;
 }
-#th-title{
+/*#th-title{
     width: 40%;
-}
+}*/
 #td-title{
     text-align: left;
 }
 td[data-column-name=title]{
     cursor: pointer;
 }
-.container{
+/*.container{
     max-width: 85%;
-}
+}*/
 
 #page-wrapper {
     padding-left: 233px;
 }
 .main-wrapper{
      margin-top: 5%;
-     margin-left: 14%;
+     margin-left: 20%;
+    margin-right: 5%;
 }
 #recruitGrid{
-    width: 996px;
+    width: 94%;
 }

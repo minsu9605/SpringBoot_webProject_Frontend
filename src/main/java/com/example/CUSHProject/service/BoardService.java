@@ -66,10 +66,29 @@ public class BoardService {
         return Math.toIntExact(boardQueryRepository.getMyBoardTotalCount(memberEntity.get(), searchType, keyword));
     }
 
-    /*페이징 하면서 조회*/
-    public List<BoardDto> getMyOldBoardList(String username, int startIndex, int searchStep) {
+    /*오래된 게시물 페이지 게시물 수*/
+    public int getMyOldBoardTotalSize(String username, String searchType, String keyword) {
         Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
-        List<BoardEntity> boardEntityList = boardQueryRepository.getMyOldBoardList(memberEntity.get(), startIndex, searchStep);
+        return Math.toIntExact(boardQueryRepository.getMyOldBoardTotalCount(memberEntity.get(), searchType, keyword));
+    }
+    /*한페이지 출력 리스트*/
+    public List<BoardDto> getMyOldBoardList(String username, int page, int perPage, String searchType, String keyword) {
+        Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
+        List<BoardEntity> boardEntityList = boardQueryRepository.getMyOldBoardList(memberEntity.get(), page, perPage, searchType, keyword);
+        List<BoardDto> boardDtoList = new ArrayList<>();
+
+        for (BoardEntity boardEntity : boardEntityList) {
+            boardDtoList.add(boardEntity.toDto());
+        }
+        return boardDtoList;
+    }
+
+
+
+    /*페이징 하면서 조회*/
+    public List<BoardDto> getMyOldBoardAlertList(String username, int startIndex, int searchStep) {
+        Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
+        List<BoardEntity> boardEntityList = boardQueryRepository.getMyOldBoardAlertList(memberEntity.get(), startIndex, searchStep);
         List<BoardDto> boardDtoList = new ArrayList<>();
 
         for (BoardEntity boardEntity : boardEntityList) {
@@ -79,9 +98,9 @@ public class BoardService {
     }
 
     /*전체 갯수 카운트*/
-    public int getMyOldBoardListCnt(String username) {
+    public int getMyOldBoardAlertListCnt(String username) {
         Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
-        return Math.toIntExact(boardQueryRepository.getMyOldBoardTotalCount(memberEntity.get()));
+        return Math.toIntExact(boardQueryRepository.getMyOldBoardAlertTotalCount(memberEntity.get()));
     }
 
     //보드 글 상세보기

@@ -54,7 +54,29 @@ public class BoardQueryRepository{
                 .fetchCount();
     }
 
-    public List<BoardEntity> getMyOldBoardList(MemberEntity memberEntity,int startIndex, int searchStep){
+    /*내가 쓴글 조회된 리스트 전체 크기*/
+    public Long getMyOldBoardTotalCount(MemberEntity memberEntity,String searchType, String keyword){
+        return queryFactory.selectFrom(QBoardEntity.boardEntity)
+                .where(QBoardEntity.boardEntity.writer.eq(memberEntity)
+                        .and(QBoardEntity.boardEntity.status.eq(Status.old))
+                        .and(eqSearchType(searchType,keyword)))
+                .fetchCount();
+    }
+    /*내가 쓴글 한페이지 출력 리스트*/
+    public List<BoardEntity> getMyOldBoardList(MemberEntity memberEntity, int page, int perPage, String searchType, String keyword){
+        int start = (page * perPage) - perPage;
+        return queryFactory.selectFrom(QBoardEntity.boardEntity)
+                .where(QBoardEntity.boardEntity.writer.eq(memberEntity)
+                        .and(QBoardEntity.boardEntity.status.eq(Status.old))
+                        .and(eqSearchType(searchType,keyword))
+                )
+                .orderBy(QBoardEntity.boardEntity.id.desc())
+                .offset(start)
+                .limit(perPage)
+                .fetch();
+    }
+
+    public List<BoardEntity> getMyOldBoardAlertList(MemberEntity memberEntity,int startIndex, int searchStep){
         return queryFactory.selectFrom(QBoardEntity.boardEntity)
                 .where(QBoardEntity.boardEntity.writer.eq(memberEntity)
                         .and(QBoardEntity.boardEntity.status.eq(Status.old))
@@ -65,7 +87,7 @@ public class BoardQueryRepository{
                 .fetch();
     }
 
-    public Long getMyOldBoardTotalCount(MemberEntity memberEntity){
+    public Long getMyOldBoardAlertTotalCount(MemberEntity memberEntity){
         return queryFactory.selectFrom(QBoardEntity.boardEntity)
                 .where(QBoardEntity.boardEntity.writer.eq(memberEntity)
                         .and(QBoardEntity.boardEntity.status.eq(Status.old))

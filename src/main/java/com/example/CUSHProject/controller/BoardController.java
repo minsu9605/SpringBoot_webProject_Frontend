@@ -129,29 +129,58 @@ public class BoardController {
 
     //내가 쓴 게시물(내정보)
     @GetMapping("/board/myBoard")
-    public String myBoard(Authentication authentication, Model model) {
+    public String myBoard() {
         return "account/myboard";
+    }
+
+    //내가 쓴 오래된 게시물
+    @GetMapping("/board/myOldBoard")
+    public String myOldBoard() {
+        return "account/myOldBoard";
+    }
+
+    /*내가 쓴 오래된 게시물 api*/
+    @GetMapping("/api/board/myOldBoard/table")
+    @ResponseBody
+    public HashMap<String, Object> getMyOldBoardList(@RequestParam(required = false) int page,
+                                                     @RequestParam(required = false) int perPage,
+                                                     @RequestParam(required = false) String searchType,
+                                                     @RequestParam(required = false, defaultValue = "") String keyword, Authentication authentication) {
+        HashMap<String, Object> objectMap = new HashMap<>();
+        HashMap<String, Object> dataMap = new HashMap<>();
+        HashMap<String, Object> paginationMap = new HashMap<>();
+
+        int total = boardService.getMyOldBoardTotalSize(authentication.getName(), searchType, keyword);
+        List<BoardDto> boardEntityList = boardService.getMyOldBoardList(authentication.getName(), page, perPage, searchType, keyword);
+
+        objectMap.put("result", true);
+        objectMap.put("data", dataMap);
+        dataMap.put("contents", boardEntityList);
+        dataMap.put("pagination", paginationMap);
+        paginationMap.put("page", page);
+        paginationMap.put("totalCount", total);
+        return objectMap;
     }
 
     @GetMapping("/api/board/getMyOldBoardList")
     @ResponseBody
-    public HashMap<String, Object> oldBoardList(Authentication authentication,
+    public HashMap<String, Object> oldBoardAlertList(Authentication authentication,
                                                 @RequestParam(required = false) int startIndex,
                                                 @RequestParam(required = false) int searchStep) {
         HashMap<String, Object> map = new HashMap<>();
-        List<BoardDto> boardDtoList = boardService.getMyOldBoardList(authentication.getName(), startIndex, searchStep);
-        map.put("totalCnt", boardService.getMyOldBoardListCnt(authentication.getName()));
+        List<BoardDto> boardDtoList = boardService.getMyOldBoardAlertList(authentication.getName(), startIndex, searchStep);
+        map.put("totalCnt", boardService.getMyOldBoardAlertListCnt(authentication.getName()));
         map.put("data", boardDtoList);
         return map;
     }
 
     @GetMapping("/api/board/getMyOldBoardCnt")
     @ResponseBody
-    public HashMap<String, Object> getMyOldBoardCnt(Authentication authentication) {
+    public HashMap<String, Object> getMyOldBoardAlertCnt(Authentication authentication) {
         HashMap<String, Object> map = new HashMap<>();
 
         if (authentication != null) {
-            map.put("totalCnt", boardService.getMyOldBoardListCnt(authentication.getName()));
+            map.put("totalCnt", boardService.getMyOldBoardAlertListCnt(authentication.getName()));
         } else map.put("totalCnt", 0);
 
         return map;
@@ -160,7 +189,7 @@ public class BoardController {
     /*내가 쓴 게시물 api*/
     @GetMapping("/api/board/myBoard/table")
     @ResponseBody
-    public HashMap<String, Object> getNoticeList(@RequestParam(required = false) int page,
+    public HashMap<String, Object> getMyBoardList(@RequestParam(required = false) int page,
                                                  @RequestParam(required = false) int perPage,
                                                  @RequestParam(required = false) String searchType,
                                                  @RequestParam(required = false, defaultValue = "") String keyword, Authentication authentication) {
@@ -179,6 +208,8 @@ public class BoardController {
         paginationMap.put("totalCount", total);
         return objectMap;
     }
+
+
 
     @ResponseBody
     @GetMapping("/api/admin/adminBoardChart")
