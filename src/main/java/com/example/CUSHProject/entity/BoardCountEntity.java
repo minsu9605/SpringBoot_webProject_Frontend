@@ -17,10 +17,10 @@ import java.time.format.DateTimeFormatter;
 @NoArgsConstructor
 @Getter
 @Entity
-@Table(name="BOARDCNT")
+@Table(name="MS_BOARDCNT")
 @SequenceGenerator(
         name = "BOARDCOUNT_SEQ_GEN",
-        sequenceName = "BOARDCOUNT_SEQ",
+        sequenceName = "MS_BOARDCOUNT_SEQ",
         initialValue = 1,
         allocationSize = 1
 )
@@ -37,7 +37,7 @@ public class BoardCountEntity {
     @Column(name = "STATUS_COUNT")
     private Long statusCount;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "BATCHDATE")
     private LocalDate batchDate;
 

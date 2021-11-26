@@ -16,10 +16,10 @@ import java.time.format.DateTimeFormatter;
 @NoArgsConstructor
 @Getter
 @Entity
-@Table(name="BOARD")
+@Table(name="MS_BOARD")
 @SequenceGenerator(
         name = "BOARD_SEQ_GEN",
-        sequenceName = "BOARD_SEQ",
+        sequenceName = "MS_BOARD_SEQ",
         initialValue = 1,
         allocationSize = 1
 )

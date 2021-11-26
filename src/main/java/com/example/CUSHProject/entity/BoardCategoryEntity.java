@@ -11,10 +11,10 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Entity
-@Table(name="BCATEGORY")
+@Table(name="MS_BCATEGORY")
 @SequenceGenerator(
         name = "BCATEGORY_SEQ_GEN",
-        sequenceName = "BCATEGORY_SEQ",
+        sequenceName = "MS_BCATEGORY_SEQ",
         initialValue = 1,
         allocationSize = 1
 )

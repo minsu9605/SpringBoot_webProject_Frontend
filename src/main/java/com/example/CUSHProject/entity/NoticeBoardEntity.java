@@ -14,10 +14,10 @@ import java.time.format.DateTimeFormatter;
 @NoArgsConstructor
 @Getter
 @Entity
-@Table(name="NOTICEBOARD")
+@Table(name="MS_NOTICEBOARD")
 @SequenceGenerator(
         name = "NOTICEBOARD_SEQ_GEN",
-        sequenceName = "NOTICEBOARD_SEQ",
+        sequenceName = "MS_NOTICEBOARD_SEQ",
         initialValue = 1,
         allocationSize = 1
 )

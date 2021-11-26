@@ -18,10 +18,10 @@ import java.time.format.DateTimeFormatter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table(name="MEMBER")
+@Table(name="MS_MEMBER")
 @SequenceGenerator(
         name ="MEMBER_SEQ_GEN",
-        sequenceName = "MEMBER_SEQ",
+        sequenceName = "MS_MEMBER_SEQ",
         initialValue = 1,
         allocationSize = 1
 )

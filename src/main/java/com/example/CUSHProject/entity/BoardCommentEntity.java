@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Entity
-@Table(name="BCOMMENT")
+@Table(name="MS_BCOMMENT")
 @SequenceGenerator(
         name = "BCOMMENT_SEQ_GEN",
-        sequenceName = "BCOMMENT_SEQ",
+        sequenceName = "MS_BCOMMENT_SEQ",
         initialValue = 1,
         allocationSize = 1
 )
