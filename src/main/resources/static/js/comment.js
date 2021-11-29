@@ -1,4 +1,4 @@
-$(function () {
+        $(function () {
     getCommentList();
     $("#comment").emojiInit({
         fontSize : 18

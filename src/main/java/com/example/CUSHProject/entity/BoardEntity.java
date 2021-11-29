@@ -63,6 +63,9 @@ public class BoardEntity{
     @Column(name = "MYLNG")
     private double myLng;
 
+    @Column(name = "ALERTREAD")
+    private int alertRead;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "RATING")
     private Rating rating;
@@ -70,6 +73,8 @@ public class BoardEntity{
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS")
     private Status status;
+
+
 
     @ManyToOne
     @JoinColumn(name = "CATEGORY_ID")
@@ -105,10 +110,11 @@ public class BoardEntity{
                 .writeIp(writeIp)
                 .myLat(myLat)
                 .myLng(myLng)
+                .alertRead(alertRead)
                 .build();
     }
     @Builder
-    public BoardEntity(Long id, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate,int hit, int price, Rating rating, Status status,String writeIp, double myLat, double myLng ) {
+    public BoardEntity(Long id, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate,int hit, int price, Rating rating, Status status,String writeIp, double myLat, double myLng,int alertRead ) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -121,5 +127,6 @@ public class BoardEntity{
         this.writeIp = writeIp;
         this.myLat = myLat;
         this.myLng = myLng;
+        this.alertRead = alertRead;
     }
 }

@@ -1,24 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments/common :: head('회원정보관리')"></head>
-<link th:href="@{/css/signin.css}" rel="stylesheet">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link th:href="@{/css/memberForm.css}" rel="stylesheet">
 <link th:href="@{/css/birth.css}" rel="stylesheet">
+
+<body>
+<div class="body-wrap">
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4" th:replace="fragments/common :: menu('home')"></nav>
-
-<style type="text/css">
-    body {
-        padding-top: 0px;
-        display: block;
-    }
-</style>
-
-<body class="text-center">
+<div th:include="fragments/adminsidebar"> </div>
 
 <form class="form-signin" method="post" th:object="${member}" th:action="@{/admin/memberform}">
-    <a th:href="@{/}"><img class="mb-4" th:src="@{/image/log_icon.png}" alt="로고" width="72" height="57"></a>
-    <h1 class="h3 mb-3 fw-normal">Member Page for Admin</h1>
-    <hr>
 
+    <h1 class="h3 mb-3 fw-normal">회원정보 관리</h1>
+    <hr>
     <input type="hidden" class="form-control" th:field="*{id}" th:readonly="readonly">
 
     <div class="form-floating mb-3">
@@ -113,9 +109,11 @@
     <div class="form-floating mb-3">
         <a type="button" style="color:white" class="w-100 btn btn-lg btn-secondary" onclick="window.history.back();">취소</a>
     </div>
-
 </form>
+
 <footer th:replace="fragments/common :: footer"></footer>
+</div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" th:src="@{/js/calAge.js}"></script>
 <script type="text/javascript" th:src="@{/js/modify.js}"></script>

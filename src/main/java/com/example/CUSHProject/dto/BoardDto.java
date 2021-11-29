@@ -33,6 +33,7 @@ public class BoardDto {
     private String writeIp;
     private double myLat;
     private double myLng;
+    private int alertRead;
 
     public BoardEntity toEntity() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -49,11 +50,12 @@ public class BoardDto {
                 .writeIp(writeIp)
                 .myLat(myLat)
                 .myLng(myLng)
+                .alertRead(alertRead)
                 .build();
     }
 
     @Builder
-    public BoardDto(Long id, String writer, String title, String content, String createdDate, String updatedDate, int hit, int price, Rating rating, Status status, String categoryName, Long categoryId, String writeIp, double myLat, double myLng) {
+    public BoardDto(Long id, String writer, String title, String content, String createdDate, String updatedDate, int hit, int price, Rating rating, Status status, String categoryName, Long categoryId, String writeIp, double myLat, double myLng,int alertRead) {
         this.id=id;
         this.writer=writer;
         this.title=title;
@@ -69,5 +71,6 @@ public class BoardDto {
         this.writeIp=writeIp;
         this.myLat = myLat;
         this.myLng = myLng;
+        this.alertRead = alertRead;
     }
 }

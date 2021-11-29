@@ -103,6 +103,18 @@ public class BoardService {
         return Math.toIntExact(boardQueryRepository.getMyOldBoardAlertTotalCount(memberEntity.get()));
     }
 
+    /*알람 읽었는지 체크*/
+    public String setAlertReading(Long id){
+        String result = "";
+        if(id==null){
+            result="fail";
+        }else{
+            boardQueryRepository.setAlertReading(id);
+            result="success";
+        }
+        return result;
+    }
+
     //보드 글 상세보기
     public BoardDto boardContent(Long id) {
         BoardEntity boardEntity;

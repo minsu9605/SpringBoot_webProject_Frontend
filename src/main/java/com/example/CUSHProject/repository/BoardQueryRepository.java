@@ -79,6 +79,7 @@ public class BoardQueryRepository{
     public List<BoardEntity> getMyOldBoardAlertList(MemberEntity memberEntity,int startIndex, int searchStep){
         return queryFactory.selectFrom(QBoardEntity.boardEntity)
                 .where(QBoardEntity.boardEntity.writer.eq(memberEntity)
+                        .and(QBoardEntity.boardEntity.alertRead.eq(0))
                         .and(QBoardEntity.boardEntity.status.eq(Status.old))
                 )
                 .orderBy(QBoardEntity.boardEntity.updatedDate.asc())
@@ -91,8 +92,17 @@ public class BoardQueryRepository{
         return queryFactory.selectFrom(QBoardEntity.boardEntity)
                 .where(QBoardEntity.boardEntity.writer.eq(memberEntity)
                         .and(QBoardEntity.boardEntity.status.eq(Status.old))
+                        .and(QBoardEntity.boardEntity.alertRead.eq(0))
                 )
                 .fetchCount();
+    }
+
+    @Transactional
+    public void setAlertReading(Long id){
+        queryFactory.update(QBoardEntity.boardEntity)
+                .set(QBoardEntity.boardEntity.alertRead, 1)
+                .where(QBoardEntity.boardEntity.id.eq(id))
+                .execute();
     }
 
     /*내가 쓴글 한페이지 출력 리스트*/

@@ -22,12 +22,21 @@ $(function (){
             success: function (success) {
                 const oldListCnt = success.totalCnt;
                 let NodeList = "";
+                let newNode = ""
+
+                if(success.data.length==0){
+                    newNode += "<h4 class='text-center'>모든 알람을 확인하였습니다!</h4><br>";
+                    newNode += "<span class='text-center mb-3'>오래된 게시물을 확인하시려면 아래 버튼을 눌러주세요!</span>";
+                    NodeList += newNode;
+                    $('#moveOldBoardPage').show();
+                }
                 for(let i = 0; i < success.data.length; i++){
-                    let newNode = "<div style='display: none;' class='card form-group col-sm-10 mx-auto p-0'>";
+                    newNode = "<div style='display: none;' class='card form-group col-sm-10 mx-auto p-0'>";
                     newNode += "<div class='card-body pt-3'><div class='row px-3 mb-2'>";
                     newNode += "<strong class='d-block text-gray-dark'>"+success.data[i].title+"</strong>";
                     newNode += "<p class='card-text text-danger'>물건을 올린지 1주일이 지났어요! 물건의 가격을 변경해보세요!</p>";
-                    newNode += "</div><a href='/board/content?id= "+ success.data[i].id +"' class='btn btn-primary'>게시물로 이동</a></div></div>";
+                    newNode += "</div><button type='button' class='btn btn-primary move'>게시물로 이동</button>";
+                    newNode += "<input type='hidden' class='board_id' value='" + success.data[i].id + "'></div></div>";
                     NodeList += newNode;
                 }
                 $(NodeList).appendTo($("#oldList")).slideDown();
@@ -41,10 +50,31 @@ $(function (){
                     $('#searchMoreNotify').remove();
 
                 }
+
             },
             error: function (request, status, error) {
                 alert("code: " + request.status + "\n" + "error: " + error);
             }
         });
     }
+
+    $(document).on('click',".move",function (){
+        const id = $(this).siblings('input').val();
+        $.ajax({
+            url: "/api/board/setAlertReading",
+            method: "get",
+            data: {"id": id},
+            success: function (success) {
+                if(success.result=="success"){
+                    location.href = '/board/content?id=' + id;
+                }else if(success.result=="fail"){
+                    alert("잠시 후 다시 시도해주세요.")
+                }
+            },
+            error: function (request, status, error) {
+                alert("code: " + request.status + "\n" + "error: " + error);
+            }
+        });
+    });
+
 });

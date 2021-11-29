@@ -186,6 +186,16 @@ public class BoardController {
         return map;
     }
 
+    @GetMapping("/api/board/setAlertReading")
+    @ResponseBody
+    public HashMap<String, Object> setAlertReading(@RequestParam(required = false) Long id) {
+        HashMap<String, Object> map = new HashMap<>();
+
+        map.put("result",boardService.setAlertReading(id));
+
+        return map;
+    }
+
     /*내가 쓴 게시물 api*/
     @GetMapping("/api/board/myBoard/table")
     @ResponseBody

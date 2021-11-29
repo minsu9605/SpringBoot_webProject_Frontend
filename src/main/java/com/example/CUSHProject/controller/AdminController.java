@@ -75,5 +75,11 @@ public class AdminController {
         return "admin/adminBoardChart";
     }
 
+    /*//카테고리 추가
+    @GetMapping("/admin/boardChart")
+    public String addCategory() {
+
+        return "admin/adminBoardChart";
+    }*/
 
 }
