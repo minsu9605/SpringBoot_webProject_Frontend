@@ -4,6 +4,7 @@ html, body {
 .body-wrap{
     position: relative;
 }
+
 .form-signin {
     width: 100%;
     max-width: 450px;
