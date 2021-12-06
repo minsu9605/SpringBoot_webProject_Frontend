@@ -24,22 +24,12 @@
 td[data-column-name=title]{
     cursor: pointer;
 }
-.container{
-    max-width: 85%;
-}
 
-#page-wrapper {
-    padding-left: 233px;
-}
 .main-wrapper{
-     margin-top: 5%;
-     margin-left: 15%;
+    padding-left: 14%;
+    padding-top: 3%;
 }
 
-.myboardTitle{
-    display: inline;
-    margin-left: 95px;
-}
 #recruitGrid{
-    width: 93%;
+    width: 92%;
 }
