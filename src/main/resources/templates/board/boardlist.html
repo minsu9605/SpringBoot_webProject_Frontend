@@ -12,15 +12,14 @@
 <body>
 <nav th:replace="fragments/common :: menu('board')"></nav>
 
-<th:block th:include="fragments/sidecategory :: sidecategory(${categoryList})"></th:block>
 
-<div class="container main-wrapper">
-    <h1 class="container" th:text="${categoryList[{#request.getParameter('category')-1}].name}">장터게시판</h1>
-    <input type="hidden" id="categoryId" th:value="${#request.getParameter('category')}">
+<div class="main-wrapper">
+    <th:block th:include="fragments/sidecategory :: sidecategory(${categoryList})"></th:block>
 
-    <main class="container">
+    <div class="container">
+        <h1 class="container" th:text="${categoryList[{#request.getParameter('category')-1}].name}">장터게시판</h1>
+        <input type="hidden" id="categoryId" th:value="${#request.getParameter('category')}">
         <br>
-
         <div class="btn-group mb-3" role="group" aria-label="Basic example">
             <div class="w100" style="padding-right:10px">
                 <select class="form-control form-control-sm" id="searchType" name="searchType">
@@ -38,7 +37,7 @@
         <div class="d-flex justify-content-end">
             <a type="button" class="btn btn-primary" th:href="@{/board/write(category=${#request.getParameter('category')})}">쓰기</a>
         </div>
-    </main>
+    </div>
 </div>
 <footer th:replace="fragments/common :: footer"></footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
