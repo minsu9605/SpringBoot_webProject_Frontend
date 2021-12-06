@@ -204,8 +204,6 @@ $(".modalModBtn").on("click", function () {
 $(document).on("click",".commentDel",function (){
     const comment_id = $(this).siblings('input').val();
 
-    console.log("id : "+comment_id);
-
     if (!confirm("댓글을 삭제하시겠습니까?")) {
         return false;
     } else {

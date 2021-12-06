@@ -45,8 +45,6 @@ function usernameCheck() {
         dataType: "JSON",
 
         success: function (result) {
-            console.log("data : " + this.data);
-            console.log("result.result : " + result.result);
             if (result.result == "0") {
                 if (confirm("이 아이디는 사용 가능합니다. \n사용하시겠습니까?")) {
                     usernameOverlapCheck = 1;
@@ -65,7 +63,6 @@ function usernameCheck() {
             }
         },
         error: function (request, status,error) {
-            console.log("data : " + this.data);
             alert("ajax 실행 실패");
             alert("code:" + request.status + "\n" + "error :" + error);
         }

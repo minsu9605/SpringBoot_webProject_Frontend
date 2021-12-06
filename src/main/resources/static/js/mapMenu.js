@@ -30,7 +30,6 @@ $(document).on("keydown",function (a){
     if(!a.altKey && (!a.ctrlKey && !(a.metaKey || "INPUT" == a.target.tagName))){
         /*which : 키 코드 확인가능*/
         var b = a.keyCode || a.which;
-        console.log(a.which);
         if (47 < b && 58 > b || 64 < b && 91 > b || 95 < b && 106 > b)
             $("#address").val(""),
                 $("#address").focus();
@@ -117,8 +116,6 @@ function showMarker(bounds) {
             for (let i = 0; i < success.data.length; i++) {
                 positions.push({title: success.data[i].title, latlng: new kakao.maps.LatLng(success.data[i].myLat, success.data[i].myLng), id: success.data[i].id, category : success.data[i].categoryName});
             }
-            console.log(positions);
-            console.log(positions.length);
 
             for (let i = 0; i < positions.length; i++) {
                 let imageSrc;

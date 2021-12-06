@@ -80,7 +80,6 @@ function nicknameModify(){
         data : {"id" : id.val(), "nickname" : nickname.val()},
         dataType : "JSON",
         success : function(result){
-            console.log("리턴 결과:" + result.result);
             if(result.result == "0"){
                 $('.nickname_ok').css({"display" : "inline-block","color" : "blue"});
                 $('.nickname_already').css("display", "none");

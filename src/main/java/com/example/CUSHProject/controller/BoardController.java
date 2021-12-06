@@ -225,8 +225,6 @@ public class BoardController {
     @GetMapping("/api/admin/adminBoardChart")
     public HashMap<String, Object> adminBoardCnt(@RequestParam(required = false) String monthOption,
                                                  @RequestParam(required = false) String yearOption) {
-        System.out.println(yearOption);
-        System.out.println(monthOption);
         return boardService.getBoardCount(yearOption, monthOption);
     }
 

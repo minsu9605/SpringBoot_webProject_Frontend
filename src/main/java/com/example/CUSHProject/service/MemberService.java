@@ -90,7 +90,6 @@ public class MemberService implements UserDetailsService {
     public HashMap<String, Object> usernameOverlap(String username) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("result", memberRepository.existsByUsername(username));
-        System.out.println("불린 : " + map);
         return map;
     }
 

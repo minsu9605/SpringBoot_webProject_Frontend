@@ -52,7 +52,6 @@ $("#boardDelete").on("click",function() {
             url : "/api/board/delete",
             data : {"id" : $("#id").val()},
             success: function (result){
-                    console.log("결과: " +result);
                     alert("게시물을 삭제 하였습니다.");
                     window.location.href='/board/list?category=1';
             },

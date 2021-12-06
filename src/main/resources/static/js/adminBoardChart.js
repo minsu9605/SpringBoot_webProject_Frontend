@@ -74,7 +74,6 @@ function boardData() {
                 soldOutData.push(data.soldOut[i].statusCount);
                 oldData.push(data.old[i].statusCount);
                 labels.push(data.sell[i].batchDate);
-
                 boardCountChart.update();
             }
         },

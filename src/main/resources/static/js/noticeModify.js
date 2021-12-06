@@ -52,7 +52,6 @@ $("#boardDelete").on("click",function() {
             url : "/api/notice/delete",
             data : {"id" : $("#id").val()},
             success: function (result){
-                    console.log("결과: " +result);
                     alert("공지사항을 삭제 하였습니다.");
                     window.location.href='/notice/list';
             },
