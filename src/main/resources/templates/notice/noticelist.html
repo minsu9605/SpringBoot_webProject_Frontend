@@ -1,7 +1,7 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/common :: head('공지사항')"></head>
-<link th:href="@{/css/boardList.css}" rel="stylesheet">
+<link th:href="@{/css/noticeList.css}" rel="stylesheet">
 
 <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css"/>
 <link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css"/>
@@ -13,27 +13,23 @@
 
 <div class="container main-wrapper">
     <h1 class="container mt-5">공지사항</h1>
-    <main class="container">
-        <br>
-
-        <div class="btn-group mb-3" role="group" aria-label="Basic example">
-            <div class="w100" style="padding-right:10px">
-                <select class="form-control form-control-sm" id="searchType" name="searchType">
-                    <option value="title">제목</option>
-                </select>
-            </div>
-            <input id="keyword" name="keyword" type="text" placeholder="검색어를 입력해주세요">
-            <button id="searchButton" type="submit" class="mx-2 btn btn-secondary">검색</button>
+    <br>
+    <div class="btn-group mb-3" role="group" aria-label="Basic example">
+        <div class="w100" style="padding-right:10px">
+            <select class="form-control form-control-sm" id="searchType" name="searchType">
+                <option value="title">제목</option>
+            </select>
         </div>
+        <input id="keyword" name="keyword" type="text" placeholder="검색어를 입력해주세요">
+        <button id="searchButton" type="submit" class="mx-2 btn btn-secondary">검색</button>
+    </div>
 
-        <div id="recruitGrid"></div>
+    <div id="recruitGrid"></div>
 
-        <div class="d-flex justify-content-end" sec:authorize="hasRole('ROLE_ADMIN')">
+    <div class="d-flex justify-content-end" sec:authorize="hasRole('ROLE_ADMIN')">
 
-            <a type="button" class="btn btn-primary" th:href="@{/notice/write}">쓰기</a>
-        </div>
-
-    </main>
+        <a type="button" class="btn btn-primary" th:href="@{/notice/write}">쓰기</a>
+    </div>
 </div>
 <footer th:replace="fragments/common :: footer"></footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

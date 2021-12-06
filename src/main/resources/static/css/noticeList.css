@@ -14,9 +14,7 @@
 #listHit{
     margin-left:auto;
 }
-/*#th-title{
-    width: 40%;
-}*/
+
 #td-title{
     text-align: left;
 }
@@ -25,9 +23,9 @@ td[data-column-name=title]{
 }
 
 .main-wrapper{
-    padding-left: 14%;
-    padding-top: 6%;
+    padding-left: 9%;
+    padding-top: 3%;
 }
 #recruitGrid{
-    width: 92%;
+    width: 88%;
 }
