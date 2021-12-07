@@ -74,8 +74,6 @@ public class BoardEntity{
     @Column(name = "STATUS")
     private Status status;
 
-
-
     @ManyToOne
     @JoinColumn(name = "CATEGORY_ID")
     private BoardCategoryEntity category;

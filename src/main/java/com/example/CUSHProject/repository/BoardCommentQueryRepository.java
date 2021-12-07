@@ -4,6 +4,7 @@ package com.example.CUSHProject.repository;
 import com.example.CUSHProject.dto.BoardCommentDto;
 import com.example.CUSHProject.entity.BoardCommentEntity;
 import com.example.CUSHProject.entity.BoardEntity;
+import com.example.CUSHProject.entity.MemberEntity;
 import com.example.CUSHProject.entity.QBoardCommentEntity;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -65,6 +66,22 @@ public class BoardCommentQueryRepository {
         queryFactory.delete(QBoardCommentEntity.boardCommentEntity)
                 .where(QBoardCommentEntity.boardCommentEntity.id.eq(cid)
                         .or(QBoardCommentEntity.boardCommentEntity.cGroup.eq(cid))
+                )
+                .execute();
+    }
+    /*보드 id로 삭제(회원탈퇴 시 사용)*/
+    @Transactional
+    public void deleteByBoardId(BoardEntity boardEntity){
+        queryFactory.delete(QBoardCommentEntity.boardCommentEntity)
+                .where(QBoardCommentEntity.boardCommentEntity.boardId.eq(boardEntity)
+                )
+                .execute();
+    }
+    /*보드 id로 삭제(회원탈퇴 시 사용)*/
+    @Transactional
+    public void deleteByWriter(MemberEntity memberEntity){
+        queryFactory.delete(QBoardCommentEntity.boardCommentEntity)
+                .where(QBoardCommentEntity.boardCommentEntity.writer.eq(memberEntity)
                 )
                 .execute();
     }

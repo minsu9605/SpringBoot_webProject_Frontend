@@ -23,8 +23,6 @@ public class MemberLoginFailService implements AuthenticationFailureHandler {
             loginFailMsg = "존재하지 않는 사용자입니다.";
         } else if(exception instanceof BadCredentialsException) {
             loginFailMsg = "아이디 또는 비밀번호가 틀립니다.";
-        } else if(exception instanceof LockedException) {
-            loginFailMsg = "잠긴 계정입니다. 관리자에게 문의해주세요.";
         }
 
         request.setAttribute("loginFailMsg", loginFailMsg);

@@ -1,10 +1,11 @@
 package com.example.CUSHProject.service;
 
 import com.example.CUSHProject.dto.MemberDto;
+import com.example.CUSHProject.entity.BoardCommentEntity;
+import com.example.CUSHProject.entity.BoardEntity;
 import com.example.CUSHProject.entity.MemberEntity;
 import com.example.CUSHProject.enums.Role;
-import com.example.CUSHProject.repository.MemberQueryRepository;
-import com.example.CUSHProject.repository.MemberRepository;
+import com.example.CUSHProject.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,6 +29,9 @@ public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
     private final MemberQueryRepository memberQueryRepository;
+    private final BoardRepository boardRepository;
+    private final BoardCommentRepository boardCommentRepository;
+    private final BoardCommentQueryRepository boardCommentQueryRepository;
 
 
     @Transactional
@@ -83,6 +87,26 @@ public class MemberService implements UserDetailsService {
 
     //멤버 탈퇴
     public void deleteUser(Long id) {
+        Optional<MemberEntity> memberEntity = memberRepository.findById(id);
+
+        //해당 회원이 작성한 게시물이 있을 때
+        if(boardRepository.existsByWriter(memberEntity.get())){
+            List<BoardEntity> boardEntity = boardRepository.findByWriter(memberEntity.get());
+            for(int i=0; i<boardEntity.size(); i++){
+                //해당게시물에 댓글이 있을 때 댓글 모두 삭제
+                if(boardCommentRepository.existsByBoardId(boardEntity.get(i))){
+                    boardCommentQueryRepository.deleteByBoardId(boardEntity.get(i));
+                }
+                //해당 게시물 삭제
+                boardRepository.deleteById(boardEntity.get(i).getId());
+            }
+        }
+
+        //해당 회원이 작성한 댓글 삭제
+        if(boardCommentRepository.existsByWriter(memberEntity.get())){
+            boardCommentQueryRepository.deleteByWriter(memberEntity.get());
+        }
+
         memberRepository.deleteById(id);
     }
 
