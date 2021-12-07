@@ -3,7 +3,7 @@ const original_Pw = $("#original_Pw");
 
 
 $("#submit_button").on('click', function  pwCheckAll(){
-
+    originalPwCheck();
     if(original_Pw.val()=="") {
         alert("기존 패스워드를 입력해주세요!. 필수항목입니다.");
         original_Pw.focus();
@@ -72,7 +72,7 @@ function pwSame() {
 
 function originalPwCheck(){
     $.ajax({
-        method :"get",
+        type :"get",
         url :"/api/pwCheck",
         data : {"original_Pw" : original_Pw.val()},
         success : function(result){
