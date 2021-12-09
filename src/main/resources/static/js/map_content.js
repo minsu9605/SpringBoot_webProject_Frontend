@@ -15,15 +15,27 @@ var markerPosition  = new kakao.maps.LatLng(myLat, myLng);
 
 // 마커를 생성합니다
 var marker = new kakao.maps.Marker({
-    position: markerPosition
+    position: markerPosition,
 });
 
 // 마커가 지도 위에 표시되도록 설정합니다
 marker.setMap(map);
 
+/*인포윈도우에 있는 url*/
+var openMapUrl = "https://map.kakao.com/link/map/거래 장소," + myLat + "," + myLng;
+var openToMapUrl = "https://map.kakao.com/link/to/거래 장소," + myLat + "," + myLng;
+
+var iwContent = '<div style="padding:5px;">거래 장소</br><a href="'+ openMapUrl +'" style="color:blue" target="_blank">큰지도보기</a><a href="'+ openToMapUrl +'" style="color:blue" target="_blank"> 길찾기</a></div>';
+
+// 인포윈도우를 생성합니다
+var infowindow = new kakao.maps.InfoWindow({
+    content : iwContent
+});
+
+infowindow.open(map,marker);
+
 // 주소-좌표 변환 객체를 생성합니다
 var geocoder = new kakao.maps.services.Geocoder();
-
 
 // 현재 지도 중심좌표로 주소를 검색해서 지도 좌측 상단에 표시합니다
 searchAddrFromCoords(map.getCenter(), displayCenterInfo);
