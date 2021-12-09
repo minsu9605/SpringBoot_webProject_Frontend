@@ -127,14 +127,13 @@ $(document).on("click",".reCommentBtn",function (){
                 html += "</div>";
             }
             html += "<input style='width: 90%' id='reComment_"+cid+"' class='reComment' name='reComment' placeholder='댓글을 입력해 주세요'>";
-            html += "<button class='btn btn-primary mx-2 reCommentSubmit'>등록</button>";
+            html += "<button type='button' class='btn btn-primary mx-2 reCommentSubmit'>등록</button>";
 
             _this.siblings(".reCommentDiv").html(html);
 
             /*$("#reComment_"+cid+"").emojiInit({
                 fontSize: 14
-            });
-*/
+            });*/
         },
         error: function (request, status, error) {
             alert("code: " + request.status + "\n" + "error: " + error);
