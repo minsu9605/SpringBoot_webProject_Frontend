@@ -17,9 +17,15 @@ $("#soldOutBtn").on('click',function (){
     }
 });
 
+var winWidth = document.body.clientWidth; // 현재창의 너비
+var winX = window.screenLeft; // 현재창의 x좌표
+
+var popX = winX + (winWidth - 910)/2;
+
+
 /*거래장소 보기*/
 $("#showLocation").on('click',function (){
-    window.open("/board/map_content","map","width=910,height=485,left=350,top=120");
+    window.open("/board/map_content","map","width=910,height=485,left="+popX+",top=120");
 });
 
 $(function (){
@@ -50,6 +56,5 @@ $(function(){
     const a = $("#boardStatus").text();
 
     $("#boardStatus").text(a.replace("[오래된 판매중 게시물]","[판매중]"));
-    // $("#boardStatus").text().replace("[오래된 판매중 게시물]","[판매중]");
 });
 

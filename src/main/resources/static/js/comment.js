@@ -13,7 +13,7 @@ function commentPost() {
         url: "/api/comment/post",
         data: {"comment": $("#comment").val(), "bid": $("#bid").val()},
         success: function (data) {
-            if (data == "success") {
+            if (data.result == "success") {
                 location.reload();
             }
         },

@@ -29,11 +29,11 @@ public class CommentService {
 
 
     /*댓글 등록*/
-    public void commentPost(Long bid, String comment, int cDepth, Long cGroup, String username) throws Exception {
+    public HashMap<String, Object> commentPost(Long bid, String comment, int cDepth, Long cGroup, String username) throws Exception {
+        HashMap<String, Object> map = new HashMap<>();
 
         BoardCommentDto boardCommentDto = new BoardCommentDto();
 
-        boardCommentDto.setBoardId(bid);
         boardCommentDto.setComment(comment);
         boardCommentDto.setCDepth(cDepth);
         boardCommentDto.setCGroup(cGroup);
@@ -41,7 +41,7 @@ public class CommentService {
         boardCommentDto.setUpdateDate(LocalDateTime.now());
 
         Optional<MemberEntity> memberEntity = memberRepository.findByUsername(username);
-        Optional<BoardEntity> boardEntity = boardRepository.findById(boardCommentDto.getBoardId());
+        Optional<BoardEntity> boardEntity = boardRepository.findById(bid);
 
         BoardCommentEntity boardCommentEntity = boardCommentDto.toEntity();
 
@@ -49,6 +49,8 @@ public class CommentService {
         boardCommentEntity.setCommentWriter(memberEntity.get());
 
         boardCommentRepository.save(boardCommentEntity);
+        map.put("result","success");
+        return map;
     }
 
     public HashMap<String, Object> getCommentList(Long bid) {
@@ -74,7 +76,6 @@ public class CommentService {
         Optional<BoardCommentEntity> boardCommentEntity = boardCommentRepository.findById(cid);
         int depth = boardCommentEntity.get().getCDepth();
         Long reCommentCnt = boardCommentQueryRepository.deleteCheck(cid);
-
 
         if (depth == 0) {
             if (roleSession.equals(Role.ROLE_ADMIN)) {

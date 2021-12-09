@@ -17,13 +17,13 @@ public class CommentController {
 
     @ResponseBody
     @PostMapping("/api/comment/post")
-    public String commentPost(@RequestParam Long bid,
+    public HashMap<String, Object> commentPost(@RequestParam Long bid,
                               @RequestParam String comment,
                               Authentication authentication) throws Exception {
         int cDepth = 0;
         Long cGroup = 0L;
-        commentService.commentPost(bid, comment, cDepth, cGroup, authentication.getName());
-        return "success";
+
+        return commentService.commentPost(bid, comment, cDepth, cGroup, authentication.getName());
     }
 
     @ResponseBody
