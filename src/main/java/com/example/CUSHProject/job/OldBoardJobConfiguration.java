@@ -45,7 +45,6 @@ public class OldBoardJobConfiguration {
     @Bean
     public Job oldBoardJob() {
         return jobBuilderFactory.get("oldBoardJob")
-//                .start(cntByStatusStep())
                 .start(oldBoardJobStep())
                 .next(cntByStatusStep())
                 .build();

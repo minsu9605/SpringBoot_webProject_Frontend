@@ -8,8 +8,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
-//@Getter
-//@Setter
 @Data
 @NoArgsConstructor
 public class BoardCategoryDto {
@@ -25,8 +23,8 @@ public class BoardCategoryDto {
 
     @Builder
     public BoardCategoryDto(Long id, String name) {
-        this.id=id;
-        this.name=name;
+        this.id = id;
+        this.name = name;
 
     }
 }

@@ -11,10 +11,7 @@ import javax.servlet.http.HttpSession;
 public class HomeController {
 
     @GetMapping("/")
-    public String index(HttpSession session) {
-        System.out.println("-----------------------------------");
-        System.out.println("세션 닉네임 : "+session.getAttribute("memberNickname"));
-        System.out.println("-----------------------------------");
+    public String index() {
         return "index";
     }
 }

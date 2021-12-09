@@ -76,6 +76,7 @@ function originalPwCheck(){
         url :"/api/pwCheck",
         data : {"original_Pw" : original_Pw.val()},
         success : function(result){
+            console.log(result);
             if(result.result == "1"){
                 original_PwCheck = 1;
             }else{
