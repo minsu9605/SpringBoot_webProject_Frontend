@@ -11,6 +11,7 @@ import java.util.List;
 @Repository
 public interface BoardCommentRepository extends JpaRepository<BoardCommentEntity, Long> {
     List<BoardCommentEntity> findByBoardId(BoardEntity boardEntity);
+    List<BoardCommentEntity> findByWriter(MemberEntity memberEntity);
 
     boolean existsByBoardId(BoardEntity boardEntity);
     boolean existsByWriter(MemberEntity memberEntity);

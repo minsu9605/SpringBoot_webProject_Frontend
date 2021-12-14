@@ -6,17 +6,6 @@
 <link th:href="@{/css/withdrawal.css}" rel="stylesheet">
 <link th:href="@{/css/birth.css}" rel="stylesheet">
 
-<script>
-    function withdrawal() {
-        if (!confirm("정말로 탈퇴 하시겠습니까?")) {
-            return false
-        } else if (!confirm("게시글과 댓글 등이 삭제되며 이후 취소 처리가 불가 합니다. 탈퇴 하시겠습니까?")) {
-            return false
-        }
-        alert("회원탈퇴가 완료되었습니다.")
-    }
-</script>
-
 <body class="body-wrap">
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4" th:replace="fragments/common :: menu('board')"></nav>
 <div th:include="fragments/mypagesidebar"> </div>
@@ -74,5 +63,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" th:src="@{/js/calAge.js}"></script>
 <script type="text/javascript" th:src="@{/js/nav_top.js}"></script>
+<script type="text/javascript" th:src="@{/js/withdrawal.js}"></script>
 </body>
 </html>

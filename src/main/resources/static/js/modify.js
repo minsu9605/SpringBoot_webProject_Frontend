@@ -54,7 +54,7 @@ function modifyCheckAll(){
         username.focus();
         return false;
     }else if(nickname.val()==""){
-        alert("아이디를 입력해주세요!. 필수항목입니다.");
+        alert("닉네임을 입력해주세요!. 필수항목입니다.");
         nickname.focus();
         return false;
     } else if (usernameCheck == 0){

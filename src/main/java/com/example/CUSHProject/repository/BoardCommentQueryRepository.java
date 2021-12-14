@@ -20,7 +20,7 @@ public class BoardCommentQueryRepository {
     private final JPAQueryFactory queryFactory;
 
     @Transactional
-    public void updateComment(Long cid, String comment){
+    public void updateComment(Long cid, String comment) {
         queryFactory.update(QBoardCommentEntity.boardCommentEntity)
                 .set(QBoardCommentEntity.boardCommentEntity.comment, comment)
                 .set(QBoardCommentEntity.boardCommentEntity.updateDate, LocalDateTime.now())
@@ -29,7 +29,7 @@ public class BoardCommentQueryRepository {
     }
 
     /*대댓글 리스트*/
-    public List<BoardCommentEntity> findByCGroup(Long cid){
+    public List<BoardCommentEntity> findByCGroup(Long cid) {
         return queryFactory.selectFrom(QBoardCommentEntity.boardCommentEntity)
                 .where(QBoardCommentEntity.boardCommentEntity.cGroup.eq(cid)
                         .and(QBoardCommentEntity.boardCommentEntity.cDepth.eq(1))
@@ -39,7 +39,7 @@ public class BoardCommentQueryRepository {
     }
 
     /*댓글 리스트*/
-    public List<BoardCommentEntity> findByBoardId(BoardEntity boardEntity){
+    public List<BoardCommentEntity> findByBoardId(BoardEntity boardEntity) {
         return queryFactory.selectFrom(QBoardCommentEntity.boardCommentEntity)
                 .where(QBoardCommentEntity.boardCommentEntity.boardId.eq(boardEntity)
                         .and(QBoardCommentEntity.boardCommentEntity.cDepth.eq(0))
@@ -48,40 +48,33 @@ public class BoardCommentQueryRepository {
                 .fetch();
     }
 
-    public Long deleteCheck(Long cid){
+    public Long deleteCheck(Long cid) {
         return queryFactory.selectFrom(QBoardCommentEntity.boardCommentEntity)
                 .where(QBoardCommentEntity.boardCommentEntity.cGroup.eq(cid))
                 .fetchCount();
     }
 
-    public Long findReCommentCnt(Long cid){
+    public Long findReCommentCnt(Long cid) {
         return queryFactory.selectFrom(QBoardCommentEntity.boardCommentEntity)
                 .where(QBoardCommentEntity.boardCommentEntity.cGroup.eq(cid))
                 .fetchCount();
     }
 
-    /*모댓글 삭제시 대댓글 삭제(관리자)*/
+    /*모댓글, 대댓글 삭제*/
     @Transactional
-    public void deleteByCid(Long cid){
+    public void deleteByCid(Long cid) {
         queryFactory.delete(QBoardCommentEntity.boardCommentEntity)
                 .where(QBoardCommentEntity.boardCommentEntity.id.eq(cid)
                         .or(QBoardCommentEntity.boardCommentEntity.cGroup.eq(cid))
                 )
                 .execute();
     }
+
     /*보드 id로 삭제(회원탈퇴 시 사용)*/
     @Transactional
-    public void deleteByBoardId(BoardEntity boardEntity){
+    public void deleteByBoardId(BoardEntity boardEntity) {
         queryFactory.delete(QBoardCommentEntity.boardCommentEntity)
                 .where(QBoardCommentEntity.boardCommentEntity.boardId.eq(boardEntity)
-                )
-                .execute();
-    }
-    /*보드 id로 삭제(회원탈퇴 시 사용)*/
-    @Transactional
-    public void deleteByWriter(MemberEntity memberEntity){
-        queryFactory.delete(QBoardCommentEntity.boardCommentEntity)
-                .where(QBoardCommentEntity.boardCommentEntity.writer.eq(memberEntity)
                 )
                 .execute();
     }

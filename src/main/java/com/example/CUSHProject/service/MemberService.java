@@ -104,7 +104,10 @@ public class MemberService implements UserDetailsService {
 
         //해당 회원이 작성한 댓글 삭제
         if(boardCommentRepository.existsByWriter(memberEntity.get())){
-            boardCommentQueryRepository.deleteByWriter(memberEntity.get());
+            List<BoardCommentEntity> boardCommentEntityList = boardCommentRepository.findByWriter(memberEntity.get());
+            for(int i=0; i<boardCommentEntityList.size();i++){
+                boardCommentQueryRepository.deleteByCid(boardCommentEntityList.get(i).getId());
+            }
         }
 
         memberRepository.deleteById(id);
