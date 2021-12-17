@@ -13,7 +13,7 @@
 <nav th:replace="fragments/common :: menu('board')"></nav>
 
 <div class="main-wrapper">
-    <th:block th:include="fragments/sidecategory :: sidecategory(${categoryList})"></th:block>
+<!--    <th:block th:include="fragments/sidecategory :: sidecategory(${categoryList})"></th:block>-->
 
     <div class="container">
         <h1 class="container" th:text="${categoryList[{#request.getParameter('category')-1}].name}">장터게시판</h1>

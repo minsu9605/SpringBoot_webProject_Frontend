@@ -81,7 +81,7 @@
         <div class="dropdown" id="gen">
             <select onkeyup="checkGender()" class="form-control" id="gender" name="gender">
                 <option value="">성별</option>
-                <option th:each="genderValue : ${T(com.example.CUSHProject.enums.Gender).values()}"
+                <option th:each="genderValue : ${T(com.example.CUSHProjectFront.enums.Gender).values()}"
                         th:value="${genderValue.value}"
                         th:text="${genderValue.title}"></option>
             </select>

@@ -14,6 +14,7 @@ $(function () {
         method : 'get',
         success : function(success){
             let totalCnt = success.totalCnt;
+            console.log(totalCnt);
             if(!totalCnt==0){
                 $("#oldBoardCnt").text(totalCnt);
             }else{

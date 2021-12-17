@@ -75,7 +75,7 @@
         <div class="dropdown" id="gen">
             <select onkeyup="blankModify()" class="form-control" id="gender" name="gender">
                 <option value="">성별</option>
-                <option th:each="genderValue : ${T(com.example.CUSHProject.enums.Gender).values()}"
+                <option th:each="genderValue : ${T(com.example.CUSHProjectFront.enums.Gender).values()}"
                         th:value="${genderValue.value}"
                         th:text="${genderValue.title}"
                         th:selected="${genderValue.title} == *{gender.title}">
@@ -89,7 +89,7 @@
         <div class="dropdown" id="roleDiv">
             <select onkeyup="blankModify()" class="form-control" id="role" name="role">
                 <option value="">권한</option>
-                <option th:each="roleValue : ${T(com.example.CUSHProject.enums.Role).values()}"
+                <option th:each="roleValue : ${T(com.example.CUSHProjectFront.enums.Role).values()}"
                         th:value="${roleValue.value}"
                         th:text="${roleValue.title}"
                         th:selected="${roleValue.title} == *{role.title}">

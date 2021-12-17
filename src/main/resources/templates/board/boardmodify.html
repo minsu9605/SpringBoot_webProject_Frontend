@@ -29,7 +29,7 @@
 
             <label class="form-label" for="status"><b>판매상태</b></label>
             <select class="form-control" id="status" name="status">
-                <option th:each="status : ${T(com.example.CUSHProject.enums.Status).values()}"
+                <option th:each="status : ${T(com.example.CUSHProjectFront.enums.Status).values()}"
                         th:value="${status.value}"
                         th:text="${status.title}"
                         th:selected="${status.value} == ${boardForm.status.value}">
@@ -53,7 +53,7 @@
             <div class="dropdown" id="divRating">
                 <label class="form-label" for="rating">상태</label>
                 <select class="form-control" id="rating" name="rating">
-                    <option th:each="ratingValue : ${T(com.example.CUSHProject.enums.Rating).values()}"
+                    <option th:each="ratingValue : ${T(com.example.CUSHProjectFront.enums.Rating).values()}"
                             th:value="${ratingValue.value}"
                             th:text="${ratingValue.title}"
                             th:selected="${ratingValue.title} == ${boardForm.rating.title}">
