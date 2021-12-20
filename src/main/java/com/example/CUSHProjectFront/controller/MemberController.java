@@ -33,7 +33,7 @@ public class MemberController {
         return "account/login";
     }
 
-    //로그인 처리
+    //로그인 에러 처리
     @PostMapping("/account/login")
     public String loginError(HttpServletRequest request, Model model) {
         String loginFailMsg = (String) request.getAttribute("loginFailMsg");

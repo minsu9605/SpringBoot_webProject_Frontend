@@ -19,25 +19,6 @@ public class RestTemplateHandler {
 
     private final ObjectMapper objectMapper;
 
-    public HashMap<String,Object> OldBoardCount() throws Exception{
-        //헤더 설정
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));
-
-        //HttpEntity에 헤더 및 params 설정
-        HttpEntity entity = new HttpEntity(httpHeaders);
-
-        String uri = "http://localhost:9090/api/board/getMyOldBoardCnt";
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<HashMap> responseEntity = restTemplate.exchange(uri, HttpMethod.GET,entity,HashMap.class);
-
-        return responseEntity.getBody();
-    }
-
-
-
-
-
     /*public String restTemplateTest() throws Exception{
         //헤더 설정
         HttpHeaders httpHeaders = new HttpHeaders();

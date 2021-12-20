@@ -12,7 +12,8 @@
                 <a>게시판</a>
             </li>
             <li th:each="category : ${categoryList}">
-                <a th:text="${category.name}" th:href="@{'/board/list?category='+${category.getId}}"></a>
+                <a th:text="${category.name}" th:href="@{'/board/list?category='+${category.id}}"></a>
+<!--                <a th:text="${category.name}" th:href="@{'/board/list?category='+${category.getId}}"></a>-->
             </li>
         </ul>
     </div>
