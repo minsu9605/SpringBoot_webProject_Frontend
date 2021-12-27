@@ -11,7 +11,7 @@ $("#submitBtn").on('click',function nullCheck() {
         return false;
     }
     eraseComma()
-    alert("작성되었습니다");
+    boardWrite();
     return true;
 });
 
@@ -115,4 +115,18 @@ $("#mapButton").on('click',function (){
     window.open("/board/map","map","width=900,height=550,left=300,top=100");
 });
 
+function boardWrite() {
+    $.ajax({
+        type: "POST",
+        url: "/api/board/write",
+        data: $("form[name=board_form]").serialize(),
+        success: function (result) {
+            alert("게시글 작성이 완료되었습니다.")
+            location.href='/board/list?category='+ result.categoryId;
+        },
+        error: function (request, status, error){
+            alert("code : " +  request.status + "\n" + "error : " + error);
+        }
+    });
+}
 

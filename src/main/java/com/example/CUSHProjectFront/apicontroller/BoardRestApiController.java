@@ -25,25 +25,26 @@ public class BoardRestApiController {
     private final BoardRestApiHandler boardRestApiHandler;
 
 
-    /*@GetMapping("/api/test/hello")
-    public String testApi(Model model) throws Exception{
-       return restTemplateHandler.restTemplateTest()
-    }*/
+    @GetMapping("/api/board/soldOut")
+    public String boardMap(@RequestParam(required = false) Long id) throws Exception {
+        boardRestApiHandler.setSoldOut(id);
+        return "success";
+    }
 
     @GetMapping("/api/board/list/table")
-    public HashMap<String,Object> getBoardList(BoardListDto boardListDto) throws Exception{
+    public HashMap<String, Object> getBoardList(BoardListDto boardListDto) throws Exception {
         return boardRestApiHandler.getBoardList(boardListDto);
     }
 
     @GetMapping("/api/board/getMyOldBoardCnt")
-    public HashMap<String,Object> getMyOldBoardCnt(Authentication authentication) throws Exception{
+    public HashMap<String, Object> getMyOldBoardCnt(Authentication authentication) throws Exception {
         HashMap<String, Object> map = new HashMap<>();
-        if(authentication !=null){
-            map.put("totalCnt",boardRestApiHandler.getMyOldBoardAlertCnt(authentication.getName()));
-        }else{
-            map.put("totalCnt",0);
+        if (authentication != null) {
+            map.put("totalCnt", boardRestApiHandler.getMyOldBoardAlertCnt(authentication.getName()));
+        } else {
+            map.put("totalCnt", 0);
         }
-            return map;
+        return map;
     }
 
     @GetMapping("/api/board/getMyOldBoardList")
@@ -57,10 +58,8 @@ public class BoardRestApiController {
         return map;
     }
 
-    /*@PostMapping("/board/write")
-    public String boardWrite(@RequestParam(required = false) Long category, BoardDto boardDto, Authentication authentication, HttpServletRequest request) {
-        boardRestApiHandler.boardWrite(boardDto, authentication.getName(), request);
-        boardService.boardWrite(boardDto, authentication.getName(), request);
-        return "redirect:/board/list?category=" + category;
-    }*/
+    @PostMapping("/api/board/write")
+    public HashMap<String, Object> boardWrite(BoardDto boardDto) throws Exception {
+        return boardRestApiHandler.boardWrite(boardDto);
+    }
 }

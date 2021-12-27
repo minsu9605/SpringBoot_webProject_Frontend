@@ -4,9 +4,14 @@ package com.example.CUSHProjectFront.controller;
 import com.example.CUSHProjectFront.dto.BoardDto;
 import com.example.CUSHProjectFront.handler.BoardRestApiHandler;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @AllArgsConstructor
@@ -30,25 +35,25 @@ public class BoardController {
         return "board/boardform";
     }
 
-    /*
+    /*@PostMapping("/board/write")
+    public String boardWrite(@RequestParam(required = false) Long category, BoardDto boardDto, Authentication authentication, HttpServletRequest request) {
+        boardRestApiHandler.boardWrite(boardDto, authentication.getName(), request);
+        return "redirect:/board/list?category=" + category;
+    }*/
 
 
     @GetMapping("/board/content")
-    public String boardContent(Model model, @RequestParam(required = false) Long id) {
-        boardService.boardHitUpdate(id);
-        BoardDto boardForm = boardService.boardContent(id);
+    public String boardContent(Model model, @RequestParam(required = false) Long id) throws Exception {
+        boardRestApiHandler.boardHitUpdate(id);
+        BoardDto boardForm = boardRestApiHandler.boardContent(id);
 
-        model.addAttribute("categoryList", categoryService.getCategoryList());
+        model.addAttribute("categoryList", boardRestApiHandler.getCategoryList());
         model.addAttribute("boardForm", boardForm);
         return "board/boardcontent";
     }
 
-    @ResponseBody
-    @GetMapping("/api/board/soldOut")
-    public String boardMap(@RequestParam(required = false) Long id) {
-        boardService.setSoldOut(id);
-        return "success";
-    }
+    /*
+
 
     @GetMapping("/board/modify")
     public String boardModify(Model model, @RequestParam(required = false) Long id) {

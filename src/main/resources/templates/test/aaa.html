@@ -4,11 +4,11 @@
     <title>test</title>
 </head>
 <body>
-<!--<form method="get" th:action="@{/api/test/hello}">
-    <button type="submit" id="test_btn">click</button>
-</form>-->
-
-<a th:href="@{/api/test/hello}">aasdas</a>
+<form id="testForm" method="post" th:action="@{/api/test/hello}">
+    <input id="msg1" value="123">
+    <input id="msg2" value="world">
+</form>
+<button type="button" id="test_btn">click</button>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" th:src="@{/js/test.js}"></script>

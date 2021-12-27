@@ -3,6 +3,7 @@ package com.example.CUSHProjectFront.handler;
 import com.example.CUSHProjectFront.dto.TestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
+import org.junit.Test;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -40,34 +41,17 @@ public class RestTemplateHandler {
         return responseEntity.getBody();
     }*/
 
-    public String restTemplateTest() throws Exception{
+    public String restTemplateTest(TestDto testDto) throws Exception{
         //헤더 설정
         HttpHeaders httpHeaders = new HttpHeaders();
-        HttpEntity entity = new HttpEntity(httpHeaders);
+        httpHeaders.add(HttpHeaders.ACCEPT, MediaType.TEXT_HTML_VALUE);
         String uri = "http://localhost:9090/hello";
 
-        String msg1 = "hello";
-        int msg2 = 26;
-
-        /*TestDto testDto = TestDto.builder()
-                .id(msg2)
-                .writer(msg1)
-                .build();*/
-
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(uri)
-                .queryParam("msg1", msg1)
-                .queryParam("msg2", msg2);
-
-        System.out.println(builder.toUriString());
-
         //HttpEntity에 헤더 및 params 설정
-
+        HttpEntity httpEntity = new HttpEntity(testDto,httpHeaders);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, String.class);
-
-        System.out.println(responseEntity.getStatusCode());
-        System.out.println(responseEntity.getBody());
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(uri, httpEntity, String.class);
 
         return responseEntity.getBody();
     }

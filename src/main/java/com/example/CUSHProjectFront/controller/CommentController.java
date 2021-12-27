@@ -27,11 +27,7 @@ public class CommentController {
         return commentService.commentPost(bid, comment, cDepth, cGroup, authentication.getName());
     }
 
-    @ResponseBody
-    @GetMapping("/api/comment/list")
-    public HashMap<String, Object> getCommentList(@RequestParam Long bid, HttpServletRequest request) {
-        return commentService.getCommentList(bid);
-    }
+
 
     @ResponseBody
     @DeleteMapping("/api/comment/delete")

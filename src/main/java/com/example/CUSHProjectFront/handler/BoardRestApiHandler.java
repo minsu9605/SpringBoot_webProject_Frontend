@@ -8,9 +8,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
@@ -52,25 +55,35 @@ public class BoardRestApiHandler {
         HttpEntity entity = new HttpEntity(httpHeaders);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<HashMap> responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET,entity,HashMap.class);
+        ResponseEntity<HashMap> responseEntity = restTemplate.exchange(builder.build().toUriString(), HttpMethod.GET,entity,HashMap.class);
 
         return responseEntity.getBody();
     }
 
-    public List<BoardCategoryDto> boardWrite(){
-        //헤더 설정
+    public HashMap<String, Object> boardWrite(BoardDto boardDto) throws Exception{
         HttpHeaders httpHeaders = new HttpHeaders();
-
-        //HttpEntity에 헤더 및 params 설정
-        HttpEntity entity = new HttpEntity(httpHeaders);
-
         String uri = "http://localhost:9090/api/board/write";
+
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(uri)
+                .queryParam("writer",boardDto.getWriter())
+                .queryParam("categoryName",boardDto.getCategoryName())
+                .queryParam("rating",boardDto.getRating())
+                .queryParam("price",boardDto.getPrice())
+                .queryParam("myLat",boardDto.getMyLat())
+                .queryParam("myLng",boardDto.getMyLng())
+                .queryParam("title",boardDto.getTitle())
+                .queryParam("content",boardDto.getContent());
+
+        HttpEntity entity = new HttpEntity(boardDto,httpHeaders);
+
         RestTemplate restTemplate = new RestTemplate();
-        List<BoardCategoryDto> responseEntity = restTemplate.getForObject(uri,List.class,entity);
+        ResponseEntity<HashMap> responseEntity = restTemplate.exchange(builder.build().toUriString(), HttpMethod.POST, entity,HashMap.class);
 
-        return responseEntity;
-
+        return responseEntity.getBody();
     }
+
+
 
     public int getMyOldBoardAlertCnt(String username) throws Exception{
         //헤더 설정
@@ -84,7 +97,7 @@ public class BoardRestApiHandler {
         HttpEntity entity = new HttpEntity(httpHeaders);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Integer> responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET,entity,Integer.class);
+        ResponseEntity<Integer> responseEntity = restTemplate.exchange(builder.build().toUriString(), HttpMethod.GET,entity,Integer.class);
 
         return responseEntity.getBody();
     }
@@ -103,10 +116,54 @@ public class BoardRestApiHandler {
         HttpEntity entity = new HttpEntity(httpHeaders);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List> responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET,entity,List.class);
+        ResponseEntity<List> responseEntity = restTemplate.exchange(builder.build().toUriString(), HttpMethod.GET,entity,List.class);
 
         return responseEntity.getBody();
     }
 
+    public void boardHitUpdate(Long id)  throws Exception{
+        //헤더 설정
+        HttpHeaders httpHeaders = new HttpHeaders();
+        String uri = "http://localhost:9090/api/board/hitUpdate";
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(uri)
+                .queryParam("id",id);
+
+        //HttpEntity에 헤더 및 params 설정
+        HttpEntity entity = new HttpEntity(httpHeaders);
+
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.exchange(builder.build().toUriString(), HttpMethod.GET,entity,void.class);
+    }
+
+    public void setSoldOut(Long id) throws Exception{
+        //헤더 설정
+        HttpHeaders httpHeaders = new HttpHeaders();
+        String uri = "http://localhost:9090/api/board/setSoldOut";
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(uri)
+                .queryParam("id",id);
+
+        //HttpEntity에 헤더 및 params 설정
+        HttpEntity entity = new HttpEntity(httpHeaders);
+
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.exchange(builder.build().toUriString(), HttpMethod.GET,entity,void.class);
+    }
+    public BoardDto boardContent(Long id)  throws Exception{
+        //헤더 설정
+        HttpHeaders httpHeaders = new HttpHeaders();
+        String uri = "http://localhost:9090/api/board/getBoardContent";
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(uri)
+                .queryParam("id",id);
+
+        //HttpEntity에 헤더 및 params 설정
+        HttpEntity entity = new HttpEntity(httpHeaders);
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<BoardDto> responseEntity= restTemplate.exchange(builder.build().toUriString(), HttpMethod.GET,entity,BoardDto.class);
+        return responseEntity.getBody();
+    }
 
 }

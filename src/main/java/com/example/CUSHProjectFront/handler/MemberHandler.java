@@ -32,7 +32,7 @@ public class MemberHandler {
         HttpEntity entity = new HttpEntity(httpHeaders);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<MemberDto> responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET,entity,MemberDto.class);
+        ResponseEntity<MemberDto> responseEntity = restTemplate.exchange(builder.build().toUriString(), HttpMethod.GET,entity,MemberDto.class);
 
         return responseEntity.getBody();
     }

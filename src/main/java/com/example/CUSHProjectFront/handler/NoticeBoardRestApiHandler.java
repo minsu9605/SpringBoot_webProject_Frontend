@@ -37,7 +37,7 @@ public class NoticeBoardRestApiHandler {
         HttpEntity entity = new HttpEntity(httpHeaders);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<HashMap> responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET,entity,HashMap.class);
+        ResponseEntity<HashMap> responseEntity = restTemplate.exchange(builder.build().toUriString(), HttpMethod.GET,entity,HashMap.class);
 
         System.out.println(responseEntity.getStatusCode());
         System.out.println(responseEntity.getBody());

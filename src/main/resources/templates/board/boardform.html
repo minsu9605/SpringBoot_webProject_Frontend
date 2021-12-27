@@ -11,7 +11,8 @@
 
 <div class="container mt-5">
     <h1>장터 게시판</h1>
-    <form th:action="@{/api/board/write(category=${#request.getParameter('category')})}" method="post">
+    <form name="board_form" th:action="@{/board/write(category=${#request.getParameter('category')})}" method="post">
+
         <input type="hidden" th:field="${boardForm.id}"/>
 
         <div class="mb-3" id="divWriter">
@@ -68,7 +69,7 @@
 
         <div class="text-end">
             <a type="button" class="btn btn-secondary" th:href="@{/board/list}">취소</a>
-            <button id="submitBtn" type="submit" class="btn btn-primary">제출</button>
+            <button id="submitBtn" type="button" class="btn btn-primary">제출</button>
         </div>
     </form>
 </div>

@@ -40,7 +40,7 @@ function getCommentList() {
                     html += "<input type='hidden' id='commentId_"+ data.list[i].id +"' value='" + data.list[i].id + "'>"
                     html += "<b id='commentWriter_" + data.list[i].id + "'>" + data.list[i].writer + "</b>";
                     html += "<span style='float:right;' align='right' id='commentDate_"+ data.list[i].id +"'> " + displayTime(data.list[i].updateDate) + " </span>";
-                    html += "<div class='mb-1 comment_container' >"
+                    html += "<div class='mb-1 comment_container'>"
                     html += "<h5 id='commentText_" + data.list[i].id + "' style='display: inline'>" + data.list[i].comment +"</h5>";
                     html += "<span id='ccCount_" + data.list[i].id + "' style='color: red'> ["+data.commentCnt[i]+"]</span>"
                     html += "</div>"
@@ -112,7 +112,9 @@ $(document).on("click",".reCommentBtn",function (){
                     html += "<input type='hidden' id='commentId_"+ data.list[i].id +"' value='" + data.list[i].id + "'>"
                     html += "<b id='commentWriter_" + data.list[i].id + "' >" + data.list[i].writer + "</b>";
                     html += "<span style='float:right;' align='right' id='commentDate'> " + displayTime(data.list[i].updateDate) + " </span>";
+                    html += "<div class='mb-1 comment_container'>"
                     html += "<h5 id='commentText_"+ data.list[i].id +"'>" + data.list[i].comment + "</h5>";
+                    html += "</div>"
                     if (data.list[i].writer === $("#sessionNickname").val()) {
                         html += "<span style='cursor: pointer; color: blue' class='commentMod' data-toggle='modal' data-target='#modifyModal' >수정 </span>";
                         html += "<span style='cursor: pointer; color: blue' class='commentDel'>삭제</span>";
@@ -149,7 +151,7 @@ $(document).on("click",".reCommentBtn",function (){
             url: "/api/comment/reComment/post",
             data: {"comment": cComment, "bid": $("#bid").val(), "cid": cid},
             success: function (data) {
-                if (data == "success") {
+                if (data.result == "success") {
                     location.reload();
                 }
             },
@@ -181,11 +183,11 @@ $(".modalModBtn").on("click", function () {
         return false;
     } else {
         $.ajax({
-            type: 'put',
+            type: 'get',
             url: "/api/comment/modify",
             data: {"cid": comment_id, "comment": comment_text},
             success: function (result) {
-                if (result == "success") {
+                if (result.result == "success") {
                     alert("댓글을 수정하였습니다.");
                 } else {
                     alert("오류가 발생하였습니다. 다시 시도해주세요")
@@ -211,11 +213,11 @@ $(document).on("click",".commentDel",function (){
             url: "/api/comment/delete",
             data: {"cid": comment_id},
             success: function (count) {
-                if(count == 0){
+                if(count.result == 0){
                     alert("댓글을 삭제하였습니다.");
                     location.reload();
                 }else{
-                    alert(count+"개의 답글이 있습니다. 댓글을 삭제 할 수 없습니다.")
+                    alert(count.result+"개의 답글이 있습니다. 댓글을 삭제 할 수 없습니다.")
                 }
             },
             error: function (request, status, error) {

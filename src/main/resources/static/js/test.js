@@ -1,12 +1,18 @@
-/*$("#test_btn").on('click',function (){
+const paramDto = {
+    id : $("#msg1").val(),
+    writer : $("#msg2").val()
+}
+
+$("#test_btn").on('click',function (){
     $.ajax({
-        type:'get',
+        type:'post',
         url : "/api/test/hello",
-        success: function (value){
-            location.href=value;
+        data : paramDto,
+        success: function (result){
+            alert(result.result);
         },
         error: function (request, status, error) {
             alert("code : " + request.status + "\n" + "error : " + error);
         }
     });
-});*/
+});
