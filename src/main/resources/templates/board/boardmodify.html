@@ -11,13 +11,14 @@
 
 <div class="container mt-5">
     <h1>게시글 수정</h1>
-    <form th:action="@{/board/modify(id=${#request.getParameter('id')})}" method="post">
+    <form name="board_form" method="post">
         <input type="hidden" th:field="${boardForm.id}"/>
 
         <div class="mb-3 inline-container">
             <b class="form-label" for="writer">작성자</b>
             <input class="form-control-plaintext" id="writer" name="writer" th:value="${boardForm.writer}" readonly>
         </div>
+
         <div class="inline-container">
             <b for="createdDate">작성 날짜</b>
             <input id="createdDate" name="createdDate" th:value="${boardForm.createdDate}" readonly>
@@ -89,7 +90,7 @@
         <div class="text-end">
             <a type="button" class="btn btn-secondary" th:href="@{/board/list}">목록</a>
             <button type="button" class="btn btn-danger" id="boardDelete">삭제</button>
-            <button id="modifyBtn" type="submit" class="btn btn-primary">수정</button>
+            <button id="modifyBtn" type="button" class="btn btn-primary">수정</button>
         </div>
     </form>
 </div>

@@ -1,23 +1,35 @@
 package com.example.CUSHProjectFront.controller;
 
+import com.example.CUSHProjectFront.dto.BoardDto;
+import com.example.CUSHProjectFront.dto.NoticeBoardDto;
+import com.example.CUSHProjectFront.handler.NoticeBoardRestApiHandler;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @AllArgsConstructor
 public class NoticeBoardController {
 
     /*private final NoticeBoardService noticeBoardService;*/
+    private final NoticeBoardRestApiHandler noticeBoardRestApiHandler;
     /*공지사항*/
     @GetMapping("/notice/list")
     public String noticeList() {
         return "notice/noticelist";
     }
 
-    /*
+    @GetMapping("/notice/content")
+    public String noticeBoardContent(Model model, @RequestParam(required = false) Long id) throws Exception{
+        noticeBoardRestApiHandler.noticeBoardHitUpdate(id);
+        NoticeBoardDto boardForm = noticeBoardRestApiHandler.noticeBoardContent(id);
 
-    //글쓰기
+        model.addAttribute("boardForm",boardForm);
+        return "notice/noticecontent";
+    }
+
     @GetMapping("/notice/write")
     public String noticeBoardWrite(Model model) {
         NoticeBoardDto boardForm = new NoticeBoardDto();
@@ -26,40 +38,10 @@ public class NoticeBoardController {
         return "notice/noticeform";
     }
 
-    @PostMapping("/notice/write")
-    public String noticeBoardWrite(NoticeBoardDto noticeBoardDto, Authentication authentication, HttpServletRequest request){
-        noticeBoardService.noticeBoardWrite(noticeBoardDto, authentication.getName(), request);
-        return "redirect:/notice/list";
-    }
-
-    @GetMapping("/notice/content")
-    public String noticeBoardContent(Model model, @RequestParam(required = false) Long id){
-        noticeBoardService.noticeBoardHitUpdate(id);
-        NoticeBoardDto boardForm = noticeBoardService.noticeBoardContent(id);
-
-        model.addAttribute("boardForm",boardForm);
-        return "notice/noticecontent";
-    }
-
     @GetMapping("/notice/modify")
-    public String noticeBoardModify(Model model, @RequestParam(required = false) Long id){
-        NoticeBoardDto boardForm = noticeBoardService.noticeBoardContent(id);
-
+    public String noticeBoardModify(Model model, @RequestParam(required = false) Long id) throws Exception{
+        NoticeBoardDto boardForm = noticeBoardRestApiHandler.noticeBoardContent(id);
         model.addAttribute("boardForm",boardForm);
-
         return "notice/noticemodify";
     }
-
-    @PostMapping("/notice/modify")
-    public String noticeBoardModify(NoticeBoardDto noticeBoardDto, Authentication authentication){
-        noticeBoardService.boardModifySave(noticeBoardDto, authentication.getName());
-        return "redirect:/notice/list";
-    }
-
-    @ResponseBody
-    @DeleteMapping("/api/notice/delete")
-    public void noticeBoardDelete(@RequestParam(required = false)Long id) {
-        noticeBoardService.noticeBoardDelete(id);
-    }*/
-
 }

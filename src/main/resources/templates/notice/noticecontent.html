@@ -30,7 +30,7 @@
 
     <div class="text-end mb-3">
         <a type="button" class="btn btn-secondary" th:href="@{/notice/list}">공지사항 목록</a>
-        <a class="btn btn-primary" id="modify" th:if="${boardForm.writer.equals(session.memberNickname)}" th:href="@{/board/modify(id=${boardForm.id})}">수정</a>
+        <a class="btn btn-primary" id="modify" th:if="${boardForm.writer.equals(session.memberNickname)}" th:href="@{/notice/modify(id=${boardForm.id})}">수정</a>
     </div>
 </div>
 <footer th:replace="fragments/common :: footer"></footer>

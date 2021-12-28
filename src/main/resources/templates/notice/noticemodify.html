@@ -11,7 +11,7 @@
 
 <div class="container mt-5">
     <h1>게시글 수정</h1>
-    <form th:action="@{/notice/modify}" method="post">
+    <form name="board_form" method="post">
         <input type="hidden" th:field="${boardForm.id}"/>
 
         <div class="mb-3 inline-container">
@@ -46,7 +46,7 @@
         <div class="text-end">
             <a type="button" class="btn btn-secondary" th:href="@{/notice/list}">목록</a>
             <button type="button" class="btn btn-danger" id="boardDelete">삭제</button>
-            <button type="submit" class="btn btn-primary">제출</button>
+            <button id="modifyBtn" type="button" class="btn btn-primary">수정</button>
         </div>
     </form>
 </div>

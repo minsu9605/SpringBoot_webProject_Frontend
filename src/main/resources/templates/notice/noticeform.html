@@ -11,7 +11,7 @@
 
 <div class="container">
     <h1>공지사항</h1>
-    <form th:action="@{/notice/write}" method="post" onsubmit="return nullCheck()">
+    <form name="board_form" method="post">
         <input type="hidden" th:field="${boardForm.id}"/>
 
         <div class="mb-3" id="divWriter">
@@ -19,8 +19,6 @@
             <input class="form-control-plaintext" id="writer" name="writer" th:value="${session.memberNickname}" readonly>
         </div>
         <hr>
-
-
 
         <div class="mb-3" id="divTitle">
             <label class="form-label" for="title"></label>
@@ -34,14 +32,14 @@
 
         <div class="text-end">
             <a type="button" class="btn btn-secondary" th:href="@{/notice/list}">취소</a>
-            <button type="submit" class="btn btn-primary">제출</button>
+            <button id="submitBtn" type="button" class="btn btn-primary">제출</button>
         </div>
     </form>
 </div>
 <script type="text/javascript" th:src="@{/js/summernote/summernote-ko-KR.js}"></script>
 <script type="text/javascript" th:src="@{/js/summernote/summernote-lite.js}" defer></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
-<script type="text/javascript" th:src="@{/js/boardForm.js}"></script>
+<script type="text/javascript" th:src="@{/js/noticeBoardForm.js}"></script>
 <script type="text/javascript" th:src="@{/js/nav_top.js}"></script>
 
 </body>

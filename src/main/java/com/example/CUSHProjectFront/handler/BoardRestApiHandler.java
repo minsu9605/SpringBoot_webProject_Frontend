@@ -150,6 +150,7 @@ public class BoardRestApiHandler {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.exchange(builder.build().toUriString(), HttpMethod.GET,entity,void.class);
     }
+
     public BoardDto boardContent(Long id)  throws Exception{
         //헤더 설정
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -166,4 +167,44 @@ public class BoardRestApiHandler {
         return responseEntity.getBody();
     }
 
+    public HashMap<String, Object> boardModify(BoardDto boardDto) throws Exception{
+        HttpHeaders httpHeaders = new HttpHeaders();
+        String uri = "http://localhost:9090/api/board/modify";
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(uri)
+                .queryParam("id",boardDto.getId())
+                .queryParam("status",boardDto.getStatus())
+                .queryParam("writer",boardDto.getWriter())
+                .queryParam("createdDate",boardDto.getCreatedDate())
+                .queryParam("categoryName",boardDto.getCategoryName())
+                .queryParam("rating",boardDto.getRating())
+                .queryParam("price",boardDto.getPrice())
+                .queryParam("myLat",boardDto.getMyLat())
+                .queryParam("myLng",boardDto.getMyLng())
+                .queryParam("title",boardDto.getTitle())
+                .queryParam("content",boardDto.getContent());
+
+        HttpEntity entity = new HttpEntity(boardDto,httpHeaders);
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<HashMap> responseEntity = restTemplate.exchange(builder.build().toUriString(), HttpMethod.POST, entity,HashMap.class);
+
+        return responseEntity.getBody();
+    }
+
+    public HashMap<String, Object> boardDelete(Long id)  throws Exception{
+        //헤더 설정
+        HttpHeaders httpHeaders = new HttpHeaders();
+        String uri = "http://localhost:9090/api/board/delete";
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(uri)
+                .queryParam("id",id);
+
+        //HttpEntity에 헤더 및 params 설정
+        HttpEntity entity = new HttpEntity(httpHeaders);
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<HashMap> responseEntity= restTemplate.exchange(builder.build().toUriString(), HttpMethod.DELETE,entity,HashMap.class);
+        return responseEntity.getBody();
+    }
 }

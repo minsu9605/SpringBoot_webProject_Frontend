@@ -52,8 +52,13 @@ $("#boardDelete").on("click",function() {
             url : "/api/board/delete",
             data : {"id" : $("#id").val()},
             success: function (result){
+                if(result.result="success"){
                     alert("게시물을 삭제 하였습니다.");
                     window.location.href='/board/list?category=1';
+                }else{
+                    alert("잠시후 다시 시도 해 주세요");
+                }
+
             },
             error: function (request, status, error){
                 alert("code : " +  request.status + "\n" + "error : " + error);
@@ -81,7 +86,7 @@ $("#modifyBtn").on('click',function nullCheck() {
         return false;
     }
     eraseComma();
-    alert("수정되었습니다");
+    boardModify();
     return true;
 });
 
@@ -140,3 +145,18 @@ function eraseComma(){
 $(function (){
     $("#status option[value='old']").remove();
 });
+
+function boardModify() {
+    $.ajax({
+        type: "POST",
+        url: "/api/board/modify",
+        data: $("form[name=board_form]").serialize(),
+        success: function (result) {
+            alert("게시글 수정이 완료되었습니다.")
+            location.href='/board/content?id=' + result.boardId;
+        },
+        error: function (request, status, error){
+            alert("code : " +  request.status + "\n" + "error : " + error);
+        }
+    });
+}

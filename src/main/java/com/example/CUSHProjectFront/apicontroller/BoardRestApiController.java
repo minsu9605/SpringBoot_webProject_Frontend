@@ -8,10 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -62,4 +59,15 @@ public class BoardRestApiController {
     public HashMap<String, Object> boardWrite(BoardDto boardDto) throws Exception {
         return boardRestApiHandler.boardWrite(boardDto);
     }
+
+    @PostMapping("/api/board/modify")
+    public HashMap<String, Object> boardModify(BoardDto boardDto) throws Exception {
+        return boardRestApiHandler.boardModify(boardDto);
+    }
+
+    @DeleteMapping("/api/board/delete")
+    public HashMap<String, Object> boardDelete(@RequestParam(required = false) Long id) throws Exception{
+        return boardRestApiHandler.boardDelete(id);
+    }
+
 }

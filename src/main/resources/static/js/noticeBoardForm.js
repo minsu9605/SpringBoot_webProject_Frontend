@@ -1,13 +1,12 @@
-$("#modifyBtn").on('click',function nullCheck() {
-
+$("#submitBtn").on('click',function nullCheck() {
     if (!titleCheck()) {
         return false;
     } else if (!contentCheck()) {
         return false;
-    }if(!confirm("수정하시겠습니까?")) {
+    } if(!confirm("글을 작성하시겠습니까?")) {
         return false;
     }
-    noticeModify();
+    boardWrite();
     return true;
 });
 
@@ -57,10 +56,8 @@ $(document).ready(function () {
     });
 });
 
-/**
- * 이미지 파일 업로드
- */
-function uploadSummernoteImageFile(file, editor) {
+/*이미지 파일 업로드*/
+function uploadSummernoteImageFile(file) {
     const data = new FormData();
     data.append("file", file);
     $.ajax({
@@ -71,45 +68,25 @@ function uploadSummernoteImageFile(file, editor) {
         processData: false,
         success: function (data) {
             //항상 업로드된 파일의 url이 있어야 한다.
-            $(editor).summernote('insertImage', data.url);
+            $("#content").summernote('insertImage', data.url);
         }
     });
 }
 
-$("#boardDelete").on("click",function() {
-    if(!confirm("공지사항을 삭제하시겠습니까?")){
-        return false;
-    }else{
-        $.ajax({
-            type:"delete",
-            url : "/api/notice/delete",
-            data : {"id" : $("#id").val()},
-            success: function (result){
-                if(result.result="seccess"){
-                    alert("공지사항을 삭제 하였습니다.");
-                    window.location.href='/notice/list';
-                }else{
-                    alert("잠시후 다시 시도 해 주세요");
-                }
-            },
-            error: function (request, status, error){
-                alert("code : " +  request.status + "\n" + "error : " + error);
-            }
-        });
-    }
-});
-
-function noticeModify() {
+function boardWrite() {
     $.ajax({
         type: "POST",
-        url: "/api/notice/modify",
+        url: "/api/notice/write",
         data: $("form[name=board_form]").serialize(),
         success: function (result) {
-            alert("게시글 수정이 완료되었습니다.")
-            location.href='/notice/content?id=' + result.noticeId;
+            if(result.result="success"){
+                alert("게시글 작성이 완료되었습니다.")
+                location.href='/notice/list';
+            }
         },
         error: function (request, status, error){
             alert("code : " +  request.status + "\n" + "error : " + error);
         }
     });
 }
+

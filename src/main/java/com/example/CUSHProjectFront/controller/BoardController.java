@@ -35,13 +35,6 @@ public class BoardController {
         return "board/boardform";
     }
 
-    /*@PostMapping("/board/write")
-    public String boardWrite(@RequestParam(required = false) Long category, BoardDto boardDto, Authentication authentication, HttpServletRequest request) {
-        boardRestApiHandler.boardWrite(boardDto, authentication.getName(), request);
-        return "redirect:/board/list?category=" + category;
-    }*/
-
-
     @GetMapping("/board/content")
     public String boardContent(Model model, @RequestParam(required = false) Long id) throws Exception {
         boardRestApiHandler.boardHitUpdate(id);
@@ -52,24 +45,14 @@ public class BoardController {
         return "board/boardcontent";
     }
 
-    /*
-
-
     @GetMapping("/board/modify")
-    public String boardModify(Model model, @RequestParam(required = false) Long id) {
-        BoardDto boardForm = boardService.boardContent(id);
+    public String boardModify(Model model, @RequestParam(required = false) Long id) throws Exception {
+        BoardDto boardForm = boardRestApiHandler.boardContent(id);
 
-        List<BoardCategoryDto> categoryList = categoryService.getCategoryList();
         model.addAttribute("boardForm", boardForm);
-        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("categoryList", boardRestApiHandler.getCategoryList());
         return "board/boardmodify";
     }
-
-    @PostMapping("/board/modify")
-    public String boardModify(@RequestParam(required = false) Long id, BoardDto boardDto, Authentication authentication, HttpServletRequest request) {
-        boardService.boardModifySave(boardDto, authentication.getName(), request);
-        return "redirect:/board/content?id=" + id;
-    }*/
 
     @GetMapping("/board/map")
     public String showMap() {
@@ -81,18 +64,12 @@ public class BoardController {
         return "board/map_content";
     }
 
-
     /*@ResponseBody
     @PostMapping("/api/uploadSummernoteImageFile")
     public HashMap<String, Object> uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
         return boardService.boardImageUpload(multipartFile);
     }
 
-    @ResponseBody
-    @DeleteMapping("/api/board/delete")
-    public void boardDelete(@RequestParam(required = false) Long id) {
-        boardService.boardDelete(id);
-    }
 */
     //내가 쓴 게시물(내정보)
     @GetMapping("/board/myBoard")
