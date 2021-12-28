@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
@@ -205,6 +207,22 @@ public class BoardRestApiHandler {
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<HashMap> responseEntity= restTemplate.exchange(builder.build().toUriString(), HttpMethod.DELETE,entity,HashMap.class);
+        return responseEntity.getBody();
+    }
+
+    public HashMap<String, Object> boardImageUpload(String originalFileName, InputStream inputStream) throws Exception{
+        HttpHeaders httpHeaders = new HttpHeaders();
+        String uri = "http://localhost:9090/api/uploadSummernoteImageFile";
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(uri)
+                .queryParam("originalFileName",originalFileName)
+                .queryParam("inputStream",inputStream);
+
+        HttpEntity entity = new HttpEntity(httpHeaders);
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<HashMap> responseEntity = restTemplate.exchange(builder.build().toUriString(), HttpMethod.POST, entity,HashMap.class);
+
         return responseEntity.getBody();
     }
 }

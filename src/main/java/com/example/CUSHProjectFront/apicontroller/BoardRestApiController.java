@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -68,6 +69,11 @@ public class BoardRestApiController {
     @DeleteMapping("/api/board/delete")
     public HashMap<String, Object> boardDelete(@RequestParam(required = false) Long id) throws Exception{
         return boardRestApiHandler.boardDelete(id);
+    }
+
+    @PostMapping("/api/uploadSummernoteImageFile")
+    public HashMap<String, Object> uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) throws Exception{
+        return boardRestApiHandler.boardImageUpload(multipartFile.getOriginalFilename(),multipartFile.getInputStream());
     }
 
 }

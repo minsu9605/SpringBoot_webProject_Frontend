@@ -64,13 +64,6 @@ public class BoardController {
         return "board/map_content";
     }
 
-    /*@ResponseBody
-    @PostMapping("/api/uploadSummernoteImageFile")
-    public HashMap<String, Object> uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
-        return boardService.boardImageUpload(multipartFile);
-    }
-
-*/
     //내가 쓴 게시물(내정보)
     @GetMapping("/board/myBoard")
     public String myBoard() {
@@ -162,8 +155,6 @@ public class BoardController {
         paginationMap.put("totalCount", total);
         return objectMap;
     }
-
-
 
     @ResponseBody
     @GetMapping("/api/admin/adminBoardChart")

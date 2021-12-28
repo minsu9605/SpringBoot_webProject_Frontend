@@ -105,6 +105,7 @@ function uploadSummernoteImageFile(file) {
         contentType: false,
         processData: false,
         success: function (data) {
+            alert(data.url);
             //항상 업로드된 파일의 url이 있어야 한다.
             $("#content").summernote('insertImage', data.url);
         }
